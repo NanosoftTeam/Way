@@ -16,7 +16,7 @@ class InsertRequiredRecordsInDb extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'admin_wayapp_default',
-                'email' => 'admin_wayapp_default@wayapp_default.wayapp_default',
+                'email' => 'admin_wayapp_default@wayapp-default.wayapp.default',
                 'created_at' => date('Y-m-d H:i:s'),
                 'role' => 4,
                 'password' => Hash::make('admin_wayapp_default_password')
