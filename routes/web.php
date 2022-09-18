@@ -17,7 +17,7 @@ Route::get('/', [App\Http\Controllers\WelcomeController::class, 'show'])->name('
 
 Route::middleware(['auth'])->group(function(){
     Route::middleware(['can:isAdmin'])->group(function(){
-        
+
 
         Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::middleware(['can:isIT'])->group(function(){
-        
+
         /*OLD
         Route::get('/films', [App\Http\Controllers\FilmController::class, 'index'])->name('films.index');
         Route::get('/films/{film}', [App\Http\Controllers\FilmController::class, 'show'])->name('films.show');
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/messages/archive/{message}', [App\Http\Controllers\MessageController::class, 'archive'])->name('messages.archive');
         Route::get('/messages/download/{message}', [App\Http\Controllers\MessageController::class, 'download'])->name('messages.download');
         Route::get('/messages/d/{message}', [App\Http\Controllers\MessageController::class, 'destroy'])->name('messages.destroy');
-        
+
 
         Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('courses.index');
         Route::get('/courses/{course}', [App\Http\Controllers\CourseController::class, 'show'])->name('courses.show');
@@ -94,8 +94,8 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/tasks/update2/{task}', [App\Http\Controllers\TaskController::class, 'update2'])->name('task.update2');
         Route::get('/tasks/d/{task}', [App\Http\Controllers\TaskController::class, 'destroy'])->name('tasks.destroy');
         Route::post('/tasks/new', [App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');
-        
-        
+
+
 
         Route::get('/notes/search', [App\Http\Controllers\NoteController::class, 'auto_complete'])->name('notes.search');
         Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index'])->name('notes.index');
@@ -116,9 +116,9 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('/wordlist/{wordlist}/export', [App\Http\Controllers\WordlistController::class, 'export'])->name('wordlists.export');
         Route::post('/wordlist/{wordlist}/import', [App\Http\Controllers\WordlistController::class, 'import'])->name('wordlists.import');
-        
+
         Route::get('/wordlists/{wordlist}#w{id}', [App\Http\Controllers\WordlistController::class, 'show'])->name('wordlists.show2');
-        
+
         Route::get('/word/{word}/edit', [App\Http\Controllers\WordController::class, 'edit'])->name('words.edit');
 
         Route::get('/contacts/show2/{contact}', [App\Http\Controllers\ContactController::class, 'show2'])->name('contacts.show2');
@@ -134,26 +134,26 @@ Route::middleware(['auth'])->group(function(){
         Route::resource('debts', App\Http\Controllers\DebtController::class);
         Route::resource('wordlists', App\Http\Controllers\WordlistController::class);
         Route::resource('lessons', App\Http\Controllers\LessonController::class);
-        
+
 
         Route::get('/changes/show2', [App\Http\Controllers\ChangeController::class, 'show2'])->name('changes.show2');
     });
 
-    Route::middleware(['can:isReader'])->group(function(){
+    //Route::middleware(['can:isReader'])->group(function(){
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
         Route::get('/dashboard2', [App\Http\Controllers\HomeController::class, 'dashboard2'])->name('dashboard2');
         Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'edit'])->name('settings');
         Route::post('/settings/update', [App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
         Route::post('/settings/update-pass', [App\Http\Controllers\SettingsController::class, 'update_pass'])->name('settings.update_pass');
-        
-    });
+
+    //});
 });
 
 
 
 
-Auth::routes();
+//Auth::routes();
 
 
 
