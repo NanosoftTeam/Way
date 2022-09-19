@@ -139,7 +139,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/changes/show2', [App\Http\Controllers\ChangeController::class, 'show2'])->name('changes.show2');
     });
 
-    //Route::middleware(['can:isReader'])->group(function(){
+    Route::middleware(['can:isReader'])->group(function(){
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
         Route::get('/dashboard2', [App\Http\Controllers\HomeController::class, 'dashboard2'])->name('dashboard2');
@@ -147,7 +147,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/settings/update', [App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
         Route::post('/settings/update-pass', [App\Http\Controllers\SettingsController::class, 'update_pass'])->name('settings.update_pass');
 
-    //});
+    });
 });
 
 
