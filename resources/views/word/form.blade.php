@@ -1,14 +1,17 @@
 <div class="box box-info padding-1">
+    <div class="box-footer mt20">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
     <div class="box-body">
         
         <div class="form-group">
             {{ Form::label('name') }}
-            {{ Form::text('name', $word->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name']) }}
+            {{ Form::text('name', $word->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name', 'autocomplete'=>'off']) }}
             {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('translation') }}
-            {{ Form::text('translation', $word->translation, ['class' => 'form-control' . ($errors->has('translation') ? ' is-invalid' : ''), 'placeholder' => 'Translation']) }}
+            {{ Form::text('translation', $word->translation, ['class' => 'form-control' . ($errors->has('translation') ? ' is-invalid' : ''), 'placeholder' => 'Translation', 'autocomplete'=>'off']) }}
             {!! $errors->first('translation', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
