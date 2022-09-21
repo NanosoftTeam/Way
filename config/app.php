@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'base64:JDFqM/9s4zG1gzdsUesQV+GUT1utv7N9XvuYNMcKAUk='),
 
     'cipher' => 'AES-256-CBC',
 
@@ -233,6 +233,6 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 
     ],
-    
+
 
 ];
