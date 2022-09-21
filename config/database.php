@@ -46,8 +46,8 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'tcp:wayapp.database.windows.net'),
-            'port' => env('DB_PORT', '1433'),
+            'host' => env('DB_HOST', 'wayhost.mysql.database.azure.com'),
+            'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'laravel'),
             'username' => env('DB_USERNAME', 'rootway'),
             'password' => env('DB_PASSWORD', 'pBGGSHED9XhviUk'),

@@ -1,7 +1,7 @@
 {
-    "name": "infast-team/szymone",
-    "type": "project",
-    "description": "Team menagment system.",
+    "name": "wayapp/nanosoft",
+    "type": "wayapp",
+    "description": "Ultra useful manager",
     "keywords": ["infast", "team"],
     "license": "MIT",
     "require": {
@@ -10,17 +10,18 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
+        "laravel/framework": "^9.31.0",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.0"
+        "laravel/ui": "^4.0",
+        "spatie/laravel-backup": "^8.0",
+        "spatie/laravel-health": "^1.8"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "ibex/crud-generator": "^1.3",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
+        "nunomaduro/collision": "^6.0",
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
