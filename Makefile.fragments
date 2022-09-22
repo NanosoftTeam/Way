@@ -1,0 +1,283 @@
+cli: $(SAPI_CLI_PATH)
+
+$(SAPI_CLI_PATH): $(PHP_GLOBAL_OBJS) $(PHP_BINARY_OBJS) $(PHP_CLI_OBJS)
+	$(BUILD_CLI)
+
+install-cli: $(SAPI_CLI_PATH)
+	@echo "Installing PHP CLI binary:        $(INSTALL_ROOT)$(bindir)/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(bindir)
+	@$(INSTALL) -m 0755 $(SAPI_CLI_PATH) $(INSTALL_ROOT)$(bindir)/$(program_prefix)php$(program_suffix)$(EXEEXT)
+	@echo "Installing PHP CLI man page:      $(INSTALL_ROOT)$(mandir)/man1/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@$(INSTALL_DATA) sapi/cli/php.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)php$(program_suffix).1
+phpdbg: $(BUILD_BINARY)
+
+phpdbg-shared: $(BUILD_SHARED)
+
+$(BUILD_SHARED): $(PHP_GLOBAL_OBJS) $(PHP_BINARY_OBJS) $(PHP_PHPDBG_OBJS)
+	$(BUILD_PHPDBG_SHARED)
+
+$(BUILD_BINARY): $(PHP_GLOBAL_OBJS) $(PHP_BINARY_OBJS) $(PHP_PHPDBG_OBJS)
+	$(BUILD_PHPDBG)
+
+%.c: %.y
+%.c: %.l
+
+/home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_lexer.lo: /home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_parser.h
+
+/home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_lexer.c: /home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_lexer.l
+	@(cd $(top_srcdir); $(RE2C) $(RE2C_FLAGS) --no-generation-date -cbdFo sapi/phpdbg/phpdbg_lexer.c sapi/phpdbg/phpdbg_lexer.l)
+
+/home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_parser.h: /home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_parser.c
+/home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_parser.c: /home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_parser.y
+	@$(YACC) $(YFLAGS) -v -d /home/site/wwwroot/php-8.1.10/sapi/phpdbg/phpdbg_parser.y -o $@
+
+install-phpdbg: $(BUILD_BINARY)
+	@echo "Installing phpdbg binary:         $(INSTALL_ROOT)$(bindir)/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(bindir)
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(localstatedir)/log
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(localstatedir)/run
+	@$(INSTALL) -m 0755 $(BUILD_BINARY) $(INSTALL_ROOT)$(bindir)/$(program_prefix)phpdbg$(program_suffix)$(EXEEXT)
+	@echo "Installing phpdbg man page:       $(INSTALL_ROOT)$(mandir)/man1/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@$(INSTALL_DATA) sapi/phpdbg/phpdbg.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)phpdbg$(program_suffix).1
+cgi: $(SAPI_CGI_PATH)
+
+$(SAPI_CGI_PATH): $(PHP_GLOBAL_OBJS) $(PHP_BINARY_OBJS) $(PHP_FASTCGI_OBJS) $(PHP_CGI_OBJS)
+	$(BUILD_CGI)
+
+install-cgi: $(SAPI_CGI_PATH)
+	@echo "Installing PHP CGI binary:        $(INSTALL_ROOT)$(bindir)/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(bindir)
+	@$(INSTALL) -m 0755 $(SAPI_CGI_PATH) $(INSTALL_ROOT)$(bindir)/$(program_prefix)php-cgi$(program_suffix)$(EXEEXT)
+	@echo "Installing PHP CGI man page:      $(INSTALL_ROOT)$(mandir)/man1/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@$(INSTALL_DATA) sapi/cgi/php-cgi.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)php-cgi$(program_suffix).1
+ext/fileinfo/libmagic/apprentice.lo: /home/site/wwwroot/php-8.1.10/ext/fileinfo/data_file.c
+/home/site/wwwroot/php-8.1.10/ext/json/json_scanner.c: /home/site/wwwroot/php-8.1.10/ext/json/json_scanner.re
+	@$(RE2C) $(RE2C_FLAGS) -t /home/site/wwwroot/php-8.1.10/ext/json/php_json_scanner_defs.h --no-generation-date -bci -o $@ /home/site/wwwroot/php-8.1.10/ext/json/json_scanner.re
+
+/home/site/wwwroot/php-8.1.10/ext/json/json_parser.tab.c: /home/site/wwwroot/php-8.1.10/ext/json/json_parser.y
+	@$(YACC) $(YFLAGS) --defines -l /home/site/wwwroot/php-8.1.10/ext/json/json_parser.y -o $@
+
+ext/opcache/minilua: /home/site/wwwroot/php-8.1.10/ext/opcache/jit/dynasm/minilua.c
+	$(BUILD_CC) /home/site/wwwroot/php-8.1.10/ext/opcache/jit/dynasm/minilua.c -lm -o $@
+
+ext/opcache/jit/zend_jit_$(DASM_ARCH).c: /home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_$(DASM_ARCH).dasc /home/site/wwwroot/php-8.1.10/ext/opcache/jit/dynasm/*.lua ext/opcache/minilua
+	ext/opcache/minilua /home/site/wwwroot/php-8.1.10/ext/opcache/jit/dynasm/dynasm.lua  $(DASM_FLAGS) -o $@ /home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_$(DASM_ARCH).dasc
+
+ext/opcache/jit/zend_jit.lo: \
+	ext/opcache/jit/zend_jit_$(DASM_ARCH).c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_helpers.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_disasm.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_gdb.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_perf_dump.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_oprofile.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_vtune.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_jit_trace.c \
+	/home/site/wwwroot/php-8.1.10/ext/opcache/jit/zend_elf.c
+
+# For non-GNU make, jit/zend_jit.lo and ./jit/zend_jit.lo are considered distinct targets.
+# Use this workaround to allow building from inside ext/opcache.
+jit/zend_jit.lo: ext/opcache/jit/zend_jit.lo
+phpincludedir=$(prefix)/include/php
+
+PDO_HEADER_FILES= \
+	php_pdo.h \
+	php_pdo_driver.h \
+	php_pdo_error.h
+
+
+/home/site/wwwroot/php-8.1.10/ext/pdo/pdo_sql_parser.c: /home/site/wwwroot/php-8.1.10/ext/pdo/pdo_sql_parser.re
+	@(cd $(top_srcdir); \
+	if test -f ./pdo_sql_parser.re; then \
+		$(RE2C) $(RE2C_FLAGS) --no-generation-date -o pdo_sql_parser.c pdo_sql_parser.re; \
+	else \
+		$(RE2C) $(RE2C_FLAGS) --no-generation-date -o ext/pdo/pdo_sql_parser.c ext/pdo/pdo_sql_parser.re; \
+	fi)
+
+install-pdo-headers:
+	@echo "Installing PDO headers:           $(INSTALL_ROOT)$(phpincludedir)/ext/pdo/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(phpincludedir)/ext/pdo
+	@for f in $(PDO_HEADER_FILES); do \
+		if test -f "$(top_srcdir)/$$f"; then \
+			$(INSTALL_DATA) $(top_srcdir)/$$f $(INSTALL_ROOT)$(phpincludedir)/ext/pdo; \
+		elif test -f "$(top_builddir)/$$f"; then \
+			$(INSTALL_DATA) $(top_builddir)/$$f $(INSTALL_ROOT)$(phpincludedir)/ext/pdo; \
+		elif test -f "$(top_srcdir)/ext/pdo/$$f"; then \
+			$(INSTALL_DATA) $(top_srcdir)/ext/pdo/$$f $(INSTALL_ROOT)$(phpincludedir)/ext/pdo; \
+		elif test -f "$(top_builddir)/ext/pdo/$$f"; then \
+			$(INSTALL_DATA) $(top_builddir)/ext/pdo/$$f $(INSTALL_ROOT)$(phpincludedir)/ext/pdo; \
+		else \
+			echo "hmmm"; \
+		fi \
+	done;
+
+# mini hack
+install: $(all_targets) $(install_targets) install-pdo-headers
+/home/site/wwwroot/php-8.1.10/ext/phar/phar_path_check.c: /home/site/wwwroot/php-8.1.10/ext/phar/phar_path_check.re
+	@(cd $(top_srcdir); \
+	if test -f ./php_phar.h; then \
+		$(RE2C) $(RE2C_FLAGS) --no-generation-date -b -o phar_path_check.c phar_path_check.re; \
+	else \
+		$(RE2C) $(RE2C_FLAGS) --no-generation-date -b -o ext/phar/phar_path_check.c ext/phar/phar_path_check.re; \
+	fi)
+
+pharcmd: ext/phar/phar.php ext/phar/phar.phar
+
+PHP_PHARCMD_SETTINGS = -n -d 'open_basedir=' -d 'output_buffering=0' -d 'memory_limit=-1' -d phar.readonly=0
+PHP_PHARCMD_EXECUTABLE = ` \
+	if test -x "$(top_builddir)/$(SAPI_CLI_PATH)"; then \
+		$(top_srcdir)/build/shtool echo -n -- "$(top_builddir)/$(SAPI_CLI_PATH) -n"; \
+		if test "x$(PHP_MODULES)" != "x"; then \
+		$(top_srcdir)/build/shtool echo -n -- " -d extension_dir=$(top_builddir)/modules"; \
+		for i in bz2 zlib phar; do \
+			if test -f "$(top_builddir)/modules/$$i.la"; then \
+				. $(top_builddir)/modules/$$i.la; $(top_srcdir)/build/shtool echo -n -- " -d extension=$$dlname"; \
+			fi; \
+		done; \
+		fi; \
+	else \
+		$(top_srcdir)/build/shtool echo -n -- "$(PHP_EXECUTABLE)"; \
+	fi;`
+PHP_PHARCMD_BANG = `$(top_srcdir)/build/shtool echo -n -- "$(INSTALL_ROOT)$(bindir)/$(program_prefix)php$(program_suffix)$(EXEEXT)";`
+
+ext/phar/phar/phar.inc: /home/site/wwwroot/php-8.1.10/ext/phar/phar/phar.inc
+	-@test -d ext/phar/phar || mkdir -p ext/phar/phar
+	-@test -f ext/phar/phar/phar.inc || cp /home/site/wwwroot/php-8.1.10/ext/phar/phar/phar.inc ext/phar/phar/phar.inc
+
+ext/phar/phar.php: /home/site/wwwroot/php-8.1.10/ext/phar/build_precommand.php /home/site/wwwroot/php-8.1.10/ext/phar/phar/*.inc /home/site/wwwroot/php-8.1.10/ext/phar/phar/*.php $(SAPI_CLI_PATH)
+	-@echo "Generating phar.php"
+	@$(PHP_PHARCMD_EXECUTABLE) $(PHP_PHARCMD_SETTINGS) /home/site/wwwroot/php-8.1.10/ext/phar/build_precommand.php > ext/phar/phar.php
+
+ext/phar/phar.phar: ext/phar/phar.php ext/phar/phar/phar.inc /home/site/wwwroot/php-8.1.10/ext/phar/phar/*.inc /home/site/wwwroot/php-8.1.10/ext/phar/phar/*.php $(SAPI_CLI_PATH)
+	-@echo "Generating phar.phar"
+	-@rm -f ext/phar/phar.phar
+	-@rm -f /home/site/wwwroot/php-8.1.10/ext/phar/phar.phar
+	@$(PHP_PHARCMD_EXECUTABLE) $(PHP_PHARCMD_SETTINGS) ext/phar/phar.php pack -f ext/phar/phar.phar -a pharcommand -c auto -x \\.svn -p 0 -s /home/site/wwwroot/php-8.1.10/ext/phar/phar/phar.php -h sha1 -b "$(PHP_PHARCMD_BANG)"  /home/site/wwwroot/php-8.1.10/ext/phar/phar/
+	-@chmod +x ext/phar/phar.phar
+
+install-pharcmd: pharcmd
+	-@$(mkinstalldirs) $(INSTALL_ROOT)$(bindir)
+	$(INSTALL) ext/phar/phar.phar $(INSTALL_ROOT)$(bindir)/$(program_prefix)phar$(program_suffix).phar
+	-@rm -f $(INSTALL_ROOT)$(bindir)/$(program_prefix)phar$(program_suffix)
+	$(LN_S) -f $(program_prefix)phar$(program_suffix).phar $(INSTALL_ROOT)$(bindir)/$(program_prefix)phar$(program_suffix)
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@$(INSTALL_DATA) ext/phar/phar.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)phar$(program_suffix).1
+	@$(INSTALL_DATA) ext/phar/phar.phar.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)phar$(program_suffix).phar.1
+/home/site/wwwroot/php-8.1.10/ext/standard/var_unserializer.c: /home/site/wwwroot/php-8.1.10/ext/standard/var_unserializer.re
+	@(cd $(top_srcdir); $(RE2C) $(RE2C_FLAGS) --no-generation-date -b -o ext/standard/var_unserializer.c ext/standard/var_unserializer.re)
+
+/home/site/wwwroot/php-8.1.10/ext/standard/url_scanner_ex.c: /home/site/wwwroot/php-8.1.10/ext/standard/url_scanner_ex.re
+	@(cd $(top_srcdir); $(RE2C) $(RE2C_FLAGS) --no-generation-date -b -o ext/standard/url_scanner_ex.c	ext/standard/url_scanner_ex.re)
+
+ext/standard/info.lo: ext/standard/../../main/build-defs.h
+
+ext/standard/basic_functions.lo: $(top_srcdir)/Zend/zend_language_parser.h
+$(top_srcdir)/ext/tokenizer/tokenizer_data.c: $(top_srcdir)/Zend/zend_language_parser.y
+	@if test ! -z "$(PHP)"; then \
+		$(PHP) /home/site/wwwroot/php-8.1.10/ext/tokenizer/tokenizer_data_gen.php; \
+	fi;
+ext/tokenizer/tokenizer.lo: $(top_srcdir)/Zend/zend_language_parser.c $(top_srcdir)/Zend/zend_language_scanner.c
+#
+# Build environment install
+#
+
+phpincludedir = $(includedir)/php
+phpbuilddir = $(libdir)/build
+
+BUILD_FILES = \
+	scripts/phpize.m4 \
+	build/libtool.m4 \
+	build/ltmain.sh \
+	build/ax_check_compile_flag.m4 \
+	build/ax_gcc_func_attribute.m4 \
+	build/php_cxx_compile_stdcxx.m4 \
+	build/pkg.m4 \
+	build/Makefile.global \
+	build/php.m4 \
+	build/gen_stub.php \
+	run-tests.php
+
+BUILD_FILES_EXEC = \
+	build/shtool \
+	build/config.guess \
+	build/config.sub
+
+bin_SCRIPTS = phpize php-config
+man_PAGES = phpize php-config
+
+install-build:
+	@echo "Installing build environment:     $(INSTALL_ROOT)$(phpbuilddir)/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(phpbuilddir) $(INSTALL_ROOT)$(bindir) && \
+	(cd $(top_srcdir) && \
+	$(INSTALL) $(BUILD_FILES_EXEC) $(INSTALL_ROOT)$(phpbuilddir) && \
+	$(INSTALL_DATA) $(BUILD_FILES) $(INSTALL_ROOT)$(phpbuilddir))
+
+install-programs: scripts/phpize scripts/php-config
+	@echo "Installing helper programs:       $(INSTALL_ROOT)$(bindir)/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(bindir)
+	@for prog in $(bin_SCRIPTS); do \
+		echo "  program: $(program_prefix)$${prog}$(program_suffix)"; \
+		$(INSTALL) -m 755 scripts/$${prog} $(INSTALL_ROOT)$(bindir)/$(program_prefix)$${prog}$(program_suffix); \
+	done
+	@echo "Installing man pages:             $(INSTALL_ROOT)$(mandir)/man1/"
+	@$(mkinstalldirs) $(INSTALL_ROOT)$(mandir)/man1
+	@for page in $(man_PAGES); do \
+		echo "  page: $(program_prefix)$${page}$(program_suffix).1"; \
+		$(INSTALL_DATA) scripts/man1/$${page}.1 $(INSTALL_ROOT)$(mandir)/man1/$(program_prefix)$${page}$(program_suffix).1; \
+	done
+
+scripts/phpize: /home/site/wwwroot/php-8.1.10/scripts/phpize.in $(top_builddir)/config.status
+	(CONFIG_FILES=$@ CONFIG_HEADERS= $(top_builddir)/config.status)
+
+scripts/php-config: /home/site/wwwroot/php-8.1.10/scripts/php-config.in $(top_builddir)/config.status
+	(CONFIG_FILES=$@ CONFIG_HEADERS= $(top_builddir)/config.status)
+#
+# Zend
+#
+
+Zend/zend_language_scanner.lo: /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h
+Zend/zend_ini_scanner.lo: /home/site/wwwroot/php-8.1.10/Zend/zend_ini_parser.h
+
+/home/site/wwwroot/php-8.1.10/Zend/zend_language_scanner.c: /home/site/wwwroot/php-8.1.10/Zend/zend_language_scanner.l
+	@(cd $(top_srcdir); $(RE2C) $(RE2C_FLAGS) --no-generation-date --case-inverted -cbdFt Zend/zend_language_scanner_defs.h -oZend/zend_language_scanner.c Zend/zend_language_scanner.l)
+
+/home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h: /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.c
+/home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.c: /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.y
+# Tweak zendparse to be exported through ZEND_API. This has to be revisited once
+# bison supports foreign skeletons and that bison version is used. Read
+# https://git.savannah.gnu.org/cgit/bison.git/tree/data/README.md for more.
+	@$(YACC) $(YFLAGS) -v -d /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.y -o $@
+	@$(SED) -e 's,^int zendparse\(.*\),ZEND_API int zendparse\1,g' < $@ \
+	> $@.tmp && \
+	mv $@.tmp $@
+	@$(SED) -e 's,^int zendparse\(.*\),ZEND_API int zendparse\1,g' < /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h \
+	> /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h.tmp && \
+	mv /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h.tmp /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h
+	@nlinit=`echo 'nl="'; echo '"'`; eval "$$nlinit"; \
+	$(SED) -e "s/^#ifndef YYTOKENTYPE/#include \"zend.h\"\\$${nl}#ifndef YYTOKENTYPE/" < /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h \
+	> /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h.tmp && \
+	mv /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h.tmp /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h
+
+/home/site/wwwroot/php-8.1.10/Zend/zend_ini_parser.h: /home/site/wwwroot/php-8.1.10/Zend/zend_ini_parser.c
+/home/site/wwwroot/php-8.1.10/Zend/zend_ini_parser.c: /home/site/wwwroot/php-8.1.10/Zend/zend_ini_parser.y
+	$(YACC) $(YFLAGS) -v -d /home/site/wwwroot/php-8.1.10/Zend/zend_ini_parser.y -o $@
+
+/home/site/wwwroot/php-8.1.10/Zend/zend_ini_scanner.c: /home/site/wwwroot/php-8.1.10/Zend/zend_ini_scanner.l
+	@(cd $(top_srcdir); $(RE2C) $(RE2C_FLAGS) --no-generation-date --case-inverted -cbdFt Zend/zend_ini_scanner_defs.h -oZend/zend_ini_scanner.c Zend/zend_ini_scanner.l)
+
+# Use an intermediate target to indicate that zend_vm_gen.php produces both files
+# at the same time, rather than the same recipe applying for two different targets.
+# The "grouped targets" feature, which would solve this directly, is only available
+# since GNU Make 4.3.
+/home/site/wwwroot/php-8.1.10/Zend/zend_vm_execute.h /home/site/wwwroot/php-8.1.10/Zend/zend_vm_opcodes.c: vm.gen.intermediate ;
+.INTERMEDIATE: vm.gen.intermediate
+vm.gen.intermediate: /home/site/wwwroot/php-8.1.10/Zend/zend_vm_def.h /home/site/wwwroot/php-8.1.10/Zend/zend_vm_execute.skl /home/site/wwwroot/php-8.1.10/Zend/zend_vm_gen.php
+	@if test ! -z "$(PHP)"; then \
+		$(PHP) /home/site/wwwroot/php-8.1.10/Zend/zend_vm_gen.php; \
+	fi;
+
+Zend/zend_highlight.lo Zend/zend_compile.lo: /home/site/wwwroot/php-8.1.10/Zend/zend_language_parser.h
+
+Zend/zend_execute.lo: /home/site/wwwroot/php-8.1.10/Zend/zend_vm_execute.h /home/site/wwwroot/php-8.1.10/Zend/zend_vm_opcodes.h
