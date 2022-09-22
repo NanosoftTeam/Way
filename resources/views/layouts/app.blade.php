@@ -13,7 +13,7 @@
     <script type="text/javascript">
         @yield('javascript2')
     </script>
-    
+
 
 
     <!-- Fonts -->
@@ -23,7 +23,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    
+
 
     <style>
 .table-sm td {
@@ -42,7 +42,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -98,7 +98,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 3px;"></i> Wyloguj się
                                     </a>
-                                    
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

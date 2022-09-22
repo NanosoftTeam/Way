@@ -3166,18 +3166,20 @@ input[type=button].btn-block {
   border: 0;
 }
 .dropdown-item:hover, .dropdown-item:focus {
-    animation-name: -shake;
-    animation-duration: 0.8s;
   color: #f3f3f3;
   text-decoration: none;
   background-color: #314141;
 }
 .dropdown-item.active, .dropdown-item:active {
+    animation-name: -shake;
+    animation-duration: 0.8s;
   color: #fff;
   text-decoration: none;
   background-color: #007bff;
 }
 .dropdown-item.disabled, .dropdown-item:disabled {
+    animation-name: -shake;
+    animation-duration: 0.8s;
   color: #adb5bd;
   pointer-events: none;
   background-color: transparent;
