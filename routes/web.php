@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'show'])->name('welcome');
 
+Route::get('/temp1', [App\Http\Controllers\TemplateController::class, 'template1'])->name('temp1');
+Route::get('/temp2', [App\Http\Controllers\TemplateController::class, 'template2'])->name('temp2');
+
 Route::middleware(['auth'])->group(function(){
     Route::middleware(['can:isAdmin'])->group(function(){
 

@@ -3135,22 +3135,42 @@ input[type=button].btn-block {
   border-top: 1px solid #e9ecef;
 }
 
+@keyframes -shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
 .dropdown-item {
-  display: block;
+  display: #3d3939;
   width: 100%;
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #b9b9b9;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
   border: 0;
 }
 .dropdown-item:hover, .dropdown-item:focus {
-  color: #16181b;
+    animation-name: -shake;
+    animation-duration: 0.8s;
+  color: #f3f3f3;
   text-decoration: none;
-  background-color: #e9ecef;
+  background-color: #314141;
 }
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
