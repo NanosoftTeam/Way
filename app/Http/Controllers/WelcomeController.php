@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class WelcomeController extends Controller
 {

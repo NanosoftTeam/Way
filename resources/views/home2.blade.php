@@ -13,8 +13,6 @@
                     </button>
                 </div>
             @endif
-        
-            {!! $post_html !!}
 
             <script>
                 {!! $post_js !!}
@@ -32,9 +30,9 @@
                         <div class="progress-bar" role="progressbar" style="width: {{ round($procent, 2) * 100 }}%;" aria-valuenow="{{ round($procent, 2) * 100 }}" aria-valuemin="0" aria-valuemax="100">{{ round($procent, 2) * 100 }}%</div>
                     </div>
 
-                    
-                    
-                    
+
+
+
                 </div>
 
                 <div class="card-footer">
@@ -69,19 +67,19 @@
                                 $color = array("secondary", "danger", "warning", "primary", "success");
                             ?>
                             @foreach($tasks as $task)
-                                
+
                                 <tr>
                                     <td class="@if($task->duration == NULL) table-active @endif"><span class="badge badge-pill badge-{{ $color[$task->status] }}">{{ $status[$task->status] }}</span> <a href="{{ route('tasks.show', $task->id) }}">{{ $task->name }}</a></td>
-                                    <td><span class="badge badge-light"><i class="fa-solid fa-clock"></i> {{ $task->duration }} min</span><a onclick="window.open('{{ route('tasks.edit2', $task->id) }}', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">  <span class="badge @if(\Carbon\Carbon::parse($task->end.' 21:30:00') < date('Y-m-d H:i:s')) badge-danger @else badge-light @endif">@isset($task->end) <i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($task->end." 21:30:00")->diffForHumans()  }} @endisset</span> </a></td>   
+                                    <td><span class="badge badge-light"><i class="fa-solid fa-clock"></i> {{ $task->duration }} min</span><a onclick="window.open('{{ route('tasks.edit2', $task->id) }}', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">  <span class="badge @if(\Carbon\Carbon::parse($task->end.' 21:30:00') < date('Y-m-d H:i:s')) badge-danger @else badge-light @endif">@isset($task->end) <i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($task->end." 21:30:00")->diffForHumans()  }} @endisset</span> </a></td>
                                 </tr>
-                                
+
                             @endforeach
                         </tbody>
                     </table>
                     <a href="{{ route('tasks.index') }}?user={{ Auth::id() }}&status=a&film=a&date=1">Pokaż wszystkie</a>
-                    
-                    
-                    
+
+
+
                 </div>
 
             </div>
@@ -109,7 +107,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
 
             </div>
@@ -137,12 +135,12 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
 
             </div>
         </div>
-        
+
         <div class="col-sm">
         <div class="card">
                 <div class="card-header text-danger"><b><i class="fa-solid fa-thumbtack"></i> Tym się teraz zajmujemy</b></div>
@@ -184,10 +182,10 @@
                     - misja, która pozwala służyć innym,</p>
                 <footer class="blockquote-footer">Nick Vujicic <cite title="Source Title">Bez rąk, bez nóg, bez ograniczeń!</cite></footer>
             </blockquote>
-            
+
         </div>
     </div>
-  
+
 </div>
 @endsection
 
@@ -205,9 +203,9 @@ $( document ).ready(function() {
 
         if (message.command == 'refresh') window.location.reload();
     }
-        
-        
-            
+
+
+
 });
 
 @endsection
