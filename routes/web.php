@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/films/d/{film}', [App\Http\Controllers\FilmController::class, 'destroy'])->name('films.destroy');
         Route::post('/films', [App\Http\Controllers\FilmController::class, 'store'])->name('films.store');*/
 
+        //Add Librus (gradebook) Route
+        Route::get('/gradebook', [App\Http\Controllers\LibrusController::class, 'index'])->name('gradebook.index');
 
         Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
         Route::post('/calendar/action', [App\Http\Controllers\CalendarController::class, 'action'])->name('calendar.action');
@@ -144,8 +146,7 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::middleware(['can:isReader'])->group(function(){
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
         Route::get('/dashboard2', [App\Http\Controllers\HomeController::class, 'dashboard2'])->name('dashboard2');
         Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'edit'])->name('settings');
         Route::post('/settings/update', [App\Http\Controllers\SettingsController::class, 'update'])->name('settings.update');
