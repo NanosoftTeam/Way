@@ -13,7 +13,7 @@
     <script type="text/javascript">
         @yield('javascript2')
     </script>
-    
+
 
 
     <!-- Fonts -->
@@ -23,7 +23,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    
+
 
     <style>
 .table-sm td {
@@ -40,12 +40,13 @@
     <!-- Other -->
     @yield('inhead')
 </head>
-<body style="background: linear-gradient(90deg, rgba(18,52,86,1) 0%, rgba(120,154,188,1) 35%, rgba(222,240,0,1) 100%);">
+<body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-logo" href="{{ route('home') }}">
+                    <!== config('app.name', 'Laravel') -->
+                    <img src="{{ asset('images/icon.png') }}" alt="WayApp" style="width: 30px; height: 30px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -56,13 +57,13 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
-                            <a class="dropdown-item" href="{{ route('home') }}">Strona główna</a>
+                            <a class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
                             @can('isIT')
-                                <a class="dropdown-item" href="{{ route('tasks.index') }}">Zadania</a>
-                                <a class="dropdown-item" href="{{ route('goals.index') }}">Cele</a>
-                                <a class="dropdown-item" href="{{ route('tasks.index') }}">Bazy</a>
-                                <a class="dropdown-item" href="{{ route('calendar.index') }}">Kalendarz</a>
-                                <a class="dropdown-item" href="{{ route('deadlines.index') }}">Deadliney</a>
+                                <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Zadania</a>
+                                <a class="dropdown-item text-light" href="{{ route('goals.index') }}">Cele</a>
+                                <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Bazy</a>
+                                <a class="dropdown-item text-light" href="{{ route('calendar.index') }}">Kalendarz</a>
+                                <a class="dropdown-item text-light" href="{{ route('deadlines.index') }}">Deadliney</a>
                             @endcan
                         @endguest
                     </ul>
@@ -98,7 +99,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 3px;"></i> Wyloguj się
                                     </a>
-                                    
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
