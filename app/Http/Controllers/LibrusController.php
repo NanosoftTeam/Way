@@ -14,4 +14,6 @@ class LibrusController extends Controller
     public function index(): Renderable {
         return view('gradebook.index');
     }
+
+
 }
