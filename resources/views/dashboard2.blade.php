@@ -103,6 +103,7 @@
     </div>
 </div>
 
+@can('isAdmin')
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Administracja systemem</h5>
@@ -136,6 +137,7 @@
   </div>
   
 </div>
+@endcan
 
 <div class="card">
   <div class="card-body">
