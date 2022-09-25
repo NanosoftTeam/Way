@@ -109,10 +109,10 @@
                             @can('isIT')
                                 <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Zadania</a>
                                 <a class="dropdown-item text-light" href="{{ route('goals.index') }}">Cele</a>
-                                <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Bazy</a>
                                 <a class="dropdown-item text-light" href="{{ route('calendar.index') }}">Kalendarz</a>
                                 <a class="dropdown-item text-light" href="{{ route('deadlines.index') }}">Deadliney</a>
                                 <a class="dropdown-item text-light" href="{{ route('gradebook.index') }}">Oceny</a>
+                                <a class="dropdown-item text-light" href="{{ route('dashboard2') }}"><i class="fa-solid fa-rectangle-list" style="margin-right: 3px;"></i>Aplikacje</a>
                             @endcan
                         @endguest
                     </ul>
@@ -137,7 +137,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('dashboard2') }}">
-                                    <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Więcej opcji
+                                    <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
                                     </a>
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         <i class="fa-solid fa-gear" style="margin-right: 3px;"></i> Ustawienia
