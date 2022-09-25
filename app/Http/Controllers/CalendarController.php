@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use App\Models\Change;
-use App\Models\User;
-use App\Models\Course;
 use App\Models\Deadline;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Exception;
-use \Datetime;
+use App\Models\Task;
+use App\Models\User;
 use Auth;
+use Datetime;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CalendarController extends Controller
 {
@@ -23,9 +17,9 @@ class CalendarController extends Controller
         if($request->ajax())
     	{
     		$data = Deadline::where('date', '!=', NULL)->get(['id', 'name', 'priority', 'date', 'type', 'is_planned']);
-            
 
-            
+
+
             foreach ($data as $element) {
                 if($element->is_planned == 0) {
                     $element->title = "❌ ".$element->name;
@@ -46,7 +40,7 @@ class CalendarController extends Controller
 
                     $element->end = $date1->format('Y-m-d');
                 }
-                
+
                 $colors = array("#e3342f", "#ff6600", "#ccb800", "#38c172",  "#868e96");
                 $element->color = $colors[$element->priority];
 
@@ -55,7 +49,7 @@ class CalendarController extends Controller
                     $element->color = "#ccb800";
                 }
 
-                
+
 
                 unset($element->type2);
             }
@@ -85,8 +79,8 @@ class CalendarController extends Controller
                     $element->color = "#ababab";
                 }
 
-                
-                
+
+
             }
 
             //$data = array_merge($data2, $data);
@@ -143,7 +137,7 @@ class CalendarController extends Controller
                     ]);
 
                 }
-    			
+
 
     			return response()->json($event);
     		}

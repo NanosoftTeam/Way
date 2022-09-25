@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\View;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Illuminate\Support\Facades\Storage;
 use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MessageController extends Controller
 {
@@ -58,7 +55,7 @@ class MessageController extends Controller
         }
 
         return redirect(route('messages.files'));
-        
+
     }
 
     /**
@@ -144,9 +141,9 @@ class MessageController extends Controller
         $name = "";
         if($data->hasFile('file')){
            $path = $data->file('file')->store('files');
-            $name = $data->file->getClientOriginalName(); 
+            $name = $data->file->getClientOriginalName();
         }
-        
+
 
         $message_id = Message::create([
             'title' => $title,
@@ -189,7 +186,7 @@ class MessageController extends Controller
             $user->unread_messages += 1;
             $user->save();
         }
-        
+
 
         return redirect(route('messages.index'));
     }
@@ -204,7 +201,7 @@ class MessageController extends Controller
     {
         return Storage::download($message->file_path, $message->file_name);
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -230,8 +227,8 @@ class MessageController extends Controller
                 $message->isread = 1;
                 $message->save();
                 $sent_view = false;
-                
-                
+
+
             }
         }
         else{
@@ -244,10 +241,10 @@ class MessageController extends Controller
             ]);
         }
 
-        
-        
-        
-        
+
+
+
+
 
         return view('messages.show', [
             'message' => $message,
@@ -312,13 +309,13 @@ class MessageController extends Controller
             ]);
         }
 
-        
+
         return response()->json([
             'status' => 'err'
         ]);
-        
+
     }
-    
+
     /**
      * Unread the specified resource.
      *
@@ -352,8 +349,8 @@ class MessageController extends Controller
             $message->save();
             return redirect(route('messages.index3'));
         }
-        
-        
+
+
 
         return redirect(route('messages.index'));
     }

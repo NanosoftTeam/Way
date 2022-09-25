@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Film;
-use App\Models\Deadline;
-use App\Models\Settings;
-use App\Models\Task;
 use App\Models\Change;
+use App\Models\Deadline;
 use App\Models\Important;
 use App\Models\Lesson;
-
-use \Datetime;
-use Illuminate\Http\Request;
+use App\Models\Settings;
+use App\Models\Task;
 use Auth;
+use Datetime;
 
 class HomeController extends Controller
 {
@@ -48,16 +45,16 @@ class HomeController extends Controller
                 ->orderBy('duration', 'desc')
                 ->where('end', '<=', $date1)
                 ->get();
-            
+
             $duration1 = Task::where('status', 4)
                 ->where('end', '!=', '')
                 ->where('end', $date1)
                 ->sum("duration");
-            
+
             $duration2 = Task::where('end', '!=', '')
                 ->where('end', $date1)
                 ->sum("duration");
-            
+
         }
 
         $weekMap = [
@@ -114,7 +111,7 @@ class HomeController extends Controller
         if(!isset($_GET['date']) and $duration2 > 0) {
             $procent = $duration1 / $duration2;
         }
-        
+
 
         $importants = Important::all();
 
@@ -137,7 +134,7 @@ class HomeController extends Controller
             'rutyna_popoludnie' => $rutyna_popoludnie->content,
             'rutyna_wieczor' => $rutyna_wieczor->content,
             'jutro' => $jutro
-        ]); 
+        ]);
     }
 
     /**
@@ -157,6 +154,6 @@ class HomeController extends Controller
 
         return view('dashboard2', [
             'tasks' => $tasks
-        ]); 
+        ]);
     }
 }
