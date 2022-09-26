@@ -23,6 +23,13 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+    public function apiIndex()
+    {
+        $users = User::all();
+
+        return $users;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

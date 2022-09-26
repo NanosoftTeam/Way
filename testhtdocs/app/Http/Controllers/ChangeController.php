@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Change;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Auth;
+use Illuminate\Http\Request;
 
 class ChangeController extends Controller
 {

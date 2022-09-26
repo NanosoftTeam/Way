@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Debt;
 use App\Models\Contact;
+use App\Models\Debt;
 use Illuminate\Http\Request;
 
 /**

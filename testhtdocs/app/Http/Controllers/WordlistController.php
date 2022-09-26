@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Wordlist;
-use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -91,14 +90,14 @@ class WordlistController extends Controller
             //$row[6] = 0;
             DB::table('words')
                         ->insert([
-                            'name'  => $row[0], 
+                            'name'  => $row[0],
                             'translation' => $row[1],
                             'name_info' => $row[2],
                             'translation_info' => $row[3],
                             'mw' => $row[4],
                             'iw' => $row[5],
                             'mt' => $row[6],
-                            'wordlist_id' => $wordlist->id, 
+                            'wordlist_id' => $wordlist->id,
                         ]);
         }
 
