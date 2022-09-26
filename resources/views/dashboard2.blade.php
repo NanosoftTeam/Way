@@ -141,21 +141,7 @@
 
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Nieużywane</h5>
-        Moduły do przerobienia na coś innego <br />
-        <a href="#">
-                <figure class="figure" >
-                    <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-ellipsis"></i></h1>
-                    <figcaption class="figure-caption text-center">Filmy</figcaption>
-                </figure>
-            </a>
-            
-            <a href="{{ route('clothes.index') }}">
-                <figure class="figure" >
-                    <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-ellipsis"></i></h1>
-                    <figcaption class="figure-caption text-center">Ubrania</figcaption>
-                </figure>
-            </a>
+    <h5 class="card-title">Inne</h5>
 
             <a href="{{ route('messages.index') }}">
                 <figure class="figure" >
