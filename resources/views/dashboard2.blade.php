@@ -68,7 +68,7 @@
                 </figure>
             </a>
             
-            <a href="{{ route('clothes.index') }}">
+            <a href="{{ route('lessons.index') }}">
                 <figure class="figure" >
                     <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-table-columns"></i></h1>
                     <figcaption class="figure-caption text-center">Plan lekcji</figcaption>
@@ -94,7 +94,7 @@
                 </figure>
             </a>
             
-            <a href="{{ route('clothes.index') }}">
+            <a href="{{ route('contacts.index') }}">
                 <figure class="figure" >
                     <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-address-book"></i></h1>
                     <figcaption class="figure-caption text-center">Osoby</figcaption>
