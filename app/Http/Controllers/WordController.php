@@ -98,7 +98,7 @@ class WordController extends Controller
         }else{
             $request['mt'] = false;
         }
-        
+
         $word->update($request->all());
 
         return redirect()->route('wordlists.show2', [$word->wordlist_id, $word->id])

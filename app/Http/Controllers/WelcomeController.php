@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Settings;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use Auth;
 
 class WelcomeController extends Controller

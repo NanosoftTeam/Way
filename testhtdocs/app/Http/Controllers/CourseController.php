@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
-use App\Models\Film;
 use App\Models\Change;
+use App\Models\Course;
+use Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Exception;
-use Auth;
 
 class CourseController extends Controller
 {
@@ -24,7 +20,7 @@ class CourseController extends Controller
         $courses = Course::orderBy('status', 'asc')->paginate(18);
 
         if ($request->ajax()) {
-            return view('courses.load', ['courses' => $courses])->render();  
+            return view('courses.load', ['courses' => $courses])->render();
         }
 
         return view('courses.index', [
@@ -74,7 +70,7 @@ class CourseController extends Controller
                 'course' => $course,
                 'films' => $course->films,
                 'count_films' => count($course->films)
-            ]); 
+            ]);
         }
 
         return view('courses.show', [
@@ -174,7 +170,7 @@ class CourseController extends Controller
      * @return View
      */
     public function tab_films(Course $course): View
-    {   
+    {
         return view('courses.tabs.films', [
             'course' => $course,
             'films' => $course->films

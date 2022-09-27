@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Settings;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use Auth;
+use Illuminate\Http\Request;
 
 class Settings2Controller extends Controller
 {
@@ -142,7 +141,7 @@ class Settings2Controller extends Controller
         $rutyna_rano = Settings::find(16);
         $rutyna_rano->content = $request->rutyna_rano;
         $rutyna_rano->save();
-        
+
         $rutyna_popoludnie = Settings::find(17);
         $rutyna_popoludnie->content = $request->rutyna_popoludnie;
         $rutyna_popoludnie->save();
@@ -156,7 +155,7 @@ class Settings2Controller extends Controller
 
 
 
-        
+
 
 
         return redirect(route('settings2.edit'));

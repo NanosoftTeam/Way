@@ -51,7 +51,7 @@ class ClothesController extends Controller
         else{
             $clothes = Clothes::orderBy("id", "ASC")->paginate();
         }
-        
+
 
         return view('clothes.index2', compact(['clothes', 'if_status']))
             ->with('i', (request()->input('page', 1) - 1) * $clothes->perPage());
@@ -130,8 +130,8 @@ class ClothesController extends Controller
 
         $clothes->update($request->all());
 
-        
-    
+
+
         return redirect()->route('clothes.index')
             ->with('success', 'Clothes updated successfully');
     }
@@ -149,15 +149,15 @@ class ClothesController extends Controller
                             ->update([
                                 'status' => $c['status'],
                                 'last_status_changed' => date('Y-m-d H:i:s')
-                            ]); 
+                            ]);
                     }
                     else{
 
                     }
-                    
-                
+
+
                 }
-                
+
             }
         }
 

@@ -26,15 +26,63 @@
 
 
     <style>
-.table-sm td {
-  padding-left: 10px;
-}
+        .table-sm td {
+          padding-left: 10px;
+        }
 
-.form-control2{
-    height: 30px;
-    padding: 3px;
-    padding-left: 7px;
-}
+        .form-control2{
+            height: 30px;
+            padding: 3px;
+            padding-left: 7px;
+        }
+    </style>
+
+    <!--NORWAGOV STYLES-->
+    <style>
+        .dropdown-divider {
+            height: 0;
+            margin: 0.5rem 0;
+            overflow: hidden;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.25rem 1.5rem;
+            clear: both;
+            font-weight: 400;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+            border-radius: 20px;
+        }
+        .dropdown-item:hover, .dropdown-item:focus {
+            color: #16181b;
+            text-decoration: none;
+            background-color: #646464;
+        }
+        .dropdown-item.active, .dropdown-item:active {
+            color: #fff;
+            text-decoration: none;
+            background-color: #3490dc;
+        }
+        .dropdown-item.disabled, .dropdown-item:disabled {
+            color: #adb5bd;
+            pointer-events: none;
+            background-color: transparent;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .bg-gradient-dark {
+            background-image: linear-gradient(0deg, #343a40, #2a2f34) !important;
+        }
+
     </style>
 
     <!-- Other -->
@@ -42,7 +90,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-gradient-dark shadow-sm">
             <div class="container">
                 <a class="navbar-logo" href="{{ route('home') }}">
                     <!== config('app.name', 'Laravel') -->
@@ -57,13 +105,14 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
-                            <a class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
+                            <a style="margin-left: 20px;" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
                             @can('isIT')
                                 <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Zadania</a>
                                 <a class="dropdown-item text-light" href="{{ route('goals.index') }}">Cele</a>
-                                <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Bazy</a>
                                 <a class="dropdown-item text-light" href="{{ route('calendar.index') }}">Kalendarz</a>
                                 <a class="dropdown-item text-light" href="{{ route('deadlines.index') }}">Deadliney</a>
+                                <a class="dropdown-item text-light" href="{{ route('gradebook.index') }}">Oceny</a>
+                                <a class="dropdown-item text-light" href="{{ route('dashboard2') }}"><i class="fa-solid fa-rectangle-list" style="margin-right: 3px;"></i>Aplikacje</a>
                             @endcan
                         @endguest
                     </ul>
@@ -88,7 +137,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('dashboard2') }}">
-                                    <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Więcej opcji
+                                    <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
                                     </a>
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         <i class="fa-solid fa-gear" style="margin-right: 3px;"></i> Ustawienia

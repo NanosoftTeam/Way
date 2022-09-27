@@ -4,18 +4,14 @@ namespace App\Http\Controllers;
 
 //use Illuminate\Support\Facades\Input;
 
-use App\Models\Task;
-use App\Models\User;
+use App\Models\Change;
 use App\Models\Deadline;
 use App\Models\Goal;
-use App\Models\Change;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Illuminate\Support\Facades\DB;
-use Exception;
+use App\Models\Task;
+use App\Models\User;
 use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -44,7 +40,7 @@ class TaskController extends Controller
         }
 
         if($if_parent == '0'){
-            $if_parent = "x"; 
+            $if_parent = "x";
         }
         else{
             $if_only_projects = 0;
@@ -60,28 +56,28 @@ class TaskController extends Controller
 
         $tasks = Task::when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
-        }) 
+        })
         ->when($if_date, function ($query, $if_date) {
             if($if_date == '1'){
                 return $query->whereDate('end', '<=', date('Y-m-d'));
             }
             else if($if_date == '2'){
                 return $query->where('end', NULL);
-            }  
+            }
             else if($if_date == '3'){
                 return $query->whereDate('end', '<', date('Y-m-d'));
-            }  
+            }
         })
         ->when($if_deadline, function ($query, $if_deadline) {
             if($if_deadline == 'a'){
-                
+
             }
             else if($if_deadline == 'b'){
                 return $query->whereNull('deadline_id');
             }
             else{
                 return $query->where('deadline_id', $if_deadline);
-            }   
+            }
         })
         ->when($if_status, function ($query, $if_status) {
             if($if_status == 200){
@@ -89,9 +85,9 @@ class TaskController extends Controller
             }
             else if($if_status == 'a'){
                 return $query->where('status', '!=', 4);
-            } 
+            }
             else if($if_status == 'b'){
-                
+
             }
             else if($if_status == 100){
                 return $query->where('status', '=', 0);
@@ -102,7 +98,7 @@ class TaskController extends Controller
         })
         ->when($if_goal, function ($query, $if_goal) {
             if($if_goal == 'a'){
-                
+
             }
             else if($if_goal == 'b'){
                 return $query->where('goal_id', NULL);
@@ -110,7 +106,7 @@ class TaskController extends Controller
             else{
                 return $query->where('goal_id', $if_goal);
             }
-        }) 
+        })
         ->where('count_children', 0)
         //->groupBy('parent_id')
         ->get();
@@ -122,7 +118,7 @@ class TaskController extends Controller
         foreach ($tasks as $t) {
             //if($t->count_children == 0 or $t->count_children == NULL){
                 if($t->parent_id != NULL){
-                    
+
                     array_push($potrzebne_projekty, $t->parent_id);
                     $chwil = $tasks_all->where("id", $t->parent_id);
                     $chwil = $chwil->first();
@@ -131,38 +127,38 @@ class TaskController extends Controller
                         array_push($potrzebne_projekty, $chwil->parent_id);
                         $chwil = $tasks_all->where("id", $chwil->parent_id);
                         $chwil = $chwil->first();
-                        
+
 
                     }
                 }
-                
+
             //}
         }
 
         $tasks = Task::when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
-        }) 
+        })
         ->when($if_date, function ($query, $if_date) {
             if($if_date == '1'){
                 return $query->whereDate('end', '<=', date('Y-m-d'));
             }
             else if($if_date == '2'){
                 return $query->where('end', NULL);
-            }  
+            }
             else if($if_date == '3'){
                 return $query->whereDate('end', '<', date('Y-m-d'));
-            }  
+            }
         })
         ->when($if_deadline, function ($query, $if_deadline) {
             if($if_deadline == 'a'){
-                
+
             }
             else if($if_deadline == 'b'){
                 return $query->whereNull('deadline_id');
             }
             else{
                 return $query->where('deadline_id', $if_deadline);
-            }  
+            }
         })
         ->when($if_status, function ($query, $if_status) {
             if($if_status == 200){
@@ -170,9 +166,9 @@ class TaskController extends Controller
             }
             else if($if_status == 'a'){
                 return $query->where('status', '!=', 4);
-            } 
+            }
             else if($if_status == 'b'){
-                
+
             }
             else if($if_status == 100){
                 return $query->where('status', '=', 0);
@@ -183,7 +179,7 @@ class TaskController extends Controller
         })
         ->when($if_goal, function ($query, $if_goal) {
             if($if_goal == 'a'){
-                
+
             }
             else if($if_goal == 'b'){
                 return $query->where('goal_id', NULL);
@@ -196,7 +192,7 @@ class TaskController extends Controller
             if($if_only_projects == 1){
                 return $query->where('count_children', '!=', 0);
             }
-        }) 
+        })
         //TO DO: CZY NA PEWNO OK->where('count_children', 0)
         ->when($if_parent, function ($query, $if_parent) use ($potrzebne_projekty) {
             if($if_parent == 'x'){
@@ -206,7 +202,7 @@ class TaskController extends Controller
                 });
             }
             else if($if_parent == 'i'){
-                
+
             }
             else{
                 return $query->where('parent_id', $if_parent)->orWhere(function($query2) use ($potrzebne_projekty, $if_parent){
@@ -234,7 +230,7 @@ class TaskController extends Controller
                 else{
                     $t->name = "do us";
                 }
-                
+
             }
         }*/
 
@@ -258,7 +254,7 @@ class TaskController extends Controller
                 return $query->where('parent_id', NULL);
             }
             else if($if_parent == 'i'){
-                
+
             }
             else{
                 return $query->where('parent_id', $if_parent);
@@ -267,10 +263,10 @@ class TaskController extends Controller
 
         //$tasks_g = $tasks->groupBy('parent_id');
         if ($request->ajax()) {
-            
+
 
             //return $tasks_g;
-            return view('tasks.load', ['tasks' => $tasks, 'parent' => $if_parent])->render();  
+            return view('tasks.load', ['tasks' => $tasks, 'parent' => $if_parent])->render();
         }
 
         return view('tasks.index', [
@@ -309,9 +305,9 @@ class TaskController extends Controller
         if($request->parent_id != NULL){
            $task2 = Task::find($request->parent_id);
            $task2->count_children += 1;
-           $task2->save(); 
+           $task2->save();
         }
-        
+
         Change::create([
             'name' => $request->name,
             'user_id' => Auth::id(),
@@ -338,7 +334,7 @@ class TaskController extends Controller
             return view('tasks.show-load', [
                 'task' => $task,
                 'users' => $users
-            ]); 
+            ]);
         }
 
         return view('tasks.show', [
@@ -415,7 +411,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        
+
 
         $parent_id = $task->parent_id;
 
@@ -429,15 +425,15 @@ class TaskController extends Controller
                 $task2->count_children -= 1;
                 $task2->save();
             }
-            
+
             if($task->parent_id != NULL){
                 $task3 = $task->parent;
                 $task3->count_children += 1;
-                $task3->save();  
+                $task3->save();
             }
-           
+
         }
-        
+
         Change::create([
             'name' => $request->name,
             'user_id' => Auth::id(),
@@ -456,7 +452,7 @@ class TaskController extends Controller
      */
     public function update2(Request $request, Task $task)
     {
-        
+
 
         $parent_id = $task->parent_id;
 
@@ -470,15 +466,15 @@ class TaskController extends Controller
                 $task2->count_children -= 1;
                 $task2->save();
             }
-            
+
             if($task->parent_id != NULL){
                 $task3 = $task->parent;
                 $task3->count_children += 1;
-                $task3->save();  
+                $task3->save();
             }
-           
+
         }
-        
+
 
         return view('tasks.x', [
             'task' => $task,
@@ -496,10 +492,10 @@ class TaskController extends Controller
         if($task->parent_id != NULL){
             $task2 = Task::find($task->parent_id);
             $task2->count_children -= 1;
-            $task2->save(); 
+            $task2->save();
         }
         $task->delete();
-        
+
 
         Change::create([
             'name' => $task->name,
@@ -526,7 +522,7 @@ class TaskController extends Controller
             ->where('status', '!=', 4)
             ->update([
                 'end' => $request['date']
-            ]); 
+            ]);
 
         return redirect(route('tasks.index'));
     }

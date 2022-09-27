@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
-use App\Models\User;
-use App\Models\Film;
 use App\Models\Change;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Exception;
+use App\Models\Note;
 use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class NoteController extends Controller
 {
@@ -24,7 +18,7 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         $notes_all = Note::orderBy('name')->get();
 
         /*$if_date = $request['date'];
@@ -40,7 +34,7 @@ class NoteController extends Controller
         }*/
 
         if($if_parent == '0'){
-            $if_parent = "x"; 
+            $if_parent = "x";
         }
         else{
             $if_only_projects = 0;
@@ -56,7 +50,7 @@ class NoteController extends Controller
 
         $notes = Note::when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
-        }) 
+        })
         ->where('count_children', 0)
         //->groupBy('parent_id')
         ->get();
@@ -68,7 +62,7 @@ class NoteController extends Controller
         foreach ($notes as $n) {
             //if($t->count_children == 0 or $t->count_children == NULL){
                 if($n->parent_id != NULL){
-                    
+
                     array_push($potrzebne_projekty, $n->parent_id);
                     $chwil = $notes_all->where("id", $n->parent_id);
                     $chwil = $chwil->first();
@@ -77,11 +71,11 @@ class NoteController extends Controller
                         array_push($potrzebne_projekty, $chwil->parent_id);
                         $chwil = $notes_all->where("id", $chwil->parent_id);
                         $chwil = $chwil->first();
-                        
+
 
                     }
                 }
-                
+
             //}
         }
 
@@ -92,7 +86,7 @@ class NoteController extends Controller
             if($if_only_projects == 1){
                 return $query->where('count_children', '!=', 0);
             }
-        }) 
+        })
         //TO DO: CZY NA PEWNO OK->where('count_children', 0)
         ->when($if_parent, function ($query, $if_parent) use ($potrzebne_projekty) {
             if($if_parent == 'x'){
@@ -102,7 +96,7 @@ class NoteController extends Controller
                 });
             }
             else if($if_parent == 'i'){
-                
+
             }
             else{
                 return $query->where('parent_id', $if_parent)->orWhere(function($query2) use ($potrzebne_projekty, $if_parent){
@@ -129,7 +123,7 @@ class NoteController extends Controller
                 else{
                     $t->name = "do us";
                 }
-                
+
             }
         }*/
 
@@ -153,7 +147,7 @@ class NoteController extends Controller
                 return $query->where('parent_id', NULL);
             }
             else if($if_parent == 'i'){
-                
+
             }
             else{
                 return $query->where('parent_id', $if_parent);
@@ -162,10 +156,10 @@ class NoteController extends Controller
 
         //$notes_g = $notes->groupBy('parent_id');
         if ($request->ajax()) {
-            
+
 
             //return $notes_g;
-            return view('notes.load', ['notes' => $notes, 'parent' => $if_parent])->render();  
+            return view('notes.load', ['notes' => $notes, 'parent' => $if_parent])->render();
         }
 
         return view('notes.index', [
@@ -222,11 +216,11 @@ class NoteController extends Controller
             $note2->count_children += 1;
             $note1->save();*/
             //$do_usuniecia = $line;
-            
-            
+
+
 
             while ($line !== false) {
-                
+
                 $note1 = new Note();
                 $note1->name = $line;
                 $note1->parent_id = $request->parent_id;
@@ -264,11 +258,11 @@ class NoteController extends Controller
             if($request->parent_id != NULL){
             $note2 = Note::find($request->parent_id);
             $note2->count_children += 1;
-            $note2->save(); 
+            $note2->save();
             }
 
-            
-            
+
+
             Change::create([
                 'name' => $request->name,
                 'user_id' => Auth::id(),
@@ -277,10 +271,10 @@ class NoteController extends Controller
             ]);
             return redirect(route('notes.index'));
         }
-        
+
     }
 
-    
+
     /**
      * Display the specified resource.
      *
@@ -295,7 +289,7 @@ class NoteController extends Controller
         if ($request->ajax()) {
             return view('notes.show-load', [
                 'note' => $note,
-            ]); 
+            ]);
         }
 
         return view('notes.show', [
@@ -331,7 +325,7 @@ class NoteController extends Controller
         if($note->parent_id != NULL){
             $note->parent_name = Note::find($note->parent_id)->name;
         }
-        
+
         return $note;
     }
 
@@ -355,15 +349,15 @@ class NoteController extends Controller
             $note->fill($request->all());
         }
 
-        
+
         if($request->content == NULL){
             $note->content = "";
         }
 
-        
+
         $note->save();
-        
-        
+
+
 
         if($request->parent_id != $parent_id){
             if($parent_id != NULL){
@@ -371,17 +365,17 @@ class NoteController extends Controller
                 $note2->count_children -= 1;
                 $note2->save();
             }
-            
+
             if($note->parent_id != NULL){
                 $note3 = $note->parent;
                 $note3->count_children += 1;
-                $note3->save();  
+                $note3->save();
             }
-           
+
         }
 
-        
-        
+
+
         Change::create([
             'name' => $request->name,
             'user_id' => Auth::id(),
@@ -405,10 +399,10 @@ class NoteController extends Controller
         if($note->parent_id != NULL){
             $note2 = Note::find($note->parent_id);
             $note2->count_children -= 1;
-            $note2->save(); 
+            $note2->save();
         }
         $note->delete();
-        
+
 
         Change::create([
             'name' => $note->name,

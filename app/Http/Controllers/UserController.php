@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Change;
+use App\Models\User;
+use Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Exception;
 use Illuminate\Support\Facades\Hash;
-use Auth;
 
 class UserController extends Controller
 {
@@ -24,6 +21,13 @@ class UserController extends Controller
         $users = User::paginate(18);
 
         return view('users.index', compact('users'));
+    }
+
+    public function apiIndex()
+    {
+        $users = User::all();
+
+        return $users;
     }
 
     /**

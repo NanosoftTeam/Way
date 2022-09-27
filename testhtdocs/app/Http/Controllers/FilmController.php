@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Film;
-use App\Models\Task;
 use App\Models\Change;
-use App\Models\User;
 use App\Models\Course;
 use App\Models\Deadline;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Exception;
-use \Datetime;
+use App\Models\Film;
+use App\Models\Task;
+use App\Models\User;
 use Auth;
+use Datetime;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FilmController extends Controller
 {
@@ -27,7 +26,7 @@ class FilmController extends Controller
     public function index(Request $request)
     {
 
-        
+
         $users = User::all();
         $courses = Course::orderBy('status', 'asc')->get();
 
@@ -60,10 +59,10 @@ class FilmController extends Controller
             }
             else if($if_date == '2'){
                 return $query->where('end', NULL);
-            }  
+            }
             else if($if_date == '3'){
                 return $query->whereDate('end', '<', date('Y-m-d'));
-            }  
+            }
         })
         ->when($if_course, function ($query, $if_course) {
             if($if_course == "z"){
@@ -71,7 +70,7 @@ class FilmController extends Controller
             }
             else if($if_course != 'a'){
                 return $query->where('course_id', $if_course);
-            }   
+            }
         })
         ->when($if_status, function ($query, $if_status) {
             if($if_status == 200){
@@ -79,9 +78,9 @@ class FilmController extends Controller
             }
             else if($if_status == 'a'){
                 return $query->where('status', '!=', 10);
-            } 
+            }
             else if($if_status == 'b'){
-                
+
             }
             else if($if_status == 100){
                 return $query->where('status', '=', 0);
@@ -92,7 +91,7 @@ class FilmController extends Controller
         })
         ->when($if_user, function ($query, $if_user) {
             if($if_user == 'a'){
-                
+
             }
             else if($if_user == 'b'){
                 return $query->where('person', NULL);
@@ -107,7 +106,7 @@ class FilmController extends Controller
             }
             else if($if_channel != 'a'){
                 return $query->where('channel', $if_channel);
-            }   
+            }
         })
         ->orderBy('status', 'asc')->orderBy('end', 'asc')->paginate(18)->appends(request()->query());
 
@@ -115,7 +114,7 @@ class FilmController extends Controller
 
 
         if ($request->ajax()) {
-            return view('films.load', ['films' => $films])->render();  
+            return view('films.load', ['films' => $films])->render();
         }
 
         return view('films.index', [
@@ -179,7 +178,7 @@ class FilmController extends Controller
                 'users' => $users,
                 'courses' => $courses,
                 'tasks' => $film->tasks,
-            ]);  
+            ]);
         }
 
         return view('films.show', [
@@ -217,7 +216,7 @@ class FilmController extends Controller
     {
         $film = Film::find($id);
         return $film;
-        
+
     }
 
     public function plan_edit(Film $film)
@@ -231,7 +230,7 @@ class FilmController extends Controller
             'courses' => $courses,
             'tasks' => $film->tasks
         ]);
-        
+
     }
 
     public function plan_update(Request $request, Film $film)
@@ -254,17 +253,17 @@ class FilmController extends Controller
                         DB::table('tasks')
                             ->where('id', $id)
                             ->update([
-                                'name'  => $task['name'], 
+                                'name'  => $task['name'],
                                 'user_id' => $task['user_id'],
                                 'status' => $task['status'],
                                 'end' => $task['end']
-                            ]); 
+                            ]);
                     }
-                
+
                 }
-                
+
             }
-        } 
+        }
 
         if(isset($tasksn)){
             foreach ($tasksn as $id => $taskn) {
@@ -277,15 +276,15 @@ class FilmController extends Controller
                     }
                     DB::table('tasks')
                         ->insert([
-                            'name'  => $taskn['name'], 
+                            'name'  => $taskn['name'],
                             'user_id' => $taskn['user_id'],
                             'film_id' => $film->id,
                             'status' => $t_status,
                             'end' => $taskn['end']
                         ]);
                 }
-                
-            
+
+
             }
         }
 
@@ -295,7 +294,7 @@ class FilmController extends Controller
             ->where('status', '>', 0)
             ->where('status', '!=', 4)
             ->update([
-                'end'  => $date, 
+                'end'  => $date,
             ]);
 
         Change::create([
@@ -304,22 +303,22 @@ class FilmController extends Controller
             'action' => 1,
             'model' => 0,
         ]);
-       
+
         switch ($request->input('action')) {
             case 'save1':
                 return redirect(route('films.index'));
             break;
-    
+
             case 'save2':
                 return redirect(route('films.show', $film->id));
             break;
-    
+
             case 'save3':
                 return redirect(route('films.plan.calendar', $film->id));
             break;
         }
-        
-        
+
+
     }
 
     public function plan_calendar(Request $request, Film $film)
@@ -328,7 +327,7 @@ class FilmController extends Controller
     	{
     		$data = Task::where("film_id", $film->id)->where('status', '>', 0)->where('status', '!=', 4)->where('end', '!=', NULL)->get(['id', 'name', 'start', 'end']);
 
-            
+
             foreach ($data as $element) {
                 if($element->start == NULL or $element->start == ''){
                     $element->start = $element->end;
@@ -340,7 +339,7 @@ class FilmController extends Controller
                     $element->end = $date1->format('Y-m-d');
                 }
                 $element->title = $element->name;
-                
+
             }
 
             return response()->json($data);
@@ -398,9 +397,9 @@ class FilmController extends Controller
         if($request->ajax())
     	{
     		$data = Deadline::where('date', '!=', NULL)->get(['id', 'name', 'priority', 'date', 'type', 'is_planned']);
-            
 
-            
+
+
             foreach ($data as $element) {
                 if($element->is_planned == 0) {
                     $element->name = "❌ ".$element->name;
@@ -419,7 +418,7 @@ class FilmController extends Controller
 
                     $element->end = $date1->format('Y-m-d');
                 }
-                
+
                 $colors = array("#e3342f", "#ff6600", "#ccb800", "#38c172",  "#868e96");
                 $element->color = $colors[$element->priority];
 
@@ -428,7 +427,7 @@ class FilmController extends Controller
                     $element->color = "#ccb800";
                 }
 
-                
+
 
                 unset($element->type2);
             }
@@ -458,8 +457,8 @@ class FilmController extends Controller
                     $element->color = "#ababab";
                 }
 
-                
-                
+
+
             }
 
             //$data = array_merge($data2, $data);
@@ -516,7 +515,7 @@ class FilmController extends Controller
                     ]);
 
                 }
-    			
+
 
     			return response()->json($event);
     		}

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
-use Illuminate\Http\Request;
 use App\Models\Settings;
+use Illuminate\Http\Request;
 
 /**
  * Class LessonController
@@ -36,7 +36,7 @@ class LessonController extends Controller
 
         $lessons_times = array($lesson0, $lesson1, $lesson2, $lesson3, $lesson4, $lesson5, $lesson6, $lesson7, $lesson8, $lesson9, $lesson10);
 
-        
+
         $plan = array(array(), array(), array(), array(), array(), array(), array(), array(), array(), array(), array());
 
         foreach ($lessons_all as $lesson) {
