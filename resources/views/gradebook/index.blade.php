@@ -1,10 +1,58 @@
 @extends('layouts.app')
 
-<?php namespace App\Http\Controllers;
+<?php 
+
+//use App\Http\Controllers; <--- errory
 
 use Illuminate\Support\Facades\Auth; ?>
-@section('javascript2')
 
+@section('javascript')
+$( document ).ready(function() {
+    console.log("test");
+
+    var json = `[
+  {
+    name: 'test1',
+    semester: [ [Object], [Object], [Object], [Object] ],
+    tempAverage: NaN,
+    average: NaN
+  },
+  {
+    name: 'test2',
+    semester: [ [Object], [Object], [Object], [Object] ],
+    tempAverage: NaN,
+    average: NaN
+  },
+  {
+    name: 'test3',
+    semester: [ [Object], [Object], [Object], [Object] ],
+    tempAverage: NaN,
+    average: NaN
+  }
+]`;
+    json = json.replace(/name/g, '"name"');
+    json = json.replace(/semester/g, '"semester"');
+    json = json.replace(/tempAverage/g, '"tempAverage"');
+    json = json.replace(/average/g, '"average"');
+    json = json.replace(/'/g, '"');
+    json = json.replace(/Object/g, '"x"');
+    json = json.replace(/NaN/g, '0');
+
+    console.log(json)
+
+    var data = JSON.parse(json);
+
+    data.forEach(myFunction);
+
+    function myFunction(item) {
+        document.getElementById('table-content1').innerHTML = document.getElementById('table-content1').innerHTML + `<tr>
+                                            <td>` + item["name"] + `</td>
+                                            <td>x</td>
+                                            <td>x</td>
+                                            <td>x</td>
+                                        </tr>`;
+    }
+});
 @endsection
 
 @section('content')
@@ -22,15 +70,16 @@ use Illuminate\Support\Facades\Auth; ?>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead class="thead">
+                                <thead class="thead" id="table-content1">
                                 <tr>
                                     <th>Subject</th>
                                     <th>Grade</th>
                                     <th>Description</th>
                                     <th>Teacher</th>
                                 </tr>
+
                                     <?php
-                                LibrusController::getData(Auth::user()->librus_id, Auth::user()->librus_password);
+                                //LibrusController::getData(Auth::user()->librus_id, Auth::user()->librus_password); <---- errory
                                 ?>
                                     <!--oreach($grades as $grade)
                                     <tr>
