@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
-<?php 
+<?php
 
 //use App\Http\Controllers; <--- errory
 
 use Illuminate\Support\Facades\Auth; ?>
 
 @section('javascript')
-$( document ).ready(function() {
+
+    import { Api } from 'public/js/api.js';
+
+    $( document ).ready(function() {
     console.log("test");
 
     var json = `[
@@ -38,9 +41,17 @@ $( document ).ready(function() {
     json = json.replace(/Object/g, '"x"');
     json = json.replace(/NaN/g, '0');
 
-    console.log(json)
+
+    const api = new Librus();
+    api.authorize('10281889u', 'Qo-71ghabd5').then(() => {
+        api.info.getGrades().then((grades) => {
+            console.log(grades);
+        });
+    });
 
     var data = JSON.parse(json);
+
+    console.log(data);
 
     data.forEach(myFunction);
 
