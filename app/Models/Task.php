@@ -14,27 +14,27 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function film()
+    public function film(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Film::class);
     }
 
-    public function children()
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Task::class, "parent_id")->orderBy('end', 'asc')->orderBy('status', 'asc');
     }
 
-    public function parent()
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Task::class, "parent_id");
     }
 
-    public function goal()
+    public function goal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Goal::class);
     }
-    
-    public function deadline()
+
+    public function deadline(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Deadline::class);
     }

@@ -1,0 +1,26 @@
+{
+  "name": "librus-api",
+  "version": "2.8.1",
+  "description": "Simple synergia.librus.pl site scraping API",
+  "private": false,
+  "main": "../../../resources/views/gradebook/api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mati365/librus-api.git"
+  },
+  "keywords": [
+    "librus",
+    "api"
+  ],
+  "author": "Mateusz Bagiński, Krzysztof Rzymkowski",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "lodash": "^4.17.15",
+    "request": "^2.34",
+    "request-promise": "^4.2.2"
+  }
+}

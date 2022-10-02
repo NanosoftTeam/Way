@@ -13,7 +13,7 @@
                     </button>
                 </div>
             @endif
-        
+
             {!! $post_html !!}
 
             <script>
@@ -229,7 +229,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
                         @foreach ($lessons as $lesson)
                             @if($lessons_times[$lesson->lesson_number]->content3 > date('H:i:s') or $date1 != date('Y-m-d'))
                             <div class="tl-item @if(\Carbon\Carbon::parse(date('Y-m-d').$lessons_times[$lesson->lesson_number]->content3) > date('Y-m-d H:i:s') and \Carbon\Carbon::parse(date('Y-m-d').$lessons_times[$lesson->lesson_number]->content2) < date('Y-m-d H:i:s')) active @endif">
@@ -264,12 +264,12 @@
                                                 $color = array("secondary", "danger", "warning", "primary", "success");
                                             ?>
                                             @foreach($tasks as $task)
-                                                
+
                                                 <tr>
                                                     <td class="@if($task->duration == NULL) table-active @endif" @if($task->description != NULL and $task->description != "") title="{!! preg_replace('/\s\s+/', '&#13;', $task->description); !!}" @endif><span class="badge badge-pill badge-{{ $color[$task->status] }}">{{ $status[$task->status] }}</span> <a href="{{ route('tasks.show', $task->id) }}">{{ $task->name }} @if($task->description != NULL and $task->description != "") <i class="fa-solid fa-circle-info"></i> @endif</a></td>
-                                                    <td><span class="badge badge-light"><i class="fa-solid fa-clock"></i> {{ $task->duration }} min</span><a onclick="window.open('{{ route('tasks.edit2', $task->id) }}', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">  <span class="badge @if(\Carbon\Carbon::parse($task->end.' 21:30:00') < date('Y-m-d H:i:s')) badge-danger @else badge-light @endif">@isset($task->end) <i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($task->end." 21:30:00")->diffForHumans()  }} @endisset</span> </a></td>   
+                                                    <td><span class="badge badge-light"><i class="fa-solid fa-clock"></i> {{ $task->duration }} min</span><a onclick="window.open('{{ route('tasks.edit2', $task->id) }}', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">  <span class="badge @if(\Carbon\Carbon::parse($task->end.' 21:30:00') < date('Y-m-d H:i:s')) badge-danger @else badge-light @endif">@isset($task->end) <i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($task->end." 21:30:00")->diffForHumans()  }} @endisset</span> </a></td>
                                                 </tr>
-                                                
+
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -294,14 +294,14 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
-               
+
+
+
             <br />
             <br />
-            
+
         </div>
-        
+
         <div class="col-sm">
         <div class="card">
                         <div class="card-body">
@@ -367,7 +367,7 @@
 
             <br />
 
-            
+
 
             <div class="card">
                 <div class="card-header"><i class="fa-solid fa-list-check"></i> Nadchodzące deadliney</div>
@@ -407,14 +407,14 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </div>
 
             </div>
-            
+
         </div>
     </div>
-  
+
 </div>
 @endsection
 
@@ -432,9 +432,9 @@ $( document ).ready(function() {
 
         if (message.command == 'refresh') window.location.reload();
     }
-        
-        
-            
+
+
+
 });
 
 @endsection
