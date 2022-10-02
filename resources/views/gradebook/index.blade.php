@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Auth; ?>
 
 
     const api = new Librus();
-    api.authorize('10281889u', 'Qo-71ghabd5').then(() => {
+    api.authorize('gg', 'gg').then(() => {
         api.info.getGrades().then((grades) => {
             console.log(grades);
         });
