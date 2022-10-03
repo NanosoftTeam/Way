@@ -29,11 +29,16 @@ class UserController extends Controller
     {
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-
-            return response()->json(['user' => $user], 200);
+            return response()->json(['user' => $user, 'success' => true], 200);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Unauthorised', 'success' => false], 401);
         }
+    }
+
+    public function apiGetUser(): string
+    {
+        $user = Auth::user();
+        return response()->json(['user' => $user, 'success' => true], 200);
     }
 
     /**
