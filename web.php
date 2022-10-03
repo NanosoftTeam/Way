@@ -16,12 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\WelcomeController::class, 'show'])->name('welcome');
 
-//API
-Route::get('/api/login', [UserController::class, 'apiLogin'])->name('api.login');
-
 Route::middleware(['auth'])->group(function(){
     Route::middleware(['can:isAdmin'])->group(function(){
-
 
         Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::get('/users/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');

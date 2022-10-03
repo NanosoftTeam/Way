@@ -10,13 +10,13 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    
+
     public function messages()
     {
         return $this->hasMany(Message::class, "user_to");
     }
 
-    public function sent_messages()
+    public function sent_messages(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class, "user_from");
     }

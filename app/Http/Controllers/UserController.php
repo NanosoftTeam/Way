@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Change;
 use App\Models\User;
 use Auth;
-use http\Env\Response;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -24,20 +25,9 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
-    public function apiIndex()
+    public function apiPostLogin(): string
     {
-        $users = User::all();
-
-        return $users;
-    }
-
-    public function apiLogin(): \Illuminate\Http\JsonResponse
-    {
-        if ($_POST["test"] == "test1") {
-            return Response()->json(["test" => "test1"]);
-        } else {
-            return Response()->json(["test" => "test2"]);
-        }
+        return "test";
     }
 
     /**

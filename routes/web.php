@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\WelcomeController::class, 'show'])->name('welcome');
+
+//TEST API NON-PUBLIC USE
+Route::namespace('api')->group(function () {
+    Route::post('/api/login', [UserController::class, 'apiPostLogin']);
+});
 
 Route::middleware(['auth'])->group(function(){
     Route::middleware(['can:isAdmin'])->group(function(){

@@ -2,10 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="59bef590-dbe4-4d96-850f-07587777d690" name="Azure" url="http://waws-prod-dm1-303.ftp.azurewebsites.windows.net/">
-        <fileTransfer accessType="FTPS" host="waws-prod-dm1-303.ftp.azurewebsites.windows.net" port="21">
+      <webServer id="6aeb6945-da29-4d17-88a6-1e67b7b9dce5" name="nazwa.pl" url="http://ftp.server631743.nazwa.pl">
+        <fileTransfer host="ftp.server631743.nazwa.pl" port="21">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" showHiddenFiles="true" />
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>
