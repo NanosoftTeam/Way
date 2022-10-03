@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Change;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -27,7 +27,13 @@ class UserController extends Controller
 
     public function apiPostLogin(): string
     {
-        return "test";
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            $user = Auth::user();
+
+            return response()->json(['user' => $user], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
+        }
     }
 
     /**
