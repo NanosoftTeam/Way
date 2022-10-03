@@ -55,7 +55,7 @@ class CalendarController extends Controller
             }
 
 
-            $data2 = Task::where('end', '!=', NULL)->where('status', '!=', 4)->get(['id', 'name', 'start', 'end', 'duration']);
+            $data2 = Task::where('user_id', Auth::id())->where('end', '!=', NULL)->where('status', '!=', 4)->get(['id', 'name', 'start', 'end', 'duration']);
 
             foreach ($data2 as $element) {
                 $element->title = $element->name;
@@ -114,7 +114,8 @@ class CalendarController extends Controller
                     'start' => $request->start,
                     'status' => 1,
     				'end'		=>	$request->end,
-                    'priority'    =>  4
+                    'priority'    =>  4,
+                    'user_id' => Auth::id(),
     			]);
 
     			return response()->json($event);

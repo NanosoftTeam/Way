@@ -36,25 +36,25 @@ class HomeController extends Controller
         $date1 = date("Y-m-d");
         if(isset($_GET["date"])){
             $date1 = $_GET["date"];
-            $tasks = Task::where('status', "!=", 4)
+            $tasks = Task::where('user_id', Auth::id())->where('status', "!=", 4)
                 ->where('end', '!=', '')
                 ->orderBy('duration', 'desc')
                 ->where('end', $date1)
                 ->get();
         }
         else{
-            $tasks = Task::where('status', "!=", 4)
+            $tasks = Task::where('user_id', Auth::id())->where('status', "!=", 4)
                 ->where('end', '!=', '')
                 ->orderBy('duration', 'desc')
                 ->where('end', '<=', $date1)
                 ->get();
             
-            $duration1 = Task::where('status', 4)
+            $duration1 = Task::where('user_id', Auth::id())->where('status', 4)
                 ->where('end', '!=', '')
                 ->where('end', $date1)
                 ->sum("duration");
             
-            $duration2 = Task::where('end', '!=', '')
+            $duration2 = Task::where('user_id', Auth::id())->where('end', '!=', '')
                 ->where('end', $date1)
                 ->sum("duration");
             

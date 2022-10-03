@@ -27,7 +27,7 @@ class TaskController extends Controller
     {
         $users = User::all();
         $deadlines = Deadline::orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
-        $tasks_all = Task::orderBy('end', 'desc')->orderBy('status', 'asc')->get();
+        $tasks_all = Task::where('user_id', Auth::id())->orderBy('end', 'desc')->orderBy('status', 'asc')->get();
         $goals = Goal::orderBy('priority', 'asc')->get();
 
         $if_date = $request['date'];
@@ -57,7 +57,7 @@ class TaskController extends Controller
             $if_status = 200;
         }
 
-        $tasks = Task::when($if_search, function ($query, $if_search) {
+        $tasks = Task::where('user_id', Auth::id())->when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
         })
         ->when($if_date, function ($query, $if_date) {
@@ -138,7 +138,7 @@ class TaskController extends Controller
             //}
         }
 
-        $tasks = Task::when($if_search, function ($query, $if_search) {
+        $tasks = Task::where('user_id', Auth::id())->when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
         })
         ->when($if_date, function ($query, $if_date) {
@@ -331,7 +331,7 @@ class TaskController extends Controller
         $users = User::all();
         $goals = Goal::orderBy('priority', 'asc')->get();
         $deadlines = Deadline::orderBy("date", "DESC")->orderBy("priority", "ASC")->get();
-        $tasks_all = Task::where('status', '!=', '4')->orderBy('end', 'asc')->orderBy('status', 'asc')->get();
+        $tasks_all = Task::where('user_id', Auth::id())->where('status', '!=', '4')->orderBy('end', 'asc')->orderBy('status', 'asc')->get();
 
         if ($request->ajax()) {
             return view('tasks.show-load', [
@@ -357,7 +357,7 @@ class TaskController extends Controller
      */
     public function edit_date(Request $request)
     {
-        $tasks = Task::where('end', '<', date('Y-m-d'))
+        $tasks = Task::where('user_id', Auth::id())->where('end', '<', date('Y-m-d'))
             ->where('status', '!=', 4)
             ->get();
         $tasks_count = $tasks->count();
