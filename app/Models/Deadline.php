@@ -33,6 +33,11 @@ class Deadline extends Model
   {
       return $this->hasMany(Goal::class);
   }
+
+  public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
     static $rules = [
 		'name' => 'required',
@@ -47,7 +52,7 @@ class Deadline extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','date','type','description','priority','is_planned'];
+    protected $fillable = ['name','date','type','description','priority','is_planned','user_id'];
 
 
 

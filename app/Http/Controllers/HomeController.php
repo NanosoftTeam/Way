@@ -91,8 +91,8 @@ class HomeController extends Controller
         $jutro = $jutro->format('Y-m-d');
 
 
-        $deadlines = Deadline::where('date', '<=', $date2)->orderBy('date', 'asc')->orderBy('priority', 'asc')->get();
-        //$deadlines_tommorow = Deadline::where('date', $date2)->orderBy('priority', 'asc')->get();
+        $deadlines = Deadline::where('user_id', Auth::id())->where('date', '<=', $date2)->orderBy('date', 'asc')->orderBy('priority', 'asc')->get();
+        //$deadlines_tommorow = Deadline::where('user_id', Auth::id())->where('date', $date2)->orderBy('priority', 'asc')->get();
         $duration = $tasks->sum("duration");
         $lessons = Lesson::where('day', $dayOfTheWeek)->orderBy('lesson_number', 'asc')->get();
 

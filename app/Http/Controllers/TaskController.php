@@ -26,9 +26,9 @@ class TaskController extends Controller
     public function index(Request $request): string
     {
         $users = User::all();
-        $deadlines = Deadline::orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
+        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
         $tasks_all = Task::where('user_id', Auth::id())->orderBy('end', 'desc')->orderBy('status', 'asc')->get();
-        $goals = Goal::orderBy('priority', 'asc')->get();
+        $goals = Goal::where('user_id', Auth::id())->orderBy('priority', 'asc')->get();
 
         $if_date = $request['date'];
         $if_deadline = $request['deadline'];
@@ -329,8 +329,8 @@ class TaskController extends Controller
     public function show(Task $task, Request $request)
     {
         $users = User::all();
-        $goals = Goal::orderBy('priority', 'asc')->get();
-        $deadlines = Deadline::orderBy("date", "DESC")->orderBy("priority", "ASC")->get();
+        $goals = Goal::where('user_id', Auth::id())->orderBy('priority', 'asc')->get();
+        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "DESC")->orderBy("priority", "ASC")->get();
         $tasks_all = Task::where('user_id', Auth::id())->where('status', '!=', '4')->orderBy('end', 'asc')->orderBy('status', 'asc')->get();
 
         if ($request->ajax()) {

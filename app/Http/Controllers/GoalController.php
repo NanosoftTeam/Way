@@ -6,6 +6,8 @@ use App\Models\Deadline;
 use App\Models\Goal;
 use Illuminate\Http\Request;
 
+use Auth;
+
 /**
  * Class GoalController
  * @package App\Http\Controllers
@@ -19,7 +21,7 @@ class GoalController extends Controller
      */
     public function index()
     {
-        $goals = Goal::orderBy('priority', "asc")->paginate();
+        $goals = Goal::where('user_id', Auth::id())->orderBy('priority', "asc")->paginate();
 
         return view('goal.index', compact('goals'))
             ->with('i', (request()->input('page', 1) - 1) * $goals->perPage());
@@ -33,7 +35,7 @@ class GoalController extends Controller
     public function create()
     {
         $goal = new Goal();
-        $deadlines = Deadline::orderBy("date", "ASC")->orderBy("priority", "ASC")->pluck('name', 'id');
+        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->pluck('name', 'id');
         return view('goal.create', ['goal' => $goal, 'deadlines' => $deadlines]);
     }
 
@@ -46,6 +48,8 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         request()->validate(Goal::$rules);
+
+        $request['user_id'] = Auth::id();
 
         $goal = Goal::create($request->all());
 
@@ -75,7 +79,7 @@ class GoalController extends Controller
     public function edit($id)
     {
         $goal = Goal::find($id);
-        $deadlines = Deadline::orderBy("date", "DESC")->orderBy("priority", "ASC")->pluck('name', 'id');
+        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "DESC")->orderBy("priority", "ASC")->pluck('name', 'id');
 
         return view('goal.edit', ['goal' => $goal, 'deadlines' => $deadlines]);
     }
@@ -90,6 +94,8 @@ class GoalController extends Controller
     public function update(Request $request, Goal $goal)
     {
         request()->validate(Goal::$rules);
+
+        $request['user_id'] = Auth::id();
 
         $goal->update($request->all());
 

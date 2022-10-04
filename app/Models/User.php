@@ -26,6 +26,16 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
+    public function deadlines()
+    {
+        return $this->hasMany(Deadline::class);
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
     public function changes()
     {
         return $this->hasMany(Change::class)->orderBy('date', 'desc');

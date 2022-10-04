@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Deadline;
 use Illuminate\Http\Request;
 
+use Auth;
+
 /**
  * Class DeadlineController
  * @package App\Http\Controllers
@@ -18,7 +20,7 @@ class DeadlineController extends Controller
      */
     public function index()
     {
-        $deadlines = Deadline::orderBy("date", "ASC")->orderBy("priority", "ASC")->paginate();
+        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->paginate();
 
         return view('deadline.index', compact('deadlines'))
             ->with('i', (request()->input('page', 1) - 1) * $deadlines->perPage());
@@ -48,6 +50,8 @@ class DeadlineController extends Controller
         if($request['is_planned'] == NULL){
             $request['is_planned'] = 0;
         }
+
+        $request['user_id'] = Auth::id();
 
         $deadline = Deadline::create($request->all());
 
@@ -95,6 +99,8 @@ class DeadlineController extends Controller
         if($request['is_planned'] == NULL){
             $request['is_planned'] = 0;
         }
+
+        $request['user_id'] = Auth::id();
 
         $deadline->update($request->all());
 

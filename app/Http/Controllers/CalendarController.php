@@ -16,7 +16,7 @@ class CalendarController extends Controller
     {
         if($request->ajax())
     	{
-    		$data = Deadline::where('date', '!=', NULL)->get(['id', 'name', 'priority', 'date', 'type', 'is_planned']);
+    		$data = Deadline::where('user_id', Auth::id())->where('date', '!=', NULL)->get(['id', 'name', 'priority', 'date', 'type', 'is_planned']);
 
 
 
