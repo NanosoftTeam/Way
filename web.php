@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\LessonController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\WelcomeController::class, 'show'])->name('welcome');
-
-Route::post('/login', [UserController::class, 'apiPostLogin']);
-Route::post('/get-user', [UserController::class, 'apiGetUser']);
-Route::post('/get-tasks', [UserController::class, 'apiGetTasks']);
-Route::post('/get-lessons', [LessonController::class, 'apiGetLessons']);
 
 Route::middleware(['auth'])->group(function(){
     Route::middleware(['can:isAdmin'])->group(function(){
@@ -140,7 +134,7 @@ Route::middleware(['auth'])->group(function(){
         Route::resource('contacts', \App\Http\Controllers\ContactController::class);
         Route::resource('debts', \App\Http\Controllers\DebtController::class);
         Route::resource('wordlists', \App\Http\Controllers\WordlistController::class);
-        Route::resource('lessons', LessonController::class);
+        Route::resource('lessons', \App\Http\Controllers\LessonController::class);
 
 
         Route::get('/changes/show2', [\App\Http\Controllers\ChangeController::class, 'show2'])->name('changes.show2');

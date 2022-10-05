@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +21,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', [UserController::class, 'apiPostLogin']);
 Route::post('/get-user', [UserController::class, 'apiGetUser']);
-
-Route::post('/get-tasks', [TaskController::class, 'apiGetTasks']);

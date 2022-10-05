@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Lesson;
 use App\Models\Settings;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -46,12 +45,6 @@ class LessonController extends Controller
 
         return view('lesson.index', compact(['lessons', 'plan', 'lessons_times']))
             ->with('i', (request()->input('page', 1) - 1) * $lessons->perPage());
-    }
-
-    public function apiGetLessons(): JsonResponse
-    {
-        $lessons = Lesson::orderBy('day')->orderBy('lesson_number')->get();
-        return response()->json(['lessons' => $lessons, 'success' => true], 200);
     }
 
     /**

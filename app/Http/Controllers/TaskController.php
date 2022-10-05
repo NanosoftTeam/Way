@@ -283,13 +283,6 @@ class TaskController extends Controller
         ]);
     }
 
-    public function apiGetTasks()
-    {
-        $tasks = Task::where('user_id', $_POST["identyfikatoruzytkownika"])->get();
-
-        return response()->json($tasks);
-    }
-
     /**
      * Show the form for creating a new resource.
      *

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth; ?>
 
 @section('javascript')
 
+    import { Api } from 'public/js/api.js';
+
     $( document ).ready(function() {
     console.log("test");
 
@@ -39,6 +41,14 @@ use Illuminate\Support\Facades\Auth; ?>
     json = json.replace(/Object/g, '"x"');
     json = json.replace(/NaN/g, '0');
 
+
+    const api = new Librus();
+    api.authorize('gg', 'gg').then(() => {
+        api.info.getGrades().then((grades) => {
+            console.log(grades);
+        });
+    });
+
     var data = JSON.parse(json);
 
     console.log(data);
@@ -57,9 +67,6 @@ use Illuminate\Support\Facades\Auth; ?>
 @endsection
 
 @section('content')
-    <script src="/public/js/api.js">
-        login();
-    </script>
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
