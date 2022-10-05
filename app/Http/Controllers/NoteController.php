@@ -19,7 +19,7 @@ class NoteController extends Controller
     public function index(Request $request)
     {
 
-        $notes_all = Note::orderBy('name')->get();
+        $notes_all = Note::where('user_id', Auth::id())->orderBy('name')->get();
 
         /*$if_date = $request['date'];
         $if_film = $request['film'];
@@ -48,7 +48,7 @@ class NoteController extends Controller
             $if_status = 200;
         }*/
 
-        $notes = Note::when($if_search, function ($query, $if_search) {
+        $notes = Note::where('user_id', Auth::id())->when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
         })
         ->where('count_children', 0)
@@ -79,7 +79,7 @@ class NoteController extends Controller
             //}
         }
 
-        $notes = Note::when($if_search, function ($query, $if_search) {
+        $notes = Note::where('user_id', Auth::id())->when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
         })
         ->when($if_only_projects, function ($query, $if_only_projects) {
@@ -176,6 +176,7 @@ class NoteController extends Controller
         $query = $data['query'];
 
         $filter_data = Note::select(['name', 'id'])
+                        ->where('user_id', Auth::id())
                         ->where('name', 'LIKE', '%'.$query.'%')
                         ->take(8)
                         ->get();
@@ -222,6 +223,7 @@ class NoteController extends Controller
             while ($line !== false) {
 
                 $note1 = new Note();
+                $note1->user_id = Auth::id();
                 $note1->name = $line;
                 $note1->parent_id = $request->parent_id;
                 $note1->content = "";
@@ -244,6 +246,7 @@ class NoteController extends Controller
         }
         else{
             $note = new Note($request->all());
+            $note->user_id = Auth::id();
             if($request->content == NULL){
                 $note->content = "";
             }
@@ -283,7 +286,7 @@ class NoteController extends Controller
      */
     public function show(Note $note, Request $request)
     {
-        $notes_all = Note::orderBy('name')->get();
+        $notes_all = Note::where('user_id', Auth::id())->orderBy('name')->get();
         $note->content = Str::markdown($note->content);
 
         if ($request->ajax()) {
@@ -354,7 +357,7 @@ class NoteController extends Controller
             $note->content = "";
         }
 
-
+        $note->user_id = Auth::id();
         $note->save();
 
 

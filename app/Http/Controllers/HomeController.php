@@ -116,7 +116,7 @@ class HomeController extends Controller
         }
         
 
-        $importants = Important::all();
+        $importants = Important::where('user_id', Auth::id())->get();
 
         return view('home', [
             'changes' => $changes,

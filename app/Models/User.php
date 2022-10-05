@@ -41,6 +41,16 @@ class User extends Authenticatable
         return $this->hasMany(Change::class)->orderBy('date', 'desc');
     }
 
+    public function importants()
+    {
+        return $this->hasMany(Importants::class);
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -21,6 +21,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Important extends Model
 {
+  use HasFactory;
+
+  public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
     static $rules = [
 		'name' => 'required',
@@ -34,7 +40,7 @@ class Important extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','type','url','description'];
+    protected $fillable = ['name','type','url','description','user_id'];
 
 
 

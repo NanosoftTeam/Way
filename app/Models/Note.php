@@ -19,12 +19,18 @@ class Note extends Model
         return $this->belongsTo(Note::class, "parent_id");
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected $fillable = [
         'name',
         'content',
         'parent_id',
         'count_children',
         'file_path',
-        'file_name'
+        'file_name',
+        'user_id'
     ];
 }

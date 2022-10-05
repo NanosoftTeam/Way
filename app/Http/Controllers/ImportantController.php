@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Important;
 use Illuminate\Http\Request;
 
+use Auth;
+
 /**
  * Class ImportantController
  * @package App\Http\Controllers
@@ -18,7 +20,7 @@ class ImportantController extends Controller
      */
     public function index()
     {
-        $importants = Important::paginate();
+        $importants = Important::where('user_id', Auth::id())->paginate();
 
         return view('important.index', compact('importants'))
             ->with('i', (request()->input('page', 1) - 1) * $importants->perPage());
@@ -44,6 +46,8 @@ class ImportantController extends Controller
     public function store(Request $request)
     {
         request()->validate(Important::$rules);
+
+        $request["user_id"] = Auth::id();
 
         $important = Important::create($request->all());
 
@@ -92,6 +96,8 @@ class ImportantController extends Controller
     public function update(Request $request, Important $important)
     {
         request()->validate(Important::$rules);
+
+        $request["user_id"] = Auth::id();
 
         $important->update($request->all());
 
