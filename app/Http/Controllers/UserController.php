@@ -41,6 +41,12 @@ class UserController extends Controller
         return response()->json(['user' => $user, 'success' => true], 200);
     }
 
+    public function apiGetTasks(): string
+    {
+        $user = Auth::user();
+        return response()->json(['tasks' => $user->tasks, 'success' => true], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
