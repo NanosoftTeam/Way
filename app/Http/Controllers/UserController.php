@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Change;
 use App\Models\User;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -89,8 +90,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $team = Team::where('id', Auth::user()->team_id)->first();
         return view('users.show', [
             'user' => $user,
+            'team' => $team
         ]);
     }
 
@@ -102,8 +105,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $teams = Team::all();
         return view('users.edit', [
-            'user' => $user
+            'user' => $user,
+            'teams' => $teams,
         ]);
     }
 

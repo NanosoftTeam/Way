@@ -58,6 +58,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="team" class="col-md-4 col-form-label text-md-right">Team</label>
+
+                            <div class="col-md-6">
+                            <select id="team_id" class="form-control" name="team_id" required autocomplete="team_id">
+                                <option class="form-control" value="NULL">Brak</option>
+                                @foreach($teams as $team)
+                                    <option class="form-control" value="{{ $team->id }}" @if(isset($user->team_id) and $user->team_id == $team->id) selected @endif>{{ $team->name }}</option>
+                                @endforeach
+                            </select>
+                                @error('team')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

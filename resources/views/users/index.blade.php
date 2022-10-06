@@ -29,6 +29,7 @@ $role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "User zwykły
                                     <th scope="col">ID</th>    
                                     <th scope="col">Nazwa</th>
                                     <th scope="col">Rola</th>
+                                    <th scope="col">Team</th>
                                     <th scope="col" style="width:10px"></th>
                                 </tr>
                                 </thead>
@@ -38,6 +39,7 @@ $role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "User zwykły
                                             <td class="show2">{{ $user->id }}</td>
                                             <td class="show2"><a href="{{ route('users.show', $user->id) }}"><i class="fa-solid fa-user"></i> {{ $user->name }}</a></td>
                                             <td class="show2"><i class="fa-solid fa-user-group"></i> {{ $role[$user->role] }}</td>
+                                            <td class="show2">@isset($user->team) <i class="fa-solid fa-user-group"></i> {{ $user->team->name }} @endisset</td>
                                             <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -149,6 +149,12 @@
                     <figcaption class="figure-caption text-center">Wiadomości</figcaption>
                 </figure>
             </a>
+            <a href="{{ route('teams.index') }}">
+                <figure class="figure" >
+                    <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-users"></i></h1>
+                    <figcaption class="figure-caption text-center">Zespoły</figcaption>
+                </figure>
+            </a>
   </div>
   
 </div>

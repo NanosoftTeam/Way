@@ -1,5 +1,26 @@
 @extends('layouts.app')
 
+@section('javascript2')
+function delete1(id1, name) {
+    let czy = prompt("Usunąć team tak/nie? nazwa: " + name);
+    if (czy == "tak") {
+        
+        $.ajax({
+            method: "DELETE",
+            url: "{{ config('app.url', 'Laravel') }}/teams/" + id1,
+        data: { id: id1}
+        })
+        .done(function( msg ) {
+            window.location.reload();
+            
+        })
+        .fail(function( msg ) {
+            alert("error");
+        });
+    }
+}
+@endsection
+
 @section('template_title')
     Team
 @endsection
@@ -52,8 +73,7 @@
                                                     <a class="btn btn-sm btn-success" href="{{ route('teams.edit',$team->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                </form>
+                                                    <button type="button" onclick="delete1({{ $team->id}}, '{{$team->name}}')" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

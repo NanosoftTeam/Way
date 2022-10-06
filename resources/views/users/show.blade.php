@@ -22,6 +22,7 @@ $role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "User zwykły
                         <li class="list-group-item">Nazwa: <b>{{ $user->name }}</b></li>
                         <li class="list-group-item">E-mail: <b>{{ $user->email }}</b></li>
                         <li class="list-group-item">Rola: <b>{{ $role[$user->role] }}</b></li>
+                        <li class="list-group-item">Team: <b>{{ $user->team->name ?? '' }}</b></li>
                         <li class="list-group-item">ID: <b>{{ $user->id }}</b></li>
                     </ul>
                 </div>

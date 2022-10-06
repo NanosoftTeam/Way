@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="content container-fluid">
+    <div class="container">
         <div class="">
             <div class="col-md-12">
 
@@ -13,7 +13,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Update Team</span>
+                        <span class="card-title"><a href="{{ route('teams.index') }}">Teamy</a> > <a href="{{ route('teams.show', $team->id) }}">{{ $team->name }}</a> > Edytuj</span>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('teams.update', $team->id) }}"  role="form" enctype="multipart/form-data">
@@ -27,5 +27,5 @@
                 </div>
             </div>
         </div>
-    </section>
+</div>
 @endsection

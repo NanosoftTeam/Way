@@ -56,6 +56,13 @@ class User extends Authenticatable
         return $this->hasMany(Wordlist::class);
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    
+
     /**
      * The attributes that are mass assignable.
      *
