@@ -26,5 +26,5 @@ class Word extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'translation', 'wordlist_id', 'name_info', 'translation_info', 'mw', 'iw', 'mt'];
+    protected $fillable = ['name', 'translation', 'wordlist_id', 'name_info', 'translation_info', 'mw', 'iw', 'mt','last_correct_answer','correct_answers','user_id'];
 }

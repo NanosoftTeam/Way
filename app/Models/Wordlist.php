@@ -25,6 +25,11 @@ class Wordlist extends Model
     {
         return $this->hasMany(Word::class)->orderBy("name", "ASC");
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
     static $rules = [
 		'name' => 'required',
@@ -37,7 +42,7 @@ class Wordlist extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','description'];
+    protected $fillable = ['name','description','user_id'];
 
 
 

@@ -63,9 +63,9 @@ function delete1(id1, name) {
                 <br />
                 <div class="card">
                 <div class="card-header">
-                        Słowa z listy <a class="btn btn-primary btn-sm float-right" style="margin-left: 3px;" href="{{ route('words.create', $wordlist->id) }}">Nowe słowo</a>
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#expor">Importuj</button>
-                        <a class="btn btn-success btn-sm float-right" style="margin-right: 3px;" href="{{ route('wordlists.export', $wordlist->id) }}">Eksportuj</a>
+                        Słowa z listy <button class="btn btn-primary btn-sm float-right" style="margin-left: 3px;" href="#" disabled>Nowe słowo</buton>
+                        <button class="btn btn-primary btn-sm float-right" disabled>Importuj</button>
+                        <button class="btn btn-success btn-sm float-right" style="margin-right: 3px;" href="#" disabled>Eksportuj</button>
                     </div>
 
                     <div class="card-body">
@@ -73,10 +73,10 @@ function delete1(id1, name) {
 
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('wordlists.show', $wordlist->id) }}">Lista słów</a>
+                            <a class="nav-link" href="{{ route('wordlists.show', $wordlist->id) }}">Lista słów</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('words.progress', $wordlist->id) }}">Postępy</a>
+                            <a class="nav-link active" href="{{ route('words.progress', $wordlist->id) }}">Postępy</a>
                         </li>
                     </ul>
                         <table class="table table-sm">
@@ -84,18 +84,18 @@ function delete1(id1, name) {
                                 <tr>
                                 <th scope="col">Słowo</th>
                                 <th scope="col">PL</th>
-                                <th scope="col">Info - nazwa</th>
-                                <th scope="col">PL - info</th>
+                                <th scope="col">Poprawna odp</th>
+                                <th scope="col">Poprawnych(+) nie(-)</th>
                                 <th scope="col">Tagi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($wordlist->words as $word)
+                                @foreach ($words as $word)
                                 <tr id="w{{ $word->id }}">
                                     <th><a href="{{ route('words.edit', $word->id) }}">{{ $word->name }}</a></th>
                                     <td>{{ $word->translation }}</td>
-                                    <td>{{ $word->name_info }}</td>
-                                    <td>{{ $word->translation_info }}</td>
+                                    <td>{{ $word->last_correct_answer }}</td>
+                                    <td class="@if($word->correct_answers > 0) text-success @elseif($word->correct_answers < 0) text-danger @endif">{{ $word->correct_answers }}</td>
                                     <td>@if($word->mw) <span class="badge badge-success">Multisłowo</span> @endif @if($word->iw) <span class="badge badge-primary">Odmiana</span> @endif @if($word->mt) <span class="badge badge-secondary">Multitłumaczenia</span> @endif</td>
                                 </tr>
                                 @endforeach
@@ -106,25 +106,5 @@ function delete1(id1, name) {
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" id="expor" tabindex="-2" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="overflow-y: auto !important;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Film</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{{ route('wordlists.import', $wordlist->id) }}">
-                    <textarea class="form-control" name="import" rows="15"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="submit2" data-id="" >Zapisz</button></form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                </div>
-            </div>
-        </div>
-    </div>@endsection
+    </div>    
+    @endsection

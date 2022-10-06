@@ -118,16 +118,23 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/clothes/update2', [\App\Http\Controllers\ClothesController::class, 'update2'])->name('clothes.update2');
 
 
-        Route::post('/word/{word}/update', [\App\Http\Controllers\WordController::class, 'update'])->name('words.update');
-        Route::post('/wordlists/{wordlist}/word/store', [\App\Http\Controllers\WordController::class, 'store'])->name('words.store');
-        Route::get('/wordlists/{wordlist}/word/create', [\App\Http\Controllers\WordController::class, 'create'])->name('words.create');
+        Route::post('/word/{word}/update', [App\Http\Controllers\WordController::class, 'update'])->name('words.update');
+        Route::post('/wordlists/{wordlist}/word/store', [App\Http\Controllers\WordController::class, 'store'])->name('words.store');
+        Route::get('/wordlists/{wordlist}/word/create', [App\Http\Controllers\WordController::class, 'create'])->name('words.create');
 
-        Route::get('/wordlist/{wordlist}/export', [\App\Http\Controllers\WordlistController::class, 'export'])->name('wordlists.export');
-        Route::post('/wordlist/{wordlist}/import', [\App\Http\Controllers\WordlistController::class, 'import'])->name('wordlists.import');
-
-        Route::get('/wordlists/{wordlist}#w{id}', [\App\Http\Controllers\WordlistController::class, 'show'])->name('wordlists.show2');
-
-        Route::get('/word/{word}/edit', [\App\Http\Controllers\WordController::class, 'edit'])->name('words.edit');
+        Route::get('/wordlist/{wordlist}/export', [App\Http\Controllers\WordlistController::class, 'export'])->name('wordlists.export');
+        Route::get('/wordlist/{wordlist}/export2', [App\Http\Controllers\WordlistController::class, 'export2'])->name('wordlists.export2');
+        Route::post('/wordlist/{wordlist}/import', [App\Http\Controllers\WordlistController::class, 'import'])->name('wordlists.import');
+        Route::get('/wordlists/{wordlist}/learn', [App\Http\Controllers\WordlistController::class, 'learn'])->name('words.learn');
+        Route::get('/wordlists/{wordlist}/learn2', [App\Http\Controllers\WordlistController::class, 'learn2'])->name('words.learn2');
+        Route::get('/wordlists/{wordlist}/learn3', [App\Http\Controllers\WordlistController::class, 'learn3'])->name('words.learn3');
+        Route::get('/wordlists/{wordlist}/progress', [App\Http\Controllers\WordlistController::class, 'progress'])->name('words.progress');
+        Route::post('/wordlists/learn-finish/{wordlist}', [App\Http\Controllers\WordlistController::class, 'learn_finish'])->name('wordlists.learnfinish');
+        
+        Route::get('/wordlists/{wordlist}#w{id}', [App\Http\Controllers\WordlistController::class, 'show'])->name('wordlists.show2');
+        
+        Route::get('/word/{word}/edit', [App\Http\Controllers\WordController::class, 'edit'])->name('words.edit');
+        Route::delete('/words/{word}', [App\Http\Controllers\WordController::class, 'destroy'])->name('words.destroy');
 
         Route::get('/contacts/show2/{contact}', [\App\Http\Controllers\ContactController::class, 'show2'])->name('contacts.show2');
         Route::get('/contacts/show3/{contact}', [\App\Http\Controllers\ContactController::class, 'show3'])->name('contacts.show3');

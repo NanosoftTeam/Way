@@ -6,6 +6,8 @@ use App\Models\Word;
 use App\Models\Wordlist;
 use Illuminate\Http\Request;
 
+use Auth;
+
 class WordController extends Controller
 {
     /**
@@ -38,6 +40,26 @@ class WordController extends Controller
     public function store(Request $request, Wordlist $wordlist)
     {
         request()->validate(Word::$rules);
+
+        $request['user_id'] = Auth::id();
+
+        if(isset($request['mw']) and $request['mw'] == 'on'){
+            $request['mw'] = true;
+        }else{
+            $request['mw'] = false;
+        }
+
+        if(isset($request['iw']) and $request['iw'] == 'on'){
+            $request['iw'] = true;
+        }else{
+            $request['iw'] = false;
+        }
+
+        if(isset($request['mt']) and $request['mt'] == 'on'){
+            $request['mt'] = true;
+        }else{
+            $request['mt'] = false;
+        }
 
         $word = new Word($request->all());
         $word->wordlist_id = $wordlist->id;
@@ -81,6 +103,8 @@ class WordController extends Controller
     {
         request()->validate(Word::$rules);
 
+        $request['user_id'] = Auth::id();
+
         if(isset($request['mw']) and $request['mw'] == 'on'){
             $request['mw'] = true;
         }else{
@@ -98,7 +122,7 @@ class WordController extends Controller
         }else{
             $request['mt'] = false;
         }
-
+        
         $word->update($request->all());
 
         return redirect()->route('wordlists.show2', [$word->wordlist_id, $word->id])
@@ -111,8 +135,12 @@ class WordController extends Controller
      * @param  \App\Models\Word  $word
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Word $word)
+    public function destroy($id)
     {
-        //
+        $wordlist = Word::find($id)->delete();
+
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }

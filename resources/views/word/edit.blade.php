@@ -4,6 +4,27 @@
     Update Wordlist
 @endsection
 
+@section('javascript2')
+function delete1(id1, name) {
+    let czy = prompt("Usunąć słowo tak/nie? nazwa: " + name);
+    if (czy == "tak") {
+        
+        $.ajax({
+            method: "DELETE",
+            url: "{{ config('app.url', 'Laravel') }}/words/" + id1,
+        data: { id: id1}
+        })
+        .done(function( msg ) {
+            window.location.href = "{{ route('wordlists.show', $word->wordlist_id) }}";
+            
+        })
+        .fail(function( msg ) {
+            alert("error");
+        });
+    }
+}
+@endsection
+
 @section('content')
     <div class="container">
         <div class="">
@@ -22,6 +43,7 @@
                             @include('word.form')
 
                         </form>
+                        <button class="btn btn-danger float-right" onclick="delete1({{ $word->id}}, '{{$word->name}}')">Delete</button>
                     </div>
                 </div>
             </div>

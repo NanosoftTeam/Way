@@ -37,14 +37,14 @@ function delete1(id1, name) {
                     <div class="card-body">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('wordlists.export', $wordlist->id) }}">Wszystkie dane</a>
+                                <a class="nav-link" href="{{ route('wordlists.export', $wordlist->id) }}">Wszystkie dane</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('wordlists.export2', $wordlist->id) }}">Proste (do excela)</a>
+                                <a class="nav-link active" href="{{ route('wordlists.export2', $wordlist->id) }}">Proste (do excela)</a>
                             </li>
                         </ul>
                         <button class="btn btn-success btn-sm float-right" onclick="Skopiuj()">Skopiuj</button>
-                        <textarea class="form-control" name="export" id="export" rows="15">@foreach ($wordlist->words as $word){{ $word->name."\t"."$word->translation"."\t".$word->name_info."\t".$word->translation_info."\t".$word->mw."\t".$word->iw."\t".$word->mt."\r\n" }}@endforeach</textarea>
+                        <textarea class="form-control" name="export" id="export" rows="15">@foreach ($wordlist->words as $word){{ $word->name."\t"."$word->translation"."\r\n" }}@endforeach</textarea>
                     </div>
                 </div>
                 
