@@ -6,8 +6,8 @@ $status  = array("Pomysł", "Do zrealizowania", "Plan", "Scenariusz", "Nagrywani
 $channel  = array("Infast", "Infast Animations");
 $type  = array("Film", "Odcinek kursu", "Short");
 $course  = array("Kurs 1", "Kurs 2", "Kurs3");
-$person = array("Infast Team", "Jan Kowalski", "Jan Malinowski");
-$role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "Infast Team", "Infast Team+", "Admin");
+$person = array("User", "Jan Kowalski", "Jan Malinowski");
+$role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "User zwykły (niedostępne)", "User", "Admin");
 ?>
 
 <div class="container">

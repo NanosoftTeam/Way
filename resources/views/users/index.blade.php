@@ -3,7 +3,7 @@
 @section('content')
 
 <?php
-$role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "Infast Team", "Infast Team+", "Admin");
+$role = array("Zablokowany", "Tylko wyświetlanie (niedostępne)", "User zwykły (niedostępne)", "User", "Admin");
 ?>
 
 <div class="container">

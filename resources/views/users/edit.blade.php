@@ -46,8 +46,8 @@
                             <select id="role" class="form-control" name="role" required autocomplete="role">
                                 <option class="form-control" value="0" @if($user->role == 0) selected @endif>Zablokowany</option>
                                 <option class="form-control" value="1" @if($user->role == 1) selected @endif disabled>Tylko wyświetlanie (niedostępne)</option>
-                                <option class="form-control" value="2" @if($user->role == 2) selected @endif>Infast Team</option>
-                                <option class="form-control" value="3" @if($user->role == 3) selected @endif>Infast Team+</option>
+                                <option class="form-control" value="2" @if($user->role == 2) selected @endif disabled>User zwykły (niedostępne)</option>
+                                <option class="form-control" value="3" @if($user->role == 3) selected @endif>User</option>
                                 <option class="form-control" value="4" @if($user->role == 4) selected @endif>Admin</option>
                             </select>
                                 @error('role')

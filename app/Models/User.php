@@ -66,7 +66,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'unread_messages'
+        'unread_messages',
+        'team_id'
     ];
 
     /**

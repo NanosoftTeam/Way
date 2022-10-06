@@ -82,7 +82,7 @@
                             <td class="table-active text-secondary" style="width: 20%">Opiekun</td>
                             <td >
                                 <select id="person2" class="form-control form-control2" name="person" value="" required autocomplete="person" value="{{ $film->person }}">
-                                    <option class="form-control form-control2" value="0">Infast Team</option>
+                                    <option class="form-control form-control2" value="0">User</option>
                                     @foreach($users as $user)
                                         <option class="form-control form-control2" value="{{ $user->id }}" @if($film->person == $user->id) selected @endif>{{ $user->name }}</option>
                                     @endforeach

@@ -26,7 +26,7 @@ function myFunction(id1, name) {
 $channel  = array("Infast", "Infast Animations");
 $type  = array("Film", "Odcinek kursu", "Short");
 $course  = array("Kurs 1", "Kurs 2", "Kurs3");
-$person = array("Infast Team", "Jan Kowalski", "Jan Malinowski");
+$person = array("User", "Jan Kowalski", "Jan Malinowski");
 $status  = array("Pomysł", "Wstrzymany", "Do zrealizowania", "Plan", "Scenariusz", "Nagrywanie", "Montaż", "Uploadowanie", "Oczekuje na publikację", "Opublikowany", "Koniec");
 $color = array("secondary", "secondary", "primary", "warning", "warning", "danger", "danger", "success", "success", "success", "success");
 ?>
@@ -118,7 +118,7 @@ $color = array("secondary", "secondary", "primary", "warning", "warning", "dange
                             <td class="table-active text-secondary" style="width: 20%">Opiekun</td>
                             <td >
                                 <select id="person2" class="form-control form-control2" name="person" value="" required autocomplete="person">
-                                    <option class="form-control form-control2" value="0">Infast Team</option>
+                                    <option class="form-control form-control2" value="0">User</option>
                                     @foreach($users as $user)
                                         <option class="form-control form-control2" value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach

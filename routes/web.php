@@ -149,6 +149,7 @@ Route::middleware(['auth'])->group(function(){
         Route::resource('debts', \App\Http\Controllers\DebtController::class);
         Route::resource('wordlists', \App\Http\Controllers\WordlistController::class);
         Route::resource('lessons', \App\Http\Controllers\LessonController::class);
+        Route::resource('teams', App\Http\Controllers\TeamController::class);
 
 
         Route::get('/changes/show2', [\App\Http\Controllers\ChangeController::class, 'show2'])->name('changes.show2');
