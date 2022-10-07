@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\WelcomeController::class, 'show'])->name('welcome');
+//test redirect
+Route::get('test', [\App\Http\Controllers\HomeController::class, 'test'])->name('test');
 
 //TEST API NON-PUBLIC USE
 Route::namespace('api')->group(function () {
@@ -130,9 +132,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/wordlists/{wordlist}/learn3', [App\Http\Controllers\WordlistController::class, 'learn3'])->name('words.learn3');
         Route::get('/wordlists/{wordlist}/progress', [App\Http\Controllers\WordlistController::class, 'progress'])->name('words.progress');
         Route::post('/wordlists/learn-finish/{wordlist}', [App\Http\Controllers\WordlistController::class, 'learn_finish'])->name('wordlists.learnfinish');
-        
+
         Route::get('/wordlists/{wordlist}#w{id}', [App\Http\Controllers\WordlistController::class, 'show'])->name('wordlists.show2');
-        
+
         Route::get('/word/{word}/edit', [App\Http\Controllers\WordController::class, 'edit'])->name('words.edit');
         Route::delete('/words/{word}', [App\Http\Controllers\WordController::class, 'destroy'])->name('words.destroy');
 
