@@ -52,6 +52,7 @@ class Task extends Model
         'count_children',
         'goal_id',
         'deadline_id',
-        'duration'
+        'duration',
+        'team_id'
     ];
 }
