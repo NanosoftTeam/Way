@@ -18,6 +18,7 @@ function delete1(id1, name) {
         });
     }
 }
+    alert(<?php \Illuminate\Support\Facades\Session::get("team_id") ?>);
 @endsection
 
 @section('template_title')
