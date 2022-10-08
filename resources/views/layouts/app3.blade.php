@@ -191,7 +191,7 @@
         </nav>
         <nav class="subnavbar">
             <div class="container">
-                <a class="vertical-item" text-light" href="{{ route('home') }}">Back to WayApp Personal</a>
+                <a class="vertical-item" text-light" href="{{ route('team.exit') }}">Back to WayApp Personal</a>
                 <a class="vertical-item" text-light">|</a>
                 <a class="vertical-item" text-light" href="{{ route('home') }}">Home</a>
                 <a class="vertical-item" text-light" href="{{ route('home') }}">Messages</a>

@@ -115,4 +115,16 @@ class TeamController extends Controller
             'status' => 'success'
         ]);
     }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function team_exit()
+    {
+        Session::put('team_id', 0);
+
+        return redirect()->route('tasks.index');
+    }
 }

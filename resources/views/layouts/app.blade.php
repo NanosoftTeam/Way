@@ -131,7 +131,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    @isset(Auth::user()->team) <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> @endisset <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
+                                    @if(Session::get('team_id') != 0) @isset(Auth::user()->team) <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> @endisset @else <span class="badge badge-secondary">Personal</span>  @endif <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

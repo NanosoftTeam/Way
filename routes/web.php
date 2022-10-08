@@ -154,6 +154,7 @@ Route::middleware(['auth'])->group(function(){
 
         Route::resource('teams', App\Http\Controllers\TeamController::class);
         Route::get('/overflow', [\App\Http\Controllers\TeamController::class, 'overflow'])->name('teams.overflow');
+        Route::get('/team/exit', [\App\Http\Controllers\TeamController::class, 'team_exit'])->name('team.exit');
 
 
         Route::get('/changes/show2', [\App\Http\Controllers\ChangeController::class, 'show2'])->name('changes.show2');
