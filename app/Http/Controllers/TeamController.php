@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 /**
  * Class TeamController
@@ -20,7 +21,7 @@ class TeamController extends Controller
     public function index()
     {
         $teams = Team::paginate();
-        Session::put('team_id', $teams[0]->id);
+        Session::put('team_id', Auth::user()->team_id);
         return view('team.index', compact('teams'))
             ->with('i', (request()->input('page', 1) - 1) * $teams->perPage());
     }

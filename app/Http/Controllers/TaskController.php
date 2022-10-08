@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class TaskController extends Controller
 {
@@ -269,6 +270,7 @@ class TaskController extends Controller
     {
         $task = new Task($request->all());
         $task->user_id = Auth::id();
+        $task->team_id = Session::get('team_id');
         $task->save();
 
         if($request->parent_id != NULL){
