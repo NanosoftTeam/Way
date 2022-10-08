@@ -63,7 +63,7 @@
 
                             <div class="col-md-6">
                             <select id="team_id" class="form-control" name="team_id" required autocomplete="team_id">
-                                <option class="form-control" value="NULL">Brak</option>
+                                <option class="form-control" value="-1">Brak</option>
                                 @foreach($teams as $team)
                                     <option class="form-control" value="{{ $team->id }}" @if(isset($user->team_id) and $user->team_id == $team->id) selected @endif>{{ $team->name }}</option>
                                 @endforeach
