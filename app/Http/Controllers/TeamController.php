@@ -20,7 +20,7 @@ class TeamController extends Controller
     public function index()
     {
         $teams = Team::paginate();
-        Session::set('team_id', $teams[0]->id);
+        Session::put('team_id', $teams[0]->id);
         return view('team.index', compact('teams'))
             ->with('i', (request()->input('page', 1) - 1) * $teams->perPage());
     }
