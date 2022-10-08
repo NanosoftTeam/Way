@@ -216,55 +216,14 @@ class TaskController extends Controller
         })
         ->orderBy('end', 'desc')
         ->orderBy('status', 'asc')
-        //->groupBy('parent_id')
-        //->get();
         ->paginate(18)
         ->appends(request()->query());
 
-        //$tasks2 = Task::whereIn('id', $potrzebne_projekty)->get();
-
-        //$tasks = $tasks2->merge($tasks); toooooooooo
-
-        /*foreach ($tasks as $t) {
-            if($t->count_children != 0 or $t->count_children != NULL){
-                if(in_array($t->id, $potrzebne_projekty)){
-
-                }
-                else{
-                    $t->name = "do us";
-                }
-
-            }
-        }*/
-
-
         if($if_parent == 'x'){
-            /*$tasks = Arr::where($tasks, function ($value, $key) {
-                return $value['parent_id'] == NULL;
-            });*/
-
-            //$tasks = $tasks->where('parent_id', NULL);
-            //$tasks->all();
         }
         else{
-            //$tasks = $tasks->where('parent_id', $if_parent);
-           // $tasks->all();
         }
 
-
-        /*$tasks = $tasks->when($if_parent, function ($query, $if_parent) {
-            if($if_parent == 'x'){
-                return $query->where('parent_id', NULL);
-            }
-            else if($if_parent == 'i'){
-
-            }
-            else{
-                return $query->where('parent_id', $if_parent);
-            }
-        });*/
-
-        //$tasks_g = $tasks->groupBy('parent_id');
         if ($request->ajax()) {
 
 
