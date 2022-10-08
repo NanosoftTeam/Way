@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Session;
 use Auth;
 
@@ -24,6 +25,11 @@ class TeamController extends Controller
         Session::put('team_id', Auth::user()->team_id);
         return view('team.index', compact('teams'))
             ->with('i', (request()->input('page', 1) - 1) * $teams->perPage());
+    }
+
+    public function overflow()
+    {
+        return view('team.overflow');
     }
 
     /**

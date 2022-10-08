@@ -135,7 +135,7 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
-                            <a style="margin-left: 20px;" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
+                            <a style="margin-left: 20px" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
                             <label>
                                 <input class="searchbar" type="text" placeholder="Search for posts or any other kind of data."/>
                             </label>
