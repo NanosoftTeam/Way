@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.app3')
 
 @section('javascript2')
 function delete1(id1, name) {
     let czy = prompt("Usunąć team tak/nie? nazwa: " + name);
     if (czy == "tak") {
-        
+
         $.ajax({
             method: "DELETE",
             url: "{{ config('app.url', 'Laravel') }}/teams/" + id1,
@@ -12,7 +12,7 @@ function delete1(id1, name) {
         })
         .done(function( msg ) {
             window.location.reload();
-            
+
         })
         .fail(function( msg ) {
             alert("error");
