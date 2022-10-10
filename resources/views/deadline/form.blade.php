@@ -32,6 +32,11 @@
             {!! $errors->first('is_planned', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
+            {{ Form::label('goal_id') }}
+            {{ Form::select('goal_id', $goals, $deadline->goal_id, ['class' => 'form-control' . ($errors->has('goal_id') ? ' is-invalid' : ''), 'placeholder' => 'Goal id']) }}
+            {!! $errors->first('goal_id', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+        <div class="form-group">
             @if($team_name != "")
                 {{ Form::label("Widoczne dla: ".$team_name) }}
             @else

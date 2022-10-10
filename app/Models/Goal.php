@@ -29,9 +29,9 @@ class Goal extends Model
       return $this->hasMany(Task::class);
   }
 
-  public function deadline()
+  public function deadlines()
     {
-        return $this->belongsTo(Deadline::class);
+        return $this->hasMany(Deadline::class);
     }
 
     public function user()

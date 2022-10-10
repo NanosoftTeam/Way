@@ -29,10 +29,10 @@ class Deadline extends Model
       return $this->hasMany(Task::class);
   }
 
-  public function goals()
-  {
-      return $this->hasMany(Goal::class);
-  }
+  public function goal()
+    {
+        return $this->belongsTo(Goal::class);
+    }
 
   public function user()
     {
@@ -57,7 +57,7 @@ class Deadline extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','date','type','description','priority','is_planned','user_id','team_id'];
+    protected $fillable = ['name','date','type','description','priority','is_planned','user_id','team_id','goal_id'];
 
 
 

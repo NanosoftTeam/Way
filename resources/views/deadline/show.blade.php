@@ -72,6 +72,10 @@ function delete1(id1, name) {
                             </tr>
                             @endisset
                             <tr>
+                                <td class="table-active text-secondary" style="width: 20%">Cel</td>
+                                <td ><b><a href="{{ route('goals.show', $deadline->goal_id) }}">{{ $deadline->goal->name }}</a></b></td>
+                            </tr>
+                            <tr>
                                 <td class="table-active text-secondary" style="width: 20%">Opis</td>
                                 <td >{!!nl2br($deadline->description)!!}</td>
                             </tr>

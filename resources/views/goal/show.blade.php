@@ -59,10 +59,6 @@ function delete1(id1, name) {
                                 <td >{!!nl2br($goal->description)!!}</td>
                             </tr>
                             <tr>
-                                <td class="table-active text-secondary" style="width: 20%" data-field="name">Deadline</td>
-                                <td id="t-name">@if(isset($goal->deadline_id))<b><a href="{{ route('deadlines.show', $goal->deadline_id) }}">{{ $goal->deadline->name ?? "[błąd]" }}</a></b>@endif</td>
-                            </tr>
-                            <tr>
                                 <td class="table-active text-secondary" style="width: 20%" data-field="name">Type</td>
                                 <td id="t-name"><b>{{ $goal->type }}</b></td>
                             </tr>

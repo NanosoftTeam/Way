@@ -12,11 +12,6 @@
             {!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('deadline_id') }}
-            {{ Form::select('deadline_id', $deadlines, $goal->deadline_id, ['class' => 'form-control' . ($errors->has('deadline_id') ? ' is-invalid' : ''), 'placeholder' => 'Deadline Id']) }}
-            {!! $errors->first('deadline_id', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
             {{ Form::label('type') }}
             {{ Form::text('type', $goal->type, ['class' => 'form-control' . ($errors->has('type') ? ' is-invalid' : ''), 'placeholder' => 'Type']) }}
             {!! $errors->first('type', '<div class="invalid-feedback">:message</div>') !!}

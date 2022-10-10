@@ -48,12 +48,12 @@ class GoalController extends Controller
     public function create()
     {
         $goal = new Goal();
-        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->pluck('name', 'id');
+        //$deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->pluck('name', 'id');
         $team_name = "";
         if(Session::get('team_id') != 0){
             $team_name = Auth::user()->team->name;
         }
-        return view('goal.create', ['goal' => $goal, 'deadlines' => $deadlines, 'team_name' => $team_name]);
+        return view('goal.create', ['goal' => $goal, 'team_name' => $team_name]);
     }
 
     /**
@@ -101,13 +101,13 @@ class GoalController extends Controller
     public function edit($id)
     {
         $goal = Goal::find($id);
-        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "DESC")->orderBy("priority", "ASC")->pluck('name', 'id');
+        //$deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "DESC")->orderBy("priority", "ASC")->pluck('name', 'id');
         $team_name = "";
         if(Session::get('team_id') != 0){
             $team_name = Auth::user()->team->name;
         }
 
-        return view('goal.edit', ['goal' => $goal, 'deadlines' => $deadlines, 'team_name' => $team_name]);
+        return view('goal.edit', ['goal' => $goal, 'team_name' => $team_name]);
     }
 
     /**

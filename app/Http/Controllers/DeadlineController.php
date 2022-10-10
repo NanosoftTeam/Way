@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Deadline;
 use App\Models\Team;
+use App\Models\Goal;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -47,12 +48,24 @@ class DeadlineController extends Controller
      */
     public function create()
     {
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
         $deadline = new Deadline();
         $team_name = "";
+        $goals = Goal::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->pluck('name', 'id');
         if(Session::get('team_id') != 0){
             $team_name = Auth::user()->team->name;
         }
-        return view('deadline.create', compact(['deadline', 'team_name']));
+        return view('deadline.create', compact(['deadline', 'team_name', 'goals']));
     }
 
     /**
@@ -103,13 +116,25 @@ class DeadlineController extends Controller
      */
     public function edit($id)
     {
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
         $deadline = Deadline::find($id);
+        $goals = Goal::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->pluck('name', 'id');
         $team_name = "";
         if(Session::get('team_id') != 0){
             $team_name = Auth::user()->team->name;
         }
 
-        return view('deadline.edit', compact(['deadline', 'team_name']));
+        return view('deadline.edit', compact(['deadline', 'team_name', 'goals']));
     }
 
     /**
