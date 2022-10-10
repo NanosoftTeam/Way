@@ -117,6 +117,7 @@ class HomeController extends Controller
         $rutyna_rano = Settings::find(16);
         $rutyna_popoludnie = Settings::find(17);
         $rutyna_wieczor = Settings::find(18);
+        $quote = Settings::find(19)->content;
         $date2 = new DateTime($date1);
         $date2->modify('+7 day');
         $date2 = $date2->format('Y-m-d');
@@ -185,7 +186,8 @@ class HomeController extends Controller
             'rutyna_rano' => $rutyna_rano->content,
             'rutyna_popoludnie' => $rutyna_popoludnie->content,
             'rutyna_wieczor' => $rutyna_wieczor->content,
-            'jutro' => $jutro
+            'jutro' => $jutro,
+            'quote' => $quote,
         ]);
     }
 
@@ -196,16 +198,13 @@ class HomeController extends Controller
      */
     public function dashboard2()
     {
-        $tasks = Task::where('user_id', Auth::id())
-        ->where('status', "!=", 4)
-        ->where('end', '!=', '')
-        ->orderBy('end', 'asc')
-        ->orderBy('status', 'asc')
-        ->take(40)
-        ->get();
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
 
         return view('dashboard2', [
-            'tasks' => $tasks
+            'actual_user_team' => $actual_user_team
         ]);
     }
 

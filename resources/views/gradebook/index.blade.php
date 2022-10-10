@@ -78,6 +78,9 @@ use Illuminate\Support\Facades\Auth; ?>
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="alert alert-warning" role="alert">
+                            Ten moduł jeszcze nie działa. Zajrzyj tu później :)
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead" id="table-content1">

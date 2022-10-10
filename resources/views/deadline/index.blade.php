@@ -58,6 +58,9 @@ function delete1(id1, name) {
                     
 
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            Deadliney można traktować jako projekty
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">

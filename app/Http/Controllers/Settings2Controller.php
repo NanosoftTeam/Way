@@ -36,6 +36,8 @@ class Settings2Controller extends Controller
         $rutyna_popoludnie = Settings::find(17);
         $rutyna_wieczor = Settings::find(18);
 
+        $quote = Settings::find(19);
+
         return view('settings_edit', [
             'settings_content' => $settings_content->content,
             'settings_content_p' => $settings_content_p->content,
@@ -55,6 +57,7 @@ class Settings2Controller extends Controller
             'rutyna_rano' => $rutyna_rano->content,
             'rutyna_popoludnie' => $rutyna_popoludnie->content,
             'rutyna_wieczor' => $rutyna_wieczor->content,
+            'quote' => $quote->content,
         ]);
     }
 
@@ -149,6 +152,10 @@ class Settings2Controller extends Controller
         $rutyna_wieczor = Settings::find(18);
         $rutyna_wieczor->content = $request->rutyna_wieczor;
         $rutyna_wieczor->save();
+
+        $quote = Settings::find(19);
+        $quote->content = $request->quote;
+        $quote->save();
 
 
 

@@ -50,7 +50,7 @@
         <a href="{{ route('importants.index') }}">
             <figure class="figure">
                 <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-thumbtack"></i></h1>
-                <figcaption class="figure-caption text-center">Przypięcia</figcaption>
+                <figcaption class="figure-caption text-center">Priorytety</figcaption>
             </figure>
         </a>
 
@@ -64,9 +64,9 @@
   
 </div>
 
-<div class="card">
+<div class="card" @if($actual_user_team != "x") style="background-color: #d9fbff;" @endif>
   <div class="card-body">
-            <h5 class="card-title">Szkoła</h5>
+            <h5 class="card-title">Szkoła @if($actual_user_team != "x")<span class="badge badge-primary">Z prywatnej przestrzeni roboczej</span>@endif</h5>
             <a href="{{ route('wordlists.index') }}">
                 <figure class="figure" >
                     <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-list"></i></h1>
@@ -90,9 +90,9 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card" @if($actual_user_team != "x") style="background-color: #d9fbff;" @endif>
   <div class="card-body">
-            <h5 class="card-title">Finanse</h5>
+            <h5 class="card-title">Finanse @if($actual_user_team != "x")<span class="badge badge-primary">Z prywatnej przestrzeni roboczej</span>@endif</h5>
             <a href="{{ route('debts.index') }}">
                 <figure class="figure" >
                     <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-money-bill"></i></h1>
@@ -112,7 +112,7 @@
 @can('isAdmin')
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Administracja systemem</h5>
+    <h5 class="card-title">Administracja systemem <span class="badge badge-success">Dla adminów</span></h5>
     <a href="{{ route('users.index') }}">
                 <figure class="figure" >
                     <h1 class="text-center display-4 figure-img img-fluid rounded bg-secondary text-light"><i class="fa-solid fa-user"></i></h1>

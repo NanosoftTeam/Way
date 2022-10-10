@@ -52,6 +52,9 @@ function delete1(id1, name) {
                     @endif
 
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            Tutaj możesz przełączać się między zespołową, a prywatną przestrzenią roboczą.
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">

@@ -353,7 +353,7 @@
                     </div>
                     <br />
         <div class="card">
-                <div class="card-header text-danger"><b><i class="fa-solid fa-thumbtack"></i> Tym się teraz zajmujemy</b></div>
+                <div class="card-header text-danger"><b><i class="fa-solid fa-thumbtack"></i> Priorytety</b></div>
 
                 <div class="card-body" style="padding-top: 0px; margin-bottom: 0px;">
                     <table class="table table-sm" style="margin-top: 0px; margin-bottom: 0px;">
@@ -377,7 +377,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    
+                    {!! $quote !!}
                 </div>
             </div>
 
@@ -386,7 +386,7 @@
 
 
             <div class="card">
-                <div class="card-header"><i class="fa-solid fa-list-check"></i> Nadchodzące deadliney</div>
+                <div class="card-header"><i class="fa-solid fa-list-check"></i> Nadchodzące deadliney (najbliższy tydzień)</div>
 
                 <div class="card-body">
                     <table class="table table-sm">

@@ -145,7 +145,7 @@
                         @else
                             <a style="margin-left: 20px" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
                             <label>
-                                <input class="searchbar" type="text" placeholder="Search for posts or any other kind of data."/>
+                                <input class="searchbar" type="text" placeholder="Search for posts or any other kind of data." disabled/>
                             </label>
                             @can('isIT')
 
