@@ -128,13 +128,22 @@ class CalendarController extends Controller
             $request->end->modify('-1 day');
     		if($request->type == 'add')
     		{
+                $team_id = NULL;
+                $user_id = NULL;
+                if(Session::get('team_id') != 0){
+                    $team_id = Session::get('team_id');
+                }
+                else{
+                    $user_id = Auth::id();
+                }
     			$event = Task::create([
     				'name'		=>	$request->name,
                     'start' => $request->start,
                     'status' => 1,
     				'end'		=>	$request->end,
                     'priority'    =>  4,
-                    'user_id' => Auth::id(),
+                    'user_id' => $user_id,
+                    'team_id'=> $team_id,
     			]);
 
     			return response()->json($event);
