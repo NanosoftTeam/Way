@@ -167,7 +167,7 @@ function myFunction(id1, name) {
                             <tr>
                                 <td class="table-active text-secondary" style="width: 20%">User</td>
                                 <td >
-                                    <select id="user_id2" class="form-control form-control2" name="user_id" value="" required autocomplete="user_id">
+                                    <select id="user_id" class="form-control form-control2" name="user_id" value="" required autocomplete="user_id">
                                         <option class="form-control form-control2" value="">Brak</option>
                                         @foreach($team_users as $user1)
                                             <option class="form-control form-control2" value="{{ $user1->id }}">{{ $user1->name }}</option>
@@ -316,6 +316,8 @@ function myFunction(id1, name) {
     $( document ).ready(function() {
         let parent = @if(isset($_GET['parent'])) {{ $_GET['parent'] }} @else 0 @endif;
         let deadline = @if(isset($_GET['deadline'])) '{{ $_GET['deadline'] }}' @else 'a' @endif;
+        let goal = @if(isset($_GET['goal'])) '{{ $_GET['goal'] }}' @else 'a' @endif;
+        let user1 = @if(isset($_GET['user'])) '{{ $_GET['user'] }}' @else 'a' @endif;
         let l_parent;
 
         
@@ -420,8 +422,8 @@ function myFunction(id1, name) {
         var color = ["secondary", "danger", "warning", "primary", "success"];
 
         $(document).on('click', '#submit2', function() { 
-            $('#edit_task').modal('hide');
             
+            $('#submit2').attr('disabled', true);
             var id11 = $('#submit2').attr('data-id')
             var status22 = document.getElementById('status2').value;
 
@@ -439,8 +441,18 @@ function myFunction(id1, name) {
                 success:function(response)
                 {
                     getArticles(window.location.href);
+                    $('#edit_task').modal('hide');
+                    $('#submit2').attr('disabled', false);
+                    
+                },
+                error: function(response)
+                {
+                    alert("error");
+                    $('#submit2').attr('disabled', false);
+                    getArticles(window.location.href);
                     
                 }
+                
             })
 
             $('#submit2').attr('data-id' , "");
@@ -460,6 +472,22 @@ function myFunction(id1, name) {
             else{
                 document.getElementById("deadline_id").value = 0;
             }
+
+            if(goal != 'a'){
+                document.getElementById("goal_id").value = goal;
+                
+            }
+            else{
+                document.getElementById("goal_id").value = 0;
+            }
+
+            if(user1 != 'a'){
+                document.getElementById("user_id").value = user1;
+                
+            }
+            else{
+                document.getElementById("user_id").value = 0;
+            }
             
             
            
@@ -467,7 +495,8 @@ function myFunction(id1, name) {
 
         
         $(document).on('click', '#submit', function() { 
-            $('#add_task').modal('hide');
+            
+            $('#submit').attr('disabled', true);
             $.ajax({
                 method: "POST",
                 url: "{{ config('app.url', 'Laravel') }}/tasks/new" ,
@@ -480,7 +509,17 @@ function myFunction(id1, name) {
                     
 
                     getArticles(window.location.href);
+                    $('#add_task').modal('hide');
+                    $('#submit').attr('disabled', false);
+                },
+                error: function(response)
+                {
+                    alert("error");
+                    $('#submit').attr('disabled', false);
+                    getArticles(window.location.href);
+                    
                 }
+                
             })
            
         })
@@ -496,6 +535,8 @@ function myFunction(id1, name) {
             window.history.pushState({}, '', window.location.pathname + "?goal=" + $('#select-goal option:selected').val() + "&status=" + $('#select-status option:selected').val() + "&deadline=" + $('#select-deadline option:selected').val() + "&date=" + $('#select-date option:selected').val() + "&parent=" + parent + "&projects=" + only_projects  + "&user=" + $('#select-user option:selected').val() +  "&search=" + $('#search').val());
             //const queryString = window.location.search;
             deadline = $('#select-deadline option:selected').val();
+            goal = $('#select-goal option:selected').val();
+            user1 = $('#select-user option:selected').val();
         });
             
 
