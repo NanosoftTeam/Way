@@ -45,7 +45,7 @@ class Debt extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','contact_id','amount','date','status','description'];
+    protected $fillable = ['name','contact_id','amount','date','status','description','user_id'];
 
 
 

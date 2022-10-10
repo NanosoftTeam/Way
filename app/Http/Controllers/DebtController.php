@@ -6,6 +6,8 @@ use App\Models\Contact;
 use App\Models\Debt;
 use Illuminate\Http\Request;
 
+use Auth;
+
 /**
  * Class DebtController
  * @package App\Http\Controllers
@@ -19,8 +21,8 @@ class DebtController extends Controller
      */
     public function index()
     {
-        $debts = Debt::where('status', '!=', 1)->orderBy("date", "DESC")->paginate();
-        $debts_all_sum = Debt::where("status", "!=", 1)->sum('amount');
+        $debts = Debt::where('user_id', Auth::id())->where('status', '!=', 1)->orderBy("date", "DESC")->paginate();
+        $debts_all_sum = Debt::where('user_id', Auth::id())->where("status", "!=", 1)->sum('amount');
 
         return view('debt.index', compact(['debts', 'debts_all_sum']))
             ->with('i', (request()->input('page', 1) - 1) * $debts->perPage());
@@ -33,7 +35,7 @@ class DebtController extends Controller
      */
     public function index2()
     {
-        $debts = Debt::orderBy("date", "DESC")->paginate();
+        $debts = Debt::where('user_id', Auth::id())->orderBy("date", "DESC")->paginate();
 
         //$debts_all_sum = Debt::where("status", "!=", 1)->sum('amount');
 
@@ -49,7 +51,7 @@ class DebtController extends Controller
     public function create()
     {
         $debt = new Debt();
-        $contacts = Contact::orderBy("name", "ASC")->pluck('name', 'id');
+        $contacts = Contact::where('user_id', Auth::id())->orderBy("name", "ASC")->pluck('name', 'id');
         return view('debt.create', ['debt' => $debt, 'contacts' => $contacts]);
     }
 
@@ -62,6 +64,8 @@ class DebtController extends Controller
     public function store(Request $request)
     {
         request()->validate(Debt::$rules);
+
+        $request['user_id'] = Auth::id();
 
         $debt = Debt::create($request->all());
 
@@ -91,7 +95,7 @@ class DebtController extends Controller
     public function edit($id)
     {
         $debt = Debt::find($id);
-        $contacts = Contact::orderBy("name", "ASC")->pluck('name', 'id');
+        $contacts = Contact::where('user_id', Auth::id())->orderBy("name", "ASC")->pluck('name', 'id');
 
         return view('debt.edit', ['debt' => $debt, 'contacts' => $contacts]);
     }

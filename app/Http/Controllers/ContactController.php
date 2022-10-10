@@ -6,6 +6,8 @@ use App\Models\Contact;
 use App\Models\Debt;
 use Illuminate\Http\Request;
 
+use Auth;
+
 /**
  * Class ContactController
  * @package App\Http\Controllers
@@ -19,7 +21,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::paginate();
+        $contacts = Contact::where('user_id', Auth::id())->paginate();
 
         return view('contact.index', compact('contacts'))
             ->with('i', (request()->input('page', 1) - 1) * $contacts->perPage());
@@ -45,6 +47,8 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         request()->validate(Contact::$rules);
+
+        $request['user_id'] = Auth::id();
 
         $contact = Contact::create($request->all());
 

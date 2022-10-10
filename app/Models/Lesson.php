@@ -35,7 +35,7 @@ class Lesson extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','day','lesson_number','classroom_number','description'];
+    protected $fillable = ['name','day','lesson_number','classroom_number','description','user_id'];
 
 
 

@@ -7,6 +7,8 @@ use App\Models\Settings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+use Auth;
+
 /**
  * Class LessonController
  * @package App\Http\Controllers
@@ -20,8 +22,8 @@ class LessonController extends Controller
      */
     public function index()
     {
-        $lessons = Lesson::orderBy('day')->orderBy('lesson_number')->paginate();
-        $lessons_all = Lesson::orderBy('day')->orderBy('lesson_number')->get();
+        $lessons = Lesson::where('user_id', Auth::id())->orderBy('day')->orderBy('lesson_number')->paginate();
+        $lessons_all = Lesson::where('user_id', Auth::id())->orderBy('day')->orderBy('lesson_number')->get();
 
         $lesson0 = Settings::find(5);
         $lesson1 = Settings::find(6);
@@ -74,6 +76,8 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         request()->validate(Lesson::$rules);
+
+        $request["user_id"] = Auth::id();
 
         $lesson = Lesson::create($request->all());
 
