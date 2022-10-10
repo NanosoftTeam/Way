@@ -377,23 +377,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <blockquote class="blockquote">
-                        <p class="mb-0">
-                            - wyraźne poczucie celu, <br />
-                            - niezachwiana nadzieja, <br />
-                            - wiara w Boga i w Jego nieograniczone możliwości, <br />
-                            - miłość i samoakceptacja, <br />
-                            11 <br />
-                            NICK VUJICIC <br />
-                            - dewiza „postawa to podstawa", <br />
-                            - odważny duch, <br />
-                            - gotowość na zmiany, <br />
-                            - ufne serce, <br />
-                            - głód okazji, <br />
-                            - umiejętność oceny ryzyka i poczucie humoru, <br />
-                            - misja, która pozwala służyć innym,</p>
-                        <footer class="blockquote-footer">Nick Vujicic <cite title="Source Title">Bez rąk, bez nóg, bez ograniczeń!</cite></footer>
-                    </blockquote>
+                    
                 </div>
             </div>
 
