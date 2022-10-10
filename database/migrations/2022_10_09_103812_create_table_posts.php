@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTeamIdColumnToTasksTable extends Migration
+class CreateTablePosts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddTeamIdColumnToTasksTable extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            $table->integer('team_id')->nullable()->default(NULL);
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->string('user_id');
+            $table->text('content');
+            $table->integer('likes');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddTeamIdColumnToTasksTable extends Migration
      */
     public function down()
     {
-        Schema::table('tasks', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('posts');
     }
 }

@@ -38,14 +38,31 @@ class UserController extends Controller
 
     public function apiGetUser(): string
     {
-        $user = Auth::user();
-        return response()->json(['user' => $user, 'success' => true], 200);
+        //$user = Auth::user();
+        //return response()->json(['user' => $user, 'success' => true], 200);
+
+        //get all users
+        $users = User::all();
+        return response()->json(['users' => $users, 'success' => true], 200);
     }
 
     public function apiGetTasks(): string
     {
         $user = Auth::user();
         return response()->json(['tasks' => $user->tasks, 'success' => true], 200);
+    }
+
+    public function apiPostCreateUser(): string
+    {
+        $postUsername = $_POST['username'];
+        $postEmail = $_POST['email'];
+        $postPassword = $_POST['password'];
+        User::create([
+            'name' => $postUsername,
+            'email' => $postEmail,
+            'password' => Hash::make($postPassword),
+        ]);
+        return response()->json(['success' => true], 200);
     }
 
     /**
