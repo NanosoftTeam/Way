@@ -29,7 +29,8 @@ class TeamController extends Controller
 
     public function overflow()
     {
-        return view('team.overflow');
+        $userTasks = Auth::user()->tasks;
+        return view('team.overflow', compact('userTasks'));
     }
 
     /**

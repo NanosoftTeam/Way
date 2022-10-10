@@ -13,8 +13,11 @@ class CreateTablePosts extends Migration
      */
     public function up()
     {
-        Schema::create('table_posts', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
+            $table->text('content');
+            $table->integer('likes');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateTablePosts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_posts');
+        Schema::dropIfExists('posts');
     }
 }

@@ -1,0 +1,462 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+/*USERINFO*/
+
+.userInfo {
+    width: 355px;
+    height: 263px;
+    background: url("../images/v10_2.png") no-repeat center center;
+    background-size: cover;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.userInfoElement {
+    width: 355px;
+    height: 236px;
+    background: rgba(239, 239, 239, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+.userInfoBanner {
+    width: 355px;
+    height: 108px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+.userInfoAvatar {
+    width: 124px;
+    height: 152px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 43px;
+    left: 25px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.userInfoName {
+    width: 86px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 134px;
+    left: 247px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    opacity: 1;
+    text-align: right;
+}
+
+.userInfoTeam {
+    width: 106px;
+    color: rgba(131, 131, 131, 1);
+    position: absolute;
+    top: 205px;
+    left: 34px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    opacity: 1;
+    text-align: left;
+}
+
+/*USER'S TASKS*/
+
+.usersTasks {
+    width: 355px;
+    height: 467px;
+    background-size: cover;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.usersTasksBG {
+    width: 355px;
+    height: 467px;
+    background: rgba(239, 239, 239, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+.usersTasksBGContent {
+    width: 322px;
+    height: 347px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 22px;
+    left: 16px;
+    overflow: hidden;
+}
+
+.usersTasksTitle {
+    width: 255px;
+    position: absolute;
+    top: 0px;
+    left: 67px;
+    font-family: Roboto;
+    font-size: 20px;
+    opacity: 1;
+    text-align: right;
+}
+
+.usersTasksContent {
+    width: 322px;
+    height: 55px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 67px;
+    left: 0px;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+
+.usersTasksForEachTask {
+    width: 322px;
+    height: 55px;
+    background: rgba(235, 235, 235, 1);
+    opacity: 1;
+    position: relative;
+    border-radius: 17px;
+}
+
+.usersTasksifDone {
+    width: 30px;
+    height: 30px;
+    background: rgba(217, 217, 217, 1);
+    opacity: 1;
+    position: absolute;
+    top: 13px;
+    left: 18px;
+    border-radius: 50%;
+}
+
+.usersTasksTaskTitle {
+    width: 222px;
+    color: rgba(71, 71, 71, 1);
+    position: absolute;
+    top: 20px;
+    left: 67px;
+    font-size: 12px;
+    opacity: 1;
+    text-align: left;
+}
+
+.name {
+    color: #fff;
+}
+
+/*SEND POST*/
+
+.postEdit {
+    width: 724px;
+    height: 115px;
+    background-size: cover;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.postEditBG {
+    width: 724px;
+    height: 115px;
+    background: rgba(239, 239, 239, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+.postEditContainer {
+    width: 607px;
+    height: 93px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    overflow: hidden;
+    float: left;
+}
+
+.postEditField {
+    width: 607px;
+    height: 93px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    float: left;
+}
+
+.ctrl1 {
+    display: table;
+}
+
+.postEditSendButton {
+    width: 93px;
+    height: 93px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: -10px;
+    left: 607px;
+    overflow: hidden;
+}
+
+.postEditText {
+    width: 607px;
+    height: 93px;
+    background: rgba(234, 234, 234, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-radius: 17px;
+    overflow: hidden;
+    border: none;
+    padding: 20px;
+}
+
+/*POSTS*/
+
+.posts {
+    width: 724px;
+    height: 810px;
+    background: url("../images/v12_6.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.postsBG {
+    width: 724px;
+    height: 810px;
+    background: rgba(239, 239, 239, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+    overflow: hidden;
+}
+
+.postsCanvas {
+    width: 679px;
+    height: 146px;
+    background: url("../images/v5_17.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 12px;
+    left: 26px;
+    overflow: hidden;
+}
+
+.postsPostCanvaBG {
+    width: 626px;
+    height: 124px;
+    background: rgba(231, 231, 231, 1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 53px;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+    overflow: hidden;
+}
+
+.postsAvatar {
+    width: 77px;
+    height: 77px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 23px;
+    left: 0px;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.postsPostOptions {
+    width: 121px;
+    height: 40px;
+    background: rgba(228, 228, 228, 1);
+    opacity: 1;
+    position: absolute;
+    top: 106px;
+    left: 155px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    overflow: hidden;
+}
+
+.postsPostContent {
+    width: 530px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 44px;
+    left: 119px;
+    font-family: Roboto;
+    font-weight: Regular;
+    font-size: 15px;
+    opacity: 1;
+    text-align: left;
+}
+
+/*TEAM TASKS*/
+
+.teamTasks {
+    width: 355px;
+    height: 467px;
+    background: url("../images/v5_74.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.teamTasksBG {
+    width: 355px;
+    height: 467px;
+    background: rgba(239, 239, 239, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+    overflow: hidden;
+}
+
+.teamTasksContainer {
+    width: 322px;
+    height: 347px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 22px;
+    left: 16px;
+    overflow: hidden;
+}
+
+.teamTasksTitle {
+    width: 255px;
+    position: absolute;
+    top: 0px;
+    left: 67px;
+    font-family: Roboto;
+    font-size: 20px;
+    opacity: 1;
+    text-align: right;
+}
+
+.taskStart {
+    position: relative;
+}
+
+li.teamTasksTask {
+    margin: 0 0 40px 0;
+}
+
+ul.teamTasksUL {
+    top: 50px;
+    position: relative;
+}
+
+.teamTasksTContainer {
+    width: 322px;
+    height: 55px;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    overflow: hidden;
+}
+
+.teamTasksTBG {
+    width: 322px;
+    height: 55px;
+    background: rgba(235, 235, 235, 1);
+    opacity: 1;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+.teamTasksIfDone {
+    width: 30px;
+    height: 30px;
+    background: rgba(217, 217, 217, 1);
+    opacity: 1;
+    position: absolute;
+    top: 13px;
+    left: 18px;
+    border-radius: 50%;
+}
+
+.teamTasksTaskContent {
+    width: 222px;
+    color: rgba(71, 71, 71, 1);
+    position: absolute;
+    top: 20px;
+    left: 67px;
+    font-family: Inter;
+    font-weight: Regular;
+    font-size: 12px;
+    opacity: 1;
+    text-align: left;
+}
