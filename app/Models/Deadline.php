@@ -38,6 +38,11 @@ class Deadline extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
     
     static $rules = [
 		'name' => 'required',
@@ -52,7 +57,7 @@ class Deadline extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','date','type','description','priority','is_planned','user_id'];
+    protected $fillable = ['name','date','type','description','priority','is_planned','user_id','team_id'];
 
 
 

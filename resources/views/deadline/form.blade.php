@@ -31,6 +31,13 @@
             {{ Form::select('is_planned', ["Niezaplanowane ❌", "Zaplanowane 👍"], $deadline->is_planned, ['class' => 'form-control' . ($errors->has('is_planned') ? ' is-invalid' : ''), 'placeholder' => 'Czy zaplanowane?']) }}
             {!! $errors->first('is_planned', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            @if($team_name != "")
+                {{ Form::label("Widoczne dla: ".$team_name) }}
+            @else
+                {{ Form::label("Prywatne") }}
+            @endif
+        </div>
 
     </div>
     <div class="box-footer mt20">

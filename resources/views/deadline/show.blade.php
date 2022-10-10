@@ -59,6 +59,12 @@ function delete1(id1, name) {
                                 <td class="table-active text-secondary" style="width: 20%" data-field="name">Type</td>
                                 <td id="t-name"><b>{{ $deadline->type }}</b></td>
                             </tr>
+                            @isset($deadline->team)
+                            <tr>
+                                <td class="table-active text-secondary" style="width: 20%" data-field="name">Team</td>
+                                <td id="t-name"><b>{{ $deadline->team->name }}</b></td>
+                            </tr>
+                            @endisset
                             <tr>
                                 <td class="table-active text-secondary" style="width: 20%">Opis</td>
                                 <td >{!!nl2br($deadline->description)!!}</td>

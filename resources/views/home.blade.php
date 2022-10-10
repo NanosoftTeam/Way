@@ -1,4 +1,10 @@
-@extends('layouts.app')
+@if(Session::get('team_id') == 0)
+<?php $e = "layouts.app"; ?>
+@else
+<?php $e = "layouts.app3"; ?>
+@endif
+
+@extends($e)
 
 @section('content')
 <div class="container">
@@ -19,6 +25,7 @@
             <script>
                 {!! $post_js !!}
             </script>
+            @if(Session::get('team_id') == 0)
             <style type="text/css">
                 body {
                     background-color: #f9f9fa
@@ -217,6 +224,7 @@
                     border-color: #f54394!important;
                 }
             </style>
+            
 
                     <div class="timeline p-4 block mb-4" style="margin-left: 0px; padding-left: 0px;">
                         @if(date("H:i:s") < "08:30:01" or $date1 != date('Y-m-d'))
@@ -294,6 +302,30 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                    <div class="card">
+                            <div class="card-header">TWOJE Zadania</div>
+
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <?php
+                                            $status  = array("Pomysł", "Do zrobienia", "W trakcie", "Testy", "Gotowe");
+                                            $color = array("secondary", "danger", "warning", "primary", "success");
+                                        ?>
+                                        @foreach($tasks as $task)
+
+                                            <tr>
+                                                <td class="@if($task->duration == NULL) table-active @endif" @if($task->description != NULL and $task->description != "") title="{!! preg_replace('/\s\s+/', '&#13;', $task->description); !!}" @endif><span class="badge badge-pill badge-{{ $color[$task->status] }}">{{ $status[$task->status] }}</span> <a href="{{ route('tasks.show', $task->id) }}">{{ $task->name }} @if($task->description != NULL and $task->description != "") <i class="fa-solid fa-circle-info"></i> @endif</a></td>
+                                                <td><span class="badge badge-light"><i class="fa-solid fa-clock"></i> {{ $task->duration }} min</span><a onclick="window.open('{{ route('tasks.edit2', $task->id) }}', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">  <span class="badge @if(\Carbon\Carbon::parse($task->end.' 21:30:00') < date('Y-m-d H:i:s')) badge-danger @else badge-light @endif">@isset($task->end) <i class="fa-solid fa-clock"></i> {{ \Carbon\Carbon::parse($task->end." 21:30:00")->diffForHumans()  }} @endisset</span> </a></td>
+                                            </tr>
+
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
 
 
 

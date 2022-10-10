@@ -26,6 +26,13 @@
             {{ Form::number('priority', $goal->priority, ['class' => 'form-control' . ($errors->has('priority') ? ' is-invalid' : ''), 'placeholder' => 'Priority']) }}
             {!! $errors->first('priority', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            @if($team_name != "")
+                {{ Form::label("Widoczne dla: ".$team_name) }}
+            @else
+                {{ Form::label("Prywatne") }}
+            @endif
+        </div>
 
     </div>
     <div class="box-footer mt20">

@@ -6,6 +6,7 @@ use App\Models\Important;
 use Illuminate\Http\Request;
 
 use Auth;
+use Session;
 
 /**
  * Class ImportantController
@@ -20,7 +21,18 @@ class ImportantController extends Controller
      */
     public function index()
     {
-        $importants = Important::where('user_id', Auth::id())->paginate();
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
+        $importants = Important::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->paginate();
 
         return view('important.index', compact('importants'))
             ->with('i', (request()->input('page', 1) - 1) * $importants->perPage());
@@ -34,7 +46,11 @@ class ImportantController extends Controller
     public function create()
     {
         $important = new Important();
-        return view('important.create', compact('important'));
+        $team_name = "";
+        if(Session::get('team_id') != 0){
+            $team_name = Auth::user()->team->name;
+        }
+        return view('important.create', compact(['important','team_name']));
     }
 
     /**
@@ -47,7 +63,12 @@ class ImportantController extends Controller
     {
         request()->validate(Important::$rules);
 
-        $request["user_id"] = Auth::id();
+        if(Session::get('team_id') != 0){
+            $request['team_id'] = Session::get('team_id');
+        }
+        else{
+            $request['user_id'] = Auth::id();
+        }
 
         $important = Important::create($request->all());
 
@@ -82,8 +103,12 @@ class ImportantController extends Controller
     public function edit($id)
     {
         $important = Important::find($id);
+        $team_name = "";
+        if(Session::get('team_id') != 0){
+            $team_name = Auth::user()->team->name;
+        }
 
-        return view('important.edit', compact('important'));
+        return view('important.edit', compact(['important','team_name']));
     }
 
     /**
@@ -97,7 +122,10 @@ class ImportantController extends Controller
     {
         request()->validate(Important::$rules);
 
-        $request["user_id"] = Auth::id();
+        if($request['is_planned'] == NULL){
+            $request['is_planned'] = 0;
+        }
+
 
         $important->update($request->all());
 

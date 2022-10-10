@@ -1,4 +1,10 @@
-@extends('layouts.app')
+@if(Session::get('team_id') == 0)
+<?php $e = "layouts.app"; ?>
+@else
+<?php $e = "layouts.app3"; ?>
+@endif
+
+@extends($e)
 
 @section('javascript2')
 function myFunction(id1, name) {
@@ -38,6 +44,7 @@ function myFunction(id1, name) {
         </div>
         <div class="card-header collapse multi-collapse" id="collapse-filters">
             <div class="form-inline">
+                <input name="search" id="search" placeholder="Szukaj" type="text" class="form-control float-left select-f" style="width: 180px;">
                 <select class="form-control select-f" id="select-goal" style="width: 180px;">
                     <option value="a" class="">Wszystkie cele</option>
                     <option value="b">Brak</option>
@@ -67,7 +74,15 @@ function myFunction(id1, name) {
                     <option value="2">Bez daty</option>
                     <option value="3">Przeterminowane</option>
                 </select>
-                <input name="search" id="search" placeholder="Szukaj" type="text" class="form-control float-left select-f" style="width: 180px;">
+                <select class="form-control select-f" id="select-user" style="width: 180px;">
+                    <option value="a" class="">Wszystkie osoby</option>
+                    @if(Session::get('team_id') != 0)
+                    <option value="b">Brak osoby</option>
+                    @foreach($users as $user)
+                        <option class="form-control" value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                    @endif
+                </select>
             </div>
         </div>
 
@@ -147,13 +162,31 @@ function myFunction(id1, name) {
                             <tr>
                                 <td class="table-active text-secondary" style="width: 20%">Deadline</td>
                                 <td ><input name="end" id="end" type="date" class="form-control form-control2"></td>
-                            </tr>      
+                            </tr>
+                            @if(Session::get('team_id') != 0)
+                            <tr>
+                                <td class="table-active text-secondary" style="width: 20%">User</td>
+                                <td >
+                                    <select id="user_id2" class="form-control form-control2" name="user_id" value="" required autocomplete="user_id">
+                                        <option class="form-control form-control2" value="">Brak</option>
+                                        @foreach($team_users as $user1)
+                                            <option class="form-control form-control2" value="{{ $user1->id }}">{{ $user1->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            @endif  
                         </tbody>
                     </table>
 
 
 
                     </form>
+                    @if(Session::get('team_id') != 0)
+                    Widoczne dla {{ Auth::user()->team->name }}
+                    @else
+                    Prywatne
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="submit" data-id="" >Zapisz</button>
@@ -229,10 +262,28 @@ function myFunction(id1, name) {
                         <tr>
                             <td class="table-active text-secondary" style="width: 20%">Deadline</td>
                             <td ><input name="end" id="end2" type="date" class="form-control form-control2"></td>
-                        </tr>      
+                        </tr>
+                        @if(Session::get('team_id') != 0)
+                        <tr>
+                            <td class="table-active text-secondary" style="width: 20%">User</td>
+                            <td >
+                                <select id="user_id2" class="form-control form-control2" name="user_id" value="" required autocomplete="user_id">
+                                    <option class="form-control form-control2" value="">Brak</option>
+                                    @foreach($team_users as $user1)
+                                        <option class="form-control form-control2" value="{{ $user1->id }}">{{ $user1->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+                        @endif
                     </tbody>
                     </table>
                     </form>
+                    @if(Session::get('team_id') != 0)
+                    Widoczne dla {{ Auth::user()->team->name }}
+                    @else
+                    Prywatne
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="submit2" data-id="" >Zapisz</button>
@@ -294,6 +345,9 @@ function myFunction(id1, name) {
                         document.getElementById('description2').value = obj.description;
                         document.getElementById('duration2').value = obj.duration;
                         document.getElementById('end2').value = obj.end;
+                        @if(Session::get('team_id') != 0)
+                            document.getElementById('user_id2').value = obj.user_id;
+                        @endif
                     }
                 })
             
@@ -438,8 +492,8 @@ function myFunction(id1, name) {
             if($("#only-projects").is(":checked")){
                 only_projects = 1;
             }
-            getArticles(window.location.pathname + "?goal=" + $('#select-goal option:selected').val() + "&status=" + $('#select-status option:selected').val() + "&deadline=" + $('#select-deadline option:selected').val() + "&date=" + $('#select-date option:selected').val() + "&parent=" + parent + "&projects=" + only_projects + "&search=" + $('#search').val());
-            window.history.pushState({}, '', window.location.pathname + "?goal=" + $('#select-goal option:selected').val() + "&status=" + $('#select-status option:selected').val() + "&deadline=" + $('#select-deadline option:selected').val() + "&date=" + $('#select-date option:selected').val() + "&parent=" + parent + "&projects=" + only_projects + "&search=" + $('#search').val());
+            getArticles(window.location.pathname + "?goal=" + $('#select-goal option:selected').val() + "&status=" + $('#select-status option:selected').val() + "&deadline=" + $('#select-deadline option:selected').val() + "&date=" + $('#select-date option:selected').val() + "&parent=" + parent + "&projects=" + only_projects + "&user=" + $('#select-user option:selected').val() + "&search=" + $('#search').val());
+            window.history.pushState({}, '', window.location.pathname + "?goal=" + $('#select-goal option:selected').val() + "&status=" + $('#select-status option:selected').val() + "&deadline=" + $('#select-deadline option:selected').val() + "&date=" + $('#select-date option:selected').val() + "&parent=" + parent + "&projects=" + only_projects  + "&user=" + $('#select-user option:selected').val() +  "&search=" + $('#search').val());
             //const queryString = window.location.search;
             deadline = $('#select-deadline option:selected').val();
         });
@@ -452,6 +506,7 @@ function myFunction(id1, name) {
         $('#collapse-filters').collapse('show');
         @endif
         @if(isset($_GET['search'])) document.getElementById('search').value = '{{ $_GET['search'] }}'; @endif
+        @if(isset($_GET['user'])) document.getElementById('select-user').value = '{{ $_GET['user'] }}'; @endif
         @if(isset($_GET['projects']) and $_GET['projects'] == 1) $("#only-projects").prop('checked', true); @endif
         
             

@@ -40,7 +40,7 @@ class Important extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','type','url','description','user_id'];
+    protected $fillable = ['name','type','url','description','user_id','team_id'];
 
 
 

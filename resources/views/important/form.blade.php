@@ -21,6 +21,13 @@
             {{ Form::textarea('description', $important->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description']) }}
             {!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            @if($team_name != "")
+                {{ Form::label("Widoczne dla: ".$team_name) }}
+            @else
+                {{ Form::label("Prywatne") }}
+            @endif
+        </div>
 
     </div>
     <div class="box-footer mt20">

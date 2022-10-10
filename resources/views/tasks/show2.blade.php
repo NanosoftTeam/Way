@@ -47,7 +47,13 @@ $category  = array("Mine-imator", "MCreator", "MC Animation");
                 <tr>
                     <td class="table-active text-secondary" style="width: 20%">Deadline</td>
                     <td >{{ $task->end }} @if($task->end <= date('Y-m-d') and $task->status != 4 and $task->end != NULL) <span class="badge badge-pill badge-danger">termin!</span> @endif</td>
-                </tr>      
+                </tr>
+                @if($task->team != NULL)
+                <tr>
+                    <td class="table-active text-secondary" style="width: 20%">Team/osoba</td>
+                    <td > {{ $task->team->name. " / " }} {{ $task->user->name ?? 'brak osoby' }}</td>
+                </tr>
+                @endif    
             </tbody>
         </table>
 </div>

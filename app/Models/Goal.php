@@ -38,6 +38,11 @@ class Goal extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
     
     static $rules = [
 		'name' => 'required',
@@ -51,7 +56,7 @@ class Goal extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','description','deadline_id','type','priority','user_id'];
+    protected $fillable = ['name','description','deadline_id','type','priority','user_id','team_id'];
 
 
 

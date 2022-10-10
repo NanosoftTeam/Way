@@ -22,9 +22,22 @@ class TeamController extends Controller
     public function index()
     {
         $teams = Team::paginate();
-        Session::put('team_id', Auth::user()->team_id);
+        //Session::put('team_id', Auth::user()->team_id);
         return view('team.index', compact('teams'))
             ->with('i', (request()->input('page', 1) - 1) * $teams->perPage());
+    }
+
+    public function index2()
+    {
+        $team = Auth::user()->team;
+        $actual_team = 0;
+        if(Session::get('team_id') == 0){
+            $actual_team = 0;
+        }
+        else{
+            $actual_team = Session::get('team_id');
+        }
+        return view('team.index2', compact(['team', 'actual_team']));
     }
 
     public function overflow()
@@ -125,6 +138,18 @@ class TeamController extends Controller
     {
         Session::put('team_id', 0);
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('team.index2');
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function team_enter()
+    {
+        Session::put('team_id', Auth::user()->team_id);
+
+        return redirect()->route('team.index2');
     }
 }

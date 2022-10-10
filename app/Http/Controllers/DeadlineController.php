@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deadline;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 use Auth;
+use Session;
 
 /**
  * Class DeadlineController
@@ -20,7 +22,19 @@ class DeadlineController extends Controller
      */
     public function index()
     {
-        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->paginate();
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
+        
+        $deadlines = Deadline::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->orderBy("date", "ASC")->orderBy("priority", "ASC")->paginate();
 
         return view('deadline.index', compact('deadlines'))
             ->with('i', (request()->input('page', 1) - 1) * $deadlines->perPage());
@@ -34,7 +48,11 @@ class DeadlineController extends Controller
     public function create()
     {
         $deadline = new Deadline();
-        return view('deadline.create', compact('deadline'));
+        $team_name = "";
+        if(Session::get('team_id') != 0){
+            $team_name = Auth::user()->team->name;
+        }
+        return view('deadline.create', compact(['deadline', 'team_name']));
     }
 
     /**
@@ -51,7 +69,12 @@ class DeadlineController extends Controller
             $request['is_planned'] = 0;
         }
 
-        $request['user_id'] = Auth::id();
+        if(Session::get('team_id') != 0){
+            $request['team_id'] = Session::get('team_id');
+        }
+        else{
+            $request['user_id'] = Auth::id();
+        }
 
         $deadline = Deadline::create($request->all());
 
@@ -81,8 +104,12 @@ class DeadlineController extends Controller
     public function edit($id)
     {
         $deadline = Deadline::find($id);
+        $team_name = "";
+        if(Session::get('team_id') != 0){
+            $team_name = Auth::user()->team->name;
+        }
 
-        return view('deadline.edit', compact('deadline'));
+        return view('deadline.edit', compact(['deadline', 'team_name']));
     }
 
     /**
@@ -100,7 +127,6 @@ class DeadlineController extends Controller
             $request['is_planned'] = 0;
         }
 
-        $request['user_id'] = Auth::id();
 
         $deadline->update($request->all());
 

@@ -60,6 +60,12 @@ function delete1(id1, name) {
                                 <td class="table-active text-secondary" style="width: 20%" data-field="name">Type</td>
                                 <td id="t-name"><b>{{ $goal->type }}</b></td>
                             </tr>
+                            @isset($goal->team)
+                            <tr>
+                                <td class="table-active text-secondary" style="width: 20%" data-field="name">Team</td>
+                                <td id="t-name"><b>{{ $goal->team->name }}</b></td>
+                            </tr>
+                            @endisset
                             
                         </tbody>
                         </table>

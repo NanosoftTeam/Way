@@ -27,6 +27,21 @@ class Team extends Model
         return $this->hasMany(User::class);
     }
     
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function deadlines()
+    {
+        return $this->hasMany(Deadline::class);
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+    
     static $rules = [
 		'name' => 'required',
     ];

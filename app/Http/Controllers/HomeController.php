@@ -13,6 +13,7 @@ use App\Models\Lesson;
 use \Datetime;
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 use function PHPUnit\Framework\returnValue;
 
 class HomeController extends Controller
@@ -33,29 +34,62 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {   
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
+
         $date1 = date("Y-m-d");
         if(isset($_GET["date"])){
             $date1 = $_GET["date"];
-            $tasks = Task::where('user_id', Auth::id())->where('status', "!=", 4)
+            $tasks = Task::when($actual_user_team, function ($query, $actual_user_team) {
+                if($actual_user_team == 'x'){
+                    return $query->where('user_id', Auth::id())->where('team_id', NULL);
+                }
+                else{
+                    return $query->where('team_id', $actual_user_team)->where('user_id', Auth::id());
+                }
+            })->where('status', "!=", 4)
                 ->where('end', '!=', '')
                 ->orderBy('duration', 'desc')
                 ->where('end', $date1)
                 ->get();
         }
         else{
-            $tasks = Task::where('user_id', Auth::id())->where('status', "!=", 4)
+            $tasks = Task::when($actual_user_team, function ($query, $actual_user_team) {
+                if($actual_user_team == 'x'){
+                    return $query->where('user_id', Auth::id())->where('team_id', NULL);
+                }
+                else{
+                    return $query->where('team_id', $actual_user_team)->where('user_id', Auth::id());
+                }
+            })->where('status', "!=", 4)
                 ->where('end', '!=', '')
                 ->orderBy('duration', 'desc')
                 ->where('end', '<=', $date1)
                 ->get();
 
-            $duration1 = Task::where('user_id', Auth::id())->where('status', 4)
+            $duration1 = Task::when($actual_user_team, function ($query, $actual_user_team) {
+                if($actual_user_team == 'x'){
+                    return $query->where('user_id', Auth::id())->where('team_id', NULL);
+                }
+                else{
+                    return $query->where('team_id', $actual_user_team)->where('user_id', Auth::id());
+                }
+            })->where('status', 4)
                 ->where('end', '!=', '')
                 ->where('end', $date1)
                 ->sum("duration");
 
-            $duration2 = Task::where('user_id', Auth::id())->where('end', '!=', '')
+            $duration2 = Task::when($actual_user_team, function ($query, $actual_user_team) {
+                if($actual_user_team == 'x'){
+                    return $query->where('user_id', Auth::id())->where('team_id', NULL);
+                }
+                else{
+                    return $query->where('team_id', $actual_user_team)->where('user_id', Auth::id());
+                }
+            })->where('end', '!=', '')
                 ->where('end', $date1)
                 ->sum("duration");
 
@@ -92,7 +126,14 @@ class HomeController extends Controller
         $jutro = $jutro->format('Y-m-d');
 
 
-        $deadlines = Deadline::where('user_id', Auth::id())->where('date', '<=', $date2)->orderBy('date', 'asc')->orderBy('priority', 'asc')->get();
+        $deadlines = Deadline::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->where('date', '<=', $date2)->orderBy('date', 'asc')->orderBy('priority', 'asc')->get();
         //$deadlines_tommorow = Deadline::where('user_id', Auth::id())->where('date', $date2)->orderBy('priority', 'asc')->get();
         $duration = $tasks->sum("duration");
         $lessons = Lesson::where('day', $dayOfTheWeek)->orderBy('lesson_number', 'asc')->get();
@@ -117,7 +158,14 @@ class HomeController extends Controller
         }
 
 
-        $importants = Important::where('user_id', Auth::id())->get();
+        $importants = Important::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id())->where('team_id', NULL);
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->get();
 
         return view('home', [
             'changes' => $changes,

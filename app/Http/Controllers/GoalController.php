@@ -7,6 +7,7 @@ use App\Models\Goal;
 use Illuminate\Http\Request;
 
 use Auth;
+use Session;
 
 /**
  * Class GoalController
@@ -21,7 +22,19 @@ class GoalController extends Controller
      */
     public function index()
     {
-        $goals = Goal::where('user_id', Auth::id())->orderBy('priority', "asc")->paginate();
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
+
+        $goals = Goal::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->orderBy('priority', "asc")->paginate();
 
         return view('goal.index', compact('goals'))
             ->with('i', (request()->input('page', 1) - 1) * $goals->perPage());
@@ -36,7 +49,11 @@ class GoalController extends Controller
     {
         $goal = new Goal();
         $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->pluck('name', 'id');
-        return view('goal.create', ['goal' => $goal, 'deadlines' => $deadlines]);
+        $team_name = "";
+        if(Session::get('team_id') != 0){
+            $team_name = Auth::user()->team->name;
+        }
+        return view('goal.create', ['goal' => $goal, 'deadlines' => $deadlines, 'team_name' => $team_name]);
     }
 
     /**
@@ -49,7 +66,12 @@ class GoalController extends Controller
     {
         request()->validate(Goal::$rules);
 
-        $request['user_id'] = Auth::id();
+        if(Session::get('team_id') != 0){
+            $request['team_id'] = Session::get('team_id');
+        }
+        else{
+            $request['user_id'] = Auth::id();
+        }
 
         $goal = Goal::create($request->all());
 
@@ -80,8 +102,12 @@ class GoalController extends Controller
     {
         $goal = Goal::find($id);
         $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "DESC")->orderBy("priority", "ASC")->pluck('name', 'id');
+        $team_name = "";
+        if(Session::get('team_id') != 0){
+            $team_name = Auth::user()->team->name;
+        }
 
-        return view('goal.edit', ['goal' => $goal, 'deadlines' => $deadlines]);
+        return view('goal.edit', ['goal' => $goal, 'deadlines' => $deadlines, 'team_name' => $team_name]);
     }
 
     /**
@@ -95,7 +121,6 @@ class GoalController extends Controller
     {
         request()->validate(Goal::$rules);
 
-        $request['user_id'] = Auth::id();
 
         $goal->update($request->all());
 

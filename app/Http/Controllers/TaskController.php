@@ -24,12 +24,30 @@ class TaskController extends Controller
      *
      * @return string
      */
-    public function index(Request $request): string
+    public function index(Request $request)
     {
-        $users = User::all();
-        $deadlines = Deadline::where('user_id', Auth::id())->orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
+        $users = Auth::user()->team->users;
+        $deadlines = Deadline::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
         $tasks_all = Task::where('user_id', Auth::id())->orderBy('end', 'desc')->orderBy('status', 'asc')->get();
-        $goals = Goal::where('user_id', Auth::id())->orderBy('priority', 'asc')->get();
+        $goals = Goal::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id());
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })->orderBy('priority', 'asc')->get();
 
         $if_date = $request['date'];
         $if_deadline = $request['deadline'];
@@ -38,6 +56,7 @@ class TaskController extends Controller
         $if_parent = $request['parent'];
         $if_only_projects = $request['projects'];
         $if_search = $request['search'];
+        $if_user = $request['user'];
 
         if($if_status == '0'){
             $if_status = 100;
@@ -57,8 +76,32 @@ class TaskController extends Controller
         if(!isset($request['status'])){
             $if_status = 200;
         }
+        $actual_user_team = Session::get('team_id');
+        if($actual_user_team == 0){
+            $actual_user_team = 'x';
+        }
 
-        $tasks = Task::where('user_id', Auth::id())->when($if_search, function ($query, $if_search) {
+
+        $tasks = Task::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id())->where('team_id', NULL);
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })
+        ->when($if_user, function ($query, $if_user) {
+            if($if_user == 'a'){
+                
+            }
+            else if($if_user == 'b'){
+                return $query->where('user_id', NULL);
+            }
+            else{
+                return $query->where('user_id', $if_user);
+            }
+        })
+        ->when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
         })
         ->when($if_date, function ($query, $if_date) {
@@ -139,7 +182,26 @@ class TaskController extends Controller
             //}
         }
 
-        $tasks = Task::where('user_id', Auth::id())->when($if_search, function ($query, $if_search) {
+        $tasks = Task::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id())->where('team_id', NULL);
+            }
+            else{
+                return $query->where('team_id', $actual_user_team);
+            }
+        })
+        ->when($if_user, function ($query, $if_user) {
+            if($if_user == 'a'){
+                
+            }
+            else if($if_user == 'b'){
+                return $query->where('user_id', NULL);
+            }
+            else{
+                return $query->where('user_id', $if_user);
+            }
+        })
+        ->when($if_search, function ($query, $if_search) {
             return $query->where('name', 'like', '%'.$if_search.'%');
         })
         ->when($if_date, function ($query, $if_date) {
@@ -231,6 +293,10 @@ class TaskController extends Controller
             //return $tasks_g;
             return view('tasks.load', ['tasks' => $tasks, 'parent' => $if_parent])->render();
         }
+        $team_users = "";
+        if(Session::get('team_id') != 0){
+            $team_users = User::where('team_id', Session::get('team_id'))->get();
+        }
 
         return view('tasks.index', [
             'tasks' => $tasks,
@@ -240,6 +306,7 @@ class TaskController extends Controller
             'deadlines' => $deadlines,
             'parent' => $if_parent,
             'potrzebne_projekty' => $potrzebne_projekty,
+            'team_users' => $team_users,
         ]);
     }
 
@@ -269,8 +336,12 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $task = new Task($request->all());
-        $task->user_id = Auth::id();
-        $task->team_id = Session::get('team_id');
+        if(Session::get('team_id') != 0){
+            $task->team_id = Session::get('team_id');
+        }
+        else{
+            $task->user_id = Auth::id();
+        }
         $task->save();
 
         if($request->parent_id != NULL){
@@ -387,7 +458,6 @@ class TaskController extends Controller
         $parent_id = $task->parent_id;
 
         $task->fill($request->all());
-        $task->user_id = Auth::id();
         $task->save();
 
         if($request->parent_id != $parent_id){

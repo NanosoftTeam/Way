@@ -117,6 +117,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
+                    
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -129,14 +130,25 @@
                                 </li>
                             @endif
                         @else
+                        
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    @if(Session::get('team_id') != 0) @isset(Auth::user()->team) <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> @endisset @else <span class="badge badge-secondary">Personal</span>  @endif <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
+                                    @if(Session::get('team_id') != 0)
+                                        @isset(Auth::user()->team)
+                                            <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> 
+                                        @endisset
+                                    @else
+                                        <span class="badge badge-secondary">Personal</span>  
+                                    @endif
+                                    <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('dashboard2') }}">
-                                    <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
+                                    <a class="dropdown-item" href="{{ route('dashboard2') }}">  
+                                        <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('team.enter') }}">
+                                        <i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> Wejdź do teamu
                                     </a>
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         <i class="fa-solid fa-gear" style="margin-right: 3px;"></i> Ustawienia

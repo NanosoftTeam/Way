@@ -168,6 +168,9 @@
                                     <a class="dropdown-item" href="{{ route('dashboard2') }}">
                                     <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('team.exit') }}">
+                                        <i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> Wyjdź z teamu
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         <i class="fa-solid fa-gear" style="margin-right: 3px;"></i> Ustawienia
                                     </a>
