@@ -52,7 +52,28 @@ class LessonController extends Controller
 
     public function apiGetLessons(): JsonResponse
     {
-        $lessons = Lesson::orderBy('day')->orderBy('lesson_number')->get();
+        $lesson0 = Settings::find(5);
+        $lesson1 = Settings::find(6);
+        $lesson2 = Settings::find(7);
+        $lesson3 = Settings::find(8);
+        $lesson4 = Settings::find(9);
+        $lesson5 = Settings::find(10);
+        $lesson6 = Settings::find(11);
+        $lesson7 = Settings::find(12);
+        $lesson8 = Settings::find(13);
+        $lesson9 = Settings::find(14);
+        $lesson10 = Settings::find(15);
+
+        $lessons_times = array($lesson0, $lesson1, $lesson2, $lesson3, $lesson4, $lesson5, $lesson6, $lesson7, $lesson8, $lesson9, $lesson10);
+
+        $actual_lesson_number = 0;
+        foreach($lessons_times as $lesson){
+            if($lesson->content3 >= date('H:i:s')){
+                $actual_lesson_number = $lesson->id - 5;
+            }
+        }
+
+        $lessons = Lesson::where('user_id', Auth::id())->where('day', $dayOfTheWeek)->where('lesson_number', '>=', $actual_lesson_number)->orderBy('lesson_number', 'asc')->get();
         return response()->json(['lessons' => $lessons, 'success' => true], 200);
     }
 
