@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://127.0.0.1:8000/wiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://127.0.0.1:8000/wiki/feed.php">
+        <title>wayapp</title>
+        <description></description>
+        <link>http://127.0.0.1:8000/wiki/</link>
+        <image rdf:resource="http://127.0.0.1:8000/wiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2022-12-03T13:45:01+00:00</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://127.0.0.1:8000/wiki/doku.php?id=wi:s&amp;rev=1670074944&amp;do=diff"/>
+                <rdf:li rdf:resource="http://127.0.0.1:8000/wiki/doku.php?id=start&amp;rev=1670074781&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://127.0.0.1:8000/wiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title>wayapp</title>
+        <link>http://127.0.0.1:8000/wiki/</link>
+        <url>http://127.0.0.1:8000/wiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://127.0.0.1:8000/wiki/doku.php?id=wi:s&amp;rev=1670074944&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2022-12-03T13:42:24+00:00</dc:date>
+        <dc:creator>norwagov (norwagov@undisclosed.example.com)</dc:creator>
+        <title>wi:s - created</title>
+        <link>http://127.0.0.1:8000/wiki/doku.php?id=wi:s&amp;rev=1670074944&amp;do=diff</link>
+        <description></description>
+    </item>
+    <item rdf:about="http://127.0.0.1:8000/wiki/doku.php?id=start&amp;rev=1670074781&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2022-12-03T13:39:41+00:00</dc:date>
+        <dc:creator>norwagov (norwagov@undisclosed.example.com)</dc:creator>
+        <title>start - created</title>
+        <link>http://127.0.0.1:8000/wiki/doku.php?id=start&amp;rev=1670074781&amp;do=diff</link>
+        <description></description>
+    </item>
+</rdf:RDF>
