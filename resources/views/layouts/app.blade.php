@@ -117,7 +117,26 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    
+                    @guest
+                    @else
+                        <div class="btn-group">
+                            <button class="btn btn-link btn-sm dropdown-toggle text-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @if(Session::get('team_id') != 0)
+                                            @isset(Auth::user()->team)
+                                                <span class="badge badge-secondary"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> {{ Auth::user()->team->name }}</span> 
+                                            @endisset
+                                        @else
+                                            <span class="badge badge-secondary"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> Personal</span>  
+                                        @endif 
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('team.exit') }}"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> <span class="badge badge-secondary">Personal</span>  </a>
+                                @isset(Auth::user()->team)
+                                    <a class="dropdown-item" href="{{ route('team.enter') }}"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> </a>
+                                @endisset
+                            </div>
+                        </div>
+                    @endguest
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -133,13 +152,7 @@
                         
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    @if(Session::get('team_id') != 0)
-                                        @isset(Auth::user()->team)
-                                            <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> 
-                                        @endisset
-                                    @else
-                                        <span class="badge badge-secondary">Personal</span>  
-                                    @endif
+
                                     <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
                                 </a>
 
@@ -147,11 +160,6 @@
                                     <a class="dropdown-item" href="{{ route('dashboard2') }}">  
                                         <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
                                     </a>
-                                    @if(Auth::user()->team_id != NULL)
-                                    <a class="dropdown-item" href="{{ route('team.enter') }}">
-                                        <i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> Wejdź do teamu
-                                    </a>
-                                    @endif
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         <i class="fa-solid fa-gear" style="margin-right: 3px;"></i> Ustawienia
                                     </a>

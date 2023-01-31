@@ -22,8 +22,8 @@ class GoalController extends Controller
      */
     public function index()
     {
-        $actual_user_team = Session::get('team_id');
-        if($actual_user_team == 0){
+        $actual_user_team = Auth::user()->team_id;
+        if(Session::get('team_id') == 0){
             $actual_user_team = 'x';
         }
 

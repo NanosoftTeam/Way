@@ -26,8 +26,8 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $actual_user_team = Session::get('team_id');
-        if($actual_user_team == 0){
+        $actual_user_team = Auth::user()->team_id;
+        if(Session::get('team_id') == 0){
             $actual_user_team = 'x';
         }
         $users = Auth::user()->team->users;
@@ -317,8 +317,8 @@ class TaskController extends Controller
      */
     public function index2(Request $request)
     {
-        $actual_user_team = Session::get('team_id');
-        if($actual_user_team == 0){
+        $actual_user_team = Auth::user()->team_id;
+        if(Session::get('team_id') == 0){
             $actual_user_team = 'x';
         }
         $users = Auth::user()->team->users;

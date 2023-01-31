@@ -31,6 +31,7 @@ function myFunction(id1, name) {
 @section('content')
 
 <div class="container">
+    @if(Session::get('team_id') == 0)
     <div class="card">
         <div class="card-header">
             <b>Notatki</b> | 
@@ -54,6 +55,11 @@ function myFunction(id1, name) {
                     </section>
         </div>
     </div>
+    @else
+    <div class="alert alert-warning" role="alert">
+        Ten moduł jest dostępny tylko w wersji personal
+    </div>
+    @endif
     
 </div>
 

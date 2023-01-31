@@ -33,60 +33,33 @@ function delete1(id1, name) {
 
 @section('content')
     <div class="container">
+        <div class="alert alert-primary" role="alert">
+            Tutaj możesz przełączać się między zespołową, a prywatną przestrzenią roboczą.
+        </div>
         <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                            <span id="card_title">
-                                Twoje zespoły
-                            </span>
-
+            <div class="col-sm">
+                <div class="list-group">
+                    <li class="list-group-item disabled">Twoje zespoły:</li>
+                    <a href="{{ route('team.exit') }}" class="list-group-item list-group-item-action flex-column align-items-start @if($actual_team == 0) active @endif">
+                        <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">WayApp Personal</h5>
+                        <small>@if($actual_team == 0)<b>Aktualna przestrzeń robocza</b>@endif</small>
                         </div>
-                    </div>
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{ $message }}</p>
-                        </div>
+                        <p class="mb-1">Twoja prywatna przestrzeń robocza</p>
+                    </a>
+                    @if(Auth::user()->team_id != NULL)
+                        <a href="{{ route('team.enter') }}" class="list-group-item list-group-item-action flex-column align-items-start @if($actual_team != 0) active @endif">
+                            <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ $team->name }}</h5>
+                            <small>@if($actual_team != 0) <b>Aktualna przestrzeń robocza</b> @endif</small>
+                            </div>
+                            <p class="mb-1">{{ $team->description }}</p>
+                        </a>
                     @endif
-
-                    <div class="card-body">
-                        <div class="alert alert-primary" role="alert">
-                            Tutaj możesz przełączać się między zespołową, a prywatną przestrzenią roboczą.
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-										<th>Name</th>
-										<th>Description</th>
-
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr class="@if($actual_team == 0) table-success @endif">
-											<td>@if($actual_team == 0) <span class="badge badge-success">Aktualna przestrzeń robocza</span> @endif WayApp Personal</td>
-											<td></td>
-
-                                            <td>
-                                                @if($actual_team != 0) <a class="btn btn-sm btn-primary " href="{{ route('team.exit') }}"><i class="fa-solid fa-arrow-right"></i> Wejdź</a>@endif
-                                            </td>
-                                        </tr>
-                                        <tr class="@if($actual_team != 0) table-success @endif">
-											<td>@if($actual_team != 0) <span class="badge badge-success">Aktualna przestrzeń robocza</span> @endif {{ $team->name }}</td>
-											<td>{{ $team->description }}</td>
-
-                                            <td>
-                                                @if($actual_team == 0)<a class="btn btn-sm btn-primary " href="{{ route('team.enter') }}"><i class="fa-solid fa-arrow-right"></i> Wejdź</a> @endif
-                                            </td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
+            </div>
+            <div class="col-sm  align-self-center text-center">
+                <button type="button" class="btn btn-primary"><a class="text-dark" href="{{ route('teams.index') }}"><i class="fa-solid fa-pen"></i> Twórz i zarządzaj zespołami</a></button>
             </div>
         </div>
     </div>

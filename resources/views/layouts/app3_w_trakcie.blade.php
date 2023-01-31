@@ -38,6 +38,10 @@
 
     <!--NORWAGOV STYLES-->
     <style>
+        body {
+            background-color: #dedede;
+        }
+
         .dropdown-divider {
             height: 0;
             margin: 0.5rem 0;
@@ -82,6 +86,41 @@
             background-image: linear-gradient(0deg, #343a40, #2a2f34) !important;
         }
 
+        .subnavbar {
+            background-color: #1f1f1f;
+            color: white;
+            height: 35px;
+            padding: 5px;
+            position: relative;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: white;
+        }
+
+        .vertical-item{
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+            padding: 3%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .searchbar {
+            background-color: #1f1f1f;
+            color: white;
+            height: 35px;
+            padding: 7px;
+            border: none;
+            margin-left: 50px;
+            display: flex;
+            width: 400px;
+            position: absolute;
+            margin-top: -1px;
+        }
+
     </style>
 
     <!-- Other -->
@@ -104,39 +143,18 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
-                            <a style="margin-left: 20px;" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
+                            <a style="margin-left: 20px" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
+                            <label>
+                                <input class="searchbar" type="text" placeholder="Search for posts or any other kind of data." disabled/>
+                            </label>
                             @can('isIT')
-                                <a class="dropdown-item text-light" href="{{ route('tasks.index2') }}">Zadania</a>
-                                <a class="dropdown-item text-light" href="{{ route('goals.index') }}">Cele</a>
-                                <a class="dropdown-item text-light" href="{{ route('calendar.index') }}">Kalendarz</a>
-                                <a class="dropdown-item text-light" href="{{ route('deadlines.index') }}">Deadliney</a>
-                                <a class="dropdown-item text-light" href="{{ route('gradebook.index') }}">Oceny</a>
-                                <a class="dropdown-item text-light" href="{{ route('dashboard2') }}"><i class="fa-solid fa-rectangle-list" style="margin-right: 3px;"></i>Aplikacje</a>
+
                             @endcan
                         @endguest
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    @guest
-                    @else
-                        <div class="btn-group">
-                            <button class="btn btn-link btn-sm dropdown-toggle text-light" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        @if(Session::get('team_id') != 0)
-                                            @isset(Auth::user()->team)
-                                                <span class="badge badge-secondary"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> {{ Auth::user()->team->name }}</span> 
-                                            @endisset
-                                        @else
-                                            <span class="badge badge-secondary"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> Personal</span>  
-                                        @endif 
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('team.exit') }}"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> <span class="badge badge-secondary">Personal</span>  </a>
-                                @isset(Auth::user()->team)
-                                    <a class="dropdown-item" href="{{ route('team.enter') }}"><i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> </a>
-                                @endisset
-                            </div>
-                        </div>
-                    @endguest
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -149,16 +167,17 @@
                                 </li>
                             @endif
                         @else
-                        
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-
-                                    <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
+                                    @isset(Auth::user()->team) <span class="badge badge-secondary">{{ Auth::user()->team->name }}</span> @endisset <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('dashboard2') }}">  
-                                        <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
+                                    <a class="dropdown-item" href="{{ route('dashboard2') }}">
+                                    <i class="fa-solid fa-ellipsis" style="margin-right: 3px;"></i> Aplikacje
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('team.exit') }}">
+                                        <i class="fa-solid fa-people-group" style="margin-right: 3px;"></i> Wyjdź z teamu
                                     </a>
                                     <a class="dropdown-item" href="{{ route('settings') }}">
                                         <i class="fa-solid fa-gear" style="margin-right: 3px;"></i> Ustawienia
@@ -179,6 +198,20 @@
                         @endguest
                     </ul>
                 </div>
+            </div>
+        </nav>
+        <nav class="subnavbar">
+            <div class="container">
+                <a class="vertical-item" text-light" href="{{ route('dashboard2') }}">Applications</a>
+                <a class="vertical-item" text-light">|</a>
+                <a class="vertical-item" text-light" href="{{ route('home') }}">Home</a>
+                <a class="vertical-item" text-light" href="{{ route('tasks.index2') }}">Tasks</a>
+                <a class="vertical-item" text-light" href="{{ route('deadlines.index') }}">Deadline</a> <!--next to gh and code-->
+                <a class="vertical-item" text-light" href="{{ route('goals.index') }}">Goals</a>
+                <a class="vertical-item" text-light" href="{{ route('home') }}">Messages</a>
+                <a class="vertical-item" text-light">|</a>
+                <a class="vertical-item" text-light" href="{{ route('team.exit') }}">Back to WayApp Personal</a>
+                <!--next-->
             </div>
         </nav>
 
