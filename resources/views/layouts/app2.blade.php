@@ -59,7 +59,7 @@
                         @else
                             <a class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
                             @can('isIT')
-                                <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Zadania</a>
+                                <a class="dropdown-item text-light" href="{{ route('tasks.index2') }}">Zadania</a>
                                 <a class="dropdown-item text-light" href="{{ route('goals.index') }}">Cele</a>
                                 <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Bazy</a>
                                 <a class="dropdown-item text-light" href="{{ route('calendar.index') }}">Kalendarz</a>

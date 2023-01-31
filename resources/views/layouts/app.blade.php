@@ -106,7 +106,7 @@
                         @else
                             <a style="margin-left: 20px;" class="dropdown-item text-light" href="{{ route('home') }}">Strona główna</a>
                             @can('isIT')
-                                <a class="dropdown-item text-light" href="{{ route('tasks.index') }}">Zadania</a>
+                                <a class="dropdown-item text-light" href="{{ route('tasks.index2') }}">Zadania</a>
                                 <a class="dropdown-item text-light" href="{{ route('goals.index') }}">Cele</a>
                                 <a class="dropdown-item text-light" href="{{ route('calendar.index') }}">Kalendarz</a>
                                 <a class="dropdown-item text-light" href="{{ route('deadlines.index') }}">Deadliney</a>

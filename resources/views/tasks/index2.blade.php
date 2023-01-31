@@ -30,70 +30,111 @@ function myFunction(id1, name) {
 
 @section('content')
 
-<div class="container">
-        <div class="alert alert-primary" role="alert">
-            Wróć do <a href="{{ route('tasks.index2') }}" class="alert-link">widoku połączonego</a> zadań, deadlineów i celów
-        </div>
-    <div class="card">
-        <div class="card-header">
-            <b>Zadania</b> | 
-            <button type="button" data-toggle="modal" data-target="#add_task" class="btn btn-primary btn-sm pull-right" id="add-t"><i class="fa-solid fa-plus"></i> Nowe</button>
-            <a href="{{ route('task.editdate') }}"><button type="button" data-toggle="modal" class="btn btn-secondary btn-sm pull-right"> Zmiana dat</button></a>
-            <label class=""><input type="checkbox" name="only-projects" class="select-f" id="only-projects"> Tylko projekty</label>
-            
-            
-            <a data-toggle="collapse" href="#collapse-filters" role="button" aria-expanded="false" aria-controls="collapse-filters"><button type="button" class="btn btn-link"><i class="fa-solid fa-filter"></i> Filtry</button></a>
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-2">
+            <div class="card">
+                <div class="card-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
 
-        </div>
-        <div class="card-header collapse multi-collapse" id="collapse-filters">
-            <div class="form-inline">
-                <input name="search" id="search" placeholder="Szukaj" type="text" class="form-control float-left select-f" style="width: 180px;">
-                <select class="form-control select-f" id="select-goal" style="width: 180px;">
-                    <option value="a" class="">Wszystkie cele</option>
-                    <option value="b">Brak</option>
+                        <span id="card_title">
+                            Cele i deadliney
+                        </span>
+
+                            <div class="float-right">
+                            <a href="{{ route('goals.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
+                                <i class="fa-solid fa-plus"></i> Nowy
+                            </a>
+                            </div>
+                    </div>
+                </div>
+                
+
+                <div class="card-body">
                     @foreach($goals as $goal)
-                        <option class="form-control" value="{{ $goal->id }}">{{ $goal->name }}</option>
+                        <div>
+                            <a data-toggle="collapse" class="h5 text-dark" href="#goal{{ $goal->id }}" role="button" aria-expanded="false" aria-controls="collapse-application" class="collapsed"><i class="fa-solid fa-caret-down"></i> {{ $goal->name }}</a>
+                            <div class="multi-collapse collapse @if($goal->id == ($_GET['goal'] ?? '')) show @endif" id="goal{{ $goal->id }}" style="">
+                                <ul class="list-group list-group-flush">
+                                    @foreach($goal->deadlines as $deadline)
+                                        <li class="list-group-item"><a href="{{ route('tasks.index2').'?goal='.$goal->id.'&status=a&deadline='.$deadline->id.'&date=a&parent=0&projects=0&user=a&search=' }}">{{ $deadline->name }}</a></li>
+                                    @endforeach
+                                    <li class="list-group-item"><a href="{{ route('deadlines.create') }}"><i class="fa-solid fa-plus"></i> Nowy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
                     @endforeach
-                </select>
-                <select class="form-control float-left select-f" id="select-status" style="width: 180px;">
-                    <option value="a">Niewykonane</option>
-                    <option value="b">Wszystkie</option>
-                    <option value="0">Pomysł</option>
-                    <option value="1">Do zrobienia</option>
-                    <option value="2">W trakcie</option>
-                    <option value="3">Testy</option>
-                    <option value="4">Gotowe</option>
-                </select>
-                <select class="form-control select-f" id="select-deadline" style="width: 180px;">
-                    <option value="a">Wszystkie deadliney</option>
-                    <option value="b">Bez deadlineu</option>
-                    @foreach($deadlines as $deadline)
-                        <option class="form-control" value="{{ $deadline->id }}">{{ $deadline->name }}</option>
-                    @endforeach
-                </select>
-                <select class="form-control float-left select-f" id="select-date" style="width: 180px;">
-                    <option value="a">Wszystkie daty</option>
-                    <option value="1">Do dzisiaj (<=)</option>
-                    <option value="2">Bez daty</option>
-                    <option value="3">Przeterminowane</option>
-                </select>
-                <select class="form-control select-f" id="select-user" style="width: 180px;">
-                    <option value="a" class="">Wszystkie osoby</option>
-                    @if(Session::get('team_id') != 0)
-                    <option value="b">Brak osoby</option>
-                    @foreach($users as $user)
-                        <option class="form-control" value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                    @endif
-                </select>
+                    
+
+                    
+                </div>
             </div>
         </div>
 
-        <div class="card-body" style="padding-top: 0px;">
-        
-                    <section class="tasks">
-                        @include('tasks.load')
-                    </section>
+        <div class="col-10">
+            <div class="card">
+                <div class="card-header">
+                    <b>Zadania</b> | 
+                    <button type="button" data-toggle="modal" data-target="#add_task" class="btn btn-primary btn-sm pull-right" id="add-t"><i class="fa-solid fa-plus"></i> Nowe</button>
+                    <a href="{{ route('task.editdate') }}"><button type="button" data-toggle="modal" class="btn btn-secondary btn-sm pull-right"> Zmiana dat</button></a>
+                    <label class=""><input type="checkbox" name="only-projects" class="select-f" id="only-projects"> Tylko projekty</label>
+                    
+                    
+                    <a data-toggle="collapse" href="#collapse-filters" role="button" aria-expanded="false" aria-controls="collapse-filters"><button type="button" class="btn btn-link"><i class="fa-solid fa-filter"></i> Filtry</button></a>
+
+                </div>
+                <div class="card-header collapse multi-collapse" id="collapse-filters">
+                    <div class="form-inline">
+                        <input name="search" id="search" placeholder="Szukaj" type="text" class="form-control float-left select-f" style="width: 180px;">
+                        <select class="form-control select-f" id="select-goal" style="width: 180px;" hidden>
+                            <option value="a" class="">Wszystkie cele</option>
+                            <option value="b">Brak</option>
+                            @foreach($goals as $goal)
+                                <option class="form-control" value="{{ $goal->id }}">{{ $goal->name }}</option>
+                            @endforeach
+                        </select>
+                        <select class="form-control float-left select-f" id="select-status" style="width: 180px;">
+                            <option value="a">Niewykonane</option>
+                            <option value="b">Wszystkie</option>
+                            <option value="0">Pomysł</option>
+                            <option value="1">Do zrobienia</option>
+                            <option value="2">W trakcie</option>
+                            <option value="3">Testy</option>
+                            <option value="4">Gotowe</option>
+                        </select>
+                        <select class="form-control select-f" id="select-deadline" style="width: 180px;">
+                            <option value="a">Wszystkie deadliney</option>
+                            <option value="b">Bez deadlineu</option>
+                            @foreach($deadlines as $deadline)
+                                <option class="form-control" value="{{ $deadline->id }}">{{ $deadline->name }}</option>
+                            @endforeach
+                        </select>
+                        <select class="form-control float-left select-f" id="select-date" style="width: 180px;">
+                            <option value="a">Wszystkie daty</option>
+                            <option value="1">Do dzisiaj (<=)</option>
+                            <option value="2">Bez daty</option>
+                            <option value="3">Przeterminowane</option>
+                        </select>
+                        <select class="form-control select-f" id="select-user" style="width: 180px;">
+                            <option value="a" class="">Wszystkie osoby</option>
+                            @if(Session::get('team_id') != 0)
+                            <option value="b">Brak osoby</option>
+                            @foreach($users as $user)
+                                <option class="form-control" value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-body" style="padding-top: 0px;">
+                
+                            <section class="tasks">
+                                @include('tasks.load')
+                            </section>
+                </div>
+            </div>
         </div>
     </div>
     

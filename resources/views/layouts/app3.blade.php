@@ -205,7 +205,7 @@
                 <a class="vertical-item" text-light" href="{{ route('dashboard2') }}">Applications</a>
                 <a class="vertical-item" text-light">|</a>
                 <a class="vertical-item" text-light" href="{{ route('home') }}">Home</a>
-                <a class="vertical-item" text-light" href="{{ route('tasks.index') }}">Tasks</a>
+                <a class="vertical-item" text-light" href="{{ route('tasks.index2') }}">Tasks</a>
                 <a class="vertical-item" text-light" href="{{ route('deadlines.index') }}">Deadline</a> <!--next to gh and code-->
                 <a class="vertical-item" text-light" href="{{ route('goals.index') }}">Goals</a>
                 <a class="vertical-item" text-light" href="{{ route('home') }}">Messages</a>

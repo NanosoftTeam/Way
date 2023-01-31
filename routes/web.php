@@ -96,6 +96,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/tasks/editdate', [\App\Http\Controllers\TaskController::class, 'edit_date'])->name('task.editdate');
         Route::post('/tasks/change_date', [\App\Http\Controllers\TaskController::class, 'change_date'])->name('task.date');
         Route::get('/tasks', [\App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/tasks/index2', [\App\Http\Controllers\TaskController::class, 'index2'])->name('tasks.index2');
         Route::get('/tasks/{task}', [\App\Http\Controllers\TaskController::class, 'show'])->name('tasks.show');
         Route::get('/tasks/m/{task}', [\App\Http\Controllers\TaskController::class, 'show2'])->name('tasks.show2');
         Route::post('/tasks/edit/{id}', [\App\Http\Controllers\TaskController::class, 'edit'])->name('tasks.edit');

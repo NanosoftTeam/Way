@@ -33,6 +33,9 @@ function delete1(id1, name) {
 
 @section('content')
     <div class="container">
+        <div class="alert alert-primary" role="alert">
+            Wróć do <a href="{{ route('tasks.index2') }}" class="alert-link">widoku połączonego</a> zadań, deadlineów i celów
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 @if ($message = Session::get('success'))
