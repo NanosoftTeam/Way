@@ -57,16 +57,27 @@ function myFunction(id1, name) {
                             <div class="multi-collapse collapse @if($goal->id == ($_GET['goal'] ?? '')) show @endif" id="goal{{ $goal->id }}" style="">
                                 <ul class="list-group list-group-flush">
                                     @foreach($goal->deadlines as $deadline)
-                                        <li class="list-group-item"><a href="{{ route('tasks.index2').'?goal='.$goal->id.'&status=a&deadline='.$deadline->id.'&date=a&parent=0&projects=0&user=a&search=' }}">{{ $deadline->name }}</a></li>
+                                        <li class="list-group-item"><a href="{{ route('tasks.index2').'?goal='.$goal->id.'&status=a&deadline='.$deadline->id.'&date=a&parent=0&projects=0&user=a&search=' }}" @if($deadline->id == ($_GET['deadline'] ?? '')) class="font-weight-bold" @endif>{{ $deadline->name }}</a></li>
                                     @endforeach
-                                    <li class="list-group-item"><a href="{{ route('deadlines.create') }}"><i class="fa-solid fa-plus"></i> Nowy</a></li>
+                                    <li class="list-group-item"><a href="{{ route('deadlines.create2',  $goal->id) }}"><i class="fa-solid fa-plus"></i> Nowy</a></li>
                                 </ul>
                             </div>
                         </div>
                         <br />
                     @endforeach
-                    
-
+                    @if($deadline_n_g->count() > 0)
+                    <div>
+                        <a data-toggle="collapse" class="h5 text-dark" href="#goal-other" role="button" aria-expanded="false" aria-controls="collapse-application" class="collapsed"><i class="fa-solid fa-caret-down"></i> Inne</a>
+                        <div class="multi-collapse collapse show" id="goal-other" style="">
+                            <ul class="list-group list-group-flush">
+                            @foreach($deadline_n_g as $deadline)
+                                <li class="list-group-item"><a href="{{ route('tasks.index2').'?goal=a&status=a&deadline='.$deadline->id.'&date=a&parent=0&projects=0&user=a&search=' }}">{{ $deadline->name }}</a></li>
+                            @endforeach
+                            <li class="list-group-item"><a href="{{ route('deadlines.create') }}"><i class="fa-solid fa-plus"></i> Nowy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    @endif
                     
                 </div>
             </div>

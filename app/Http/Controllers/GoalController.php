@@ -75,7 +75,7 @@ class GoalController extends Controller
 
         $goal = Goal::create($request->all());
 
-        return redirect()->route('goals.index')
+        return redirect()->route('tasks.index2')
             ->with('success', 'Goal created successfully.');
     }
 

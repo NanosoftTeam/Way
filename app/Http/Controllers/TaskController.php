@@ -330,6 +330,16 @@ class TaskController extends Controller
                 return $query->where('team_id', $actual_user_team);
             }
         })->orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
+
+        $deadline_n_g = Deadline::when($actual_user_team, function ($query, $actual_user_team) {
+            if($actual_user_team == 'x'){
+                return $query->where('user_id', Auth::id())->where('goal_id', NULL);
+            }
+            else{
+                return $query->where('team_id', $actual_user_team)->where('goal_id', NULL);
+            }
+        })->orderBy("date", "ASC")->orderBy("priority", "ASC")->get();
+
         $tasks_all = Task::where('user_id', Auth::id())->orderBy('end', 'desc')->orderBy('status', 'asc')->get();
         $goals = Goal::when($actual_user_team, function ($query, $actual_user_team) {
             if($actual_user_team == 'x'){
@@ -587,6 +597,7 @@ class TaskController extends Controller
             'parent' => $if_parent,
             'potrzebne_projekty' => $potrzebne_projekty,
             'team_users' => $team_users,
+            'deadline_n_g' => $deadline_n_g,
         ]);
     }
 

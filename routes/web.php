@@ -144,6 +144,8 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('/debts/index2', [\App\Http\Controllers\DebtController::class, 'index2'])->name('debts.index2');
 
+        Route::get('/deadlines/create/{goal_id}', [\App\Http\Controllers\DeadlineController::class, 'create'])->name('deadlines.create2');
+
         Route::resource('importants', \App\Http\Controllers\ImportantController::class);
         Route::resource('goals', \App\Http\Controllers\GoalController::class);
         Route::resource('deadlines', \App\Http\Controllers\DeadlineController::class);

@@ -46,13 +46,14 @@ class DeadlineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($goal_id = NULL)
     {
         $actual_user_team = Auth::user()->team_id;
         if(Session::get('team_id') == 0){
             $actual_user_team = 'x';
         }
         $deadline = new Deadline();
+        $deadline->goal_id = $goal_id;
         $team_name = "";
         $goals = Goal::when($actual_user_team, function ($query, $actual_user_team) {
             if($actual_user_team == 'x'){
@@ -91,7 +92,7 @@ class DeadlineController extends Controller
 
         $deadline = Deadline::create($request->all());
 
-        return redirect()->route('deadlines.index')
+        return redirect()->route('tasks.index2')
             ->with('success', 'Deadline created successfully.');
     }
 
