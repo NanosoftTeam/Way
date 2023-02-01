@@ -124,7 +124,7 @@ class GoalController extends Controller
 
         $goal->update($request->all());
 
-        return redirect()->route('goals.index')
+        return redirect()->route('tasks.index2')
             ->with('success', 'Goal updated successfully');
     }
 

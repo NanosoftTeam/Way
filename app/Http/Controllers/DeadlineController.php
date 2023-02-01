@@ -156,7 +156,7 @@ class DeadlineController extends Controller
 
         $deadline->update($request->all());
 
-        return redirect()->route('deadlines.index')
+        return redirect()->route('tasks.index2')
             ->with('success', 'Deadline updated successfully');
     }
 
