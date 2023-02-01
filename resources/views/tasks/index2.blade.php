@@ -32,7 +32,7 @@ function myFunction(id1, name) {
 
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-2">
+        <div class="col-sm-2" style="min-width: 200px; margin-bottom: 10px;">
             <div class="card">
                 <div class="card-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -83,7 +83,7 @@ function myFunction(id1, name) {
             </div>
         </div>
 
-        <div class="col-10">
+        <div class="col">
             <div class="card">
                 <div class="card-header">
                     <b>Zadania</b> | 
